@@ -2362,7 +2362,8 @@ MonoBehaviour:
   BaseAnimationAttack: Melee2
   BaseAnimationDeath: Death2
   BaseAnimationHit: Hit1
-  BaseAnimationStan: Death3
+  BaseAnimationStun: 
+  BaseAnimatuonMutation: 
   StartRandomMutation: 0
   BaseBody: {fileID: 8550786546911375648}
   BaseLags: {fileID: 3136551987759198911}
@@ -4807,7 +4808,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0b5f3a77dd77f514ea96571a4832dcac, type: 2}
+  - {fileID: 2100000, guid: e9e8342c481364f76b463477b827ed20, type: 2}
   - {fileID: 2100000, guid: cccce766a61bc19468aec1c769c39b22, type: 2}
   - {fileID: 2100000, guid: 0b5f3a77dd77f514ea96571a4832dcac, type: 2}
   m_StaticBatchInfo:

@@ -51,5 +51,6 @@ public enum State
     Attack,
     Death,
     Hit,
-    Stan,
+    Stun,
+    Mutate
 }

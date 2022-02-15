@@ -55,6 +55,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Image: {fileID: 0}
+  FluidParticle: {fileID: 0}
+  FluidSpawnPoint: {fileID: 0}
 --- !u!65 &2341966405692157791
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -80,7 +82,7 @@ GameObject:
   - component: {fileID: 1907129662124294110}
   - component: {fileID: 6982698088314404082}
   m_Layer: 0
-  m_Name: roundflask.002
+  m_Name: liquid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -561,6 +563,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Image: {fileID: 0}
+  FluidParticle: {fileID: 0}
+  FluidSpawnPoint: {fileID: 0}
 --- !u!65 &7077077148471236645
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -586,7 +590,7 @@ GameObject:
   - component: {fileID: 2986669872865226478}
   - component: {fileID: 2986669872865226479}
   m_Layer: 0
-  m_Name: roundflask.002
+  m_Name: liquid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -829,7 +833,7 @@ GameObject:
   - component: {fileID: 2986669873032030763}
   - component: {fileID: 2986669873032030760}
   m_Layer: 0
-  m_Name: roundflask.002
+  m_Name: liquid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -953,6 +957,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Image: {fileID: 0}
+  FluidParticle: {fileID: 0}
+  FluidSpawnPoint: {fileID: 0}
 --- !u!65 &6175681805398893096
 BoxCollider:
   m_ObjectHideFlags: 0

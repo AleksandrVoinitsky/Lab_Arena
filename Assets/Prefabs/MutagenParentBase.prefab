@@ -212,6 +212,10 @@ PrefabInstance:
       propertyPath: setParent
       value: 
       objectReference: {fileID: 8016310964693302512}
+    - target: {fileID: 7933069570389771364, guid: 8a2ca76e24a52aa4b83afb84755be324, type: 3}
+      propertyPath: FluidParticle
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a2ca76e24a52aa4b83afb84755be324, type: 3}
 --- !u!1 &8900608097821297219 stripped

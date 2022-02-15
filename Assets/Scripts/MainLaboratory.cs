@@ -74,7 +74,7 @@ public class MainLaboratory : MonoBehaviour
     {
         LboratoryTank.transform.DOShakePosition(0.3f, 0.3f);
         LboratoryTankGlassMaterial.DOColor(color, 1);
-        playerModel.GetComponent<ModelManager>().SetSwichPart(part, true);
+        playerModel.GetComponent<ModelManager>().SetSwitchPart(part, true);
         mutagenCount++;
         gameData.PlayerPartsSet.Add(part);
         switch (mutagenCount)

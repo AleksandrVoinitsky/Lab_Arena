@@ -83,7 +83,7 @@ public class Enemy : Entity
         if(collision.relativeVelocity.magnitude > rigidbody.mass * 20)
         {
             stop = true;
-            state = State.Stan;
+            state = State.Stun;
             collider.enabled = false;
             rigidbody.velocity = new Vector3(0, 0, 0);
             rigidbody.angularVelocity = new Vector3(0, 0, 0);
@@ -128,7 +128,7 @@ public class Enemy : Entity
                 rigidbody.rotation = Quaternion.Slerp(rigidbody.rotation, Quaternion.Euler(new Vector3(0, NewRotation.y, 0)), AngularSpeed * Time.fixedDeltaTime);
                 rigidbody.velocity = transform.forward * Speed;
                 break;
-            case State.Stan:
+            case State.Stun:
                 if (stanTimer > 0)
                 { 
                     stanTimer -= Time.deltaTime;

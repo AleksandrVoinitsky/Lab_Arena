@@ -33,6 +33,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5775971488255572665
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8412467421953872695}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.3, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3304817465519503370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52,13 +65,15 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Image: {fileID: 0}
---- !u!65 &5775971488255572665
+  FluidParticle: {fileID: 0}
+  FluidSpawnPoint: {fileID: 0}
+--- !u!65 &4796524648314016445
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8412467421953872695}
+  m_GameObject: {fileID: 8412467422415000010}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
@@ -84,13 +99,15 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Image: {fileID: 0}
---- !u!65 &4796524648314016445
+  FluidParticle: {fileID: 0}
+  FluidSpawnPoint: {fileID: 0}
+--- !u!65 &4136735791141688046
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8412467422415000010}
+  m_GameObject: {fileID: 8412467423429563694}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
@@ -116,19 +133,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   Image: {fileID: 0}
---- !u!65 &4136735791141688046
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8412467423429563694}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.3, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  FluidParticle: {fileID: 0}
+  FluidSpawnPoint: {fileID: 0}
 --- !u!1001 &8682517169262405759
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -184,6 +190,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: b133bd711ee370e48bacdaccdb8f169a, type: 2}
+    - target: {fileID: 72387600846628272, guid: fe34d05d5ad509d49869c4dc239eea43, type: 3}
+      propertyPath: m_Name
+      value: liquid
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: fe34d05d5ad509d49869c4dc239eea43, type: 3}
       propertyPath: m_Name
       value: triangleflask (2)
@@ -259,6 +269,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: b0396c00fbd30244b94844fbf5ead60e, type: 2}
+    - target: {fileID: 72387600846628272, guid: fe34d05d5ad509d49869c4dc239eea43, type: 3}
+      propertyPath: m_Name
+      value: liquid
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: fe34d05d5ad509d49869c4dc239eea43, type: 3}
       propertyPath: m_Name
       value: triangleflask (1)
@@ -334,6 +348,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 254a09b97f4ebc74384707942e47a923, type: 2}
+    - target: {fileID: 72387600846628272, guid: fe34d05d5ad509d49869c4dc239eea43, type: 3}
+      propertyPath: m_Name
+      value: liquid
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: fe34d05d5ad509d49869c4dc239eea43, type: 3}
       propertyPath: m_Name
       value: triangleflask

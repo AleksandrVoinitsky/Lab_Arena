@@ -15,15 +15,27 @@ public class Mutagen : MonoBehaviour
     [SerializeField] GameData FluidParticle;
     [SerializeField] Transform FluidSpawnPoint;
 
+    void Awake()
+    {
+        mutagenColor = transform.Find("liquid").GetComponent<MeshRenderer>().material.color;
+        mutagenColor = new Color(mutagenColor.r, mutagenColor.g, mutagenColor.b, 0.25f);
+    }
+
 
     private void OnMouseDown()
     {
         MainLaboratory main = FindObjectOfType<MainLaboratory>();
         Transform tank = main.GetTankObjectTransform();
         transform.parent = null;
-        setParent.NextSet();
-        OnUse.Invoke();
-        transform.DOMove(new Vector3(0, transform.position.y + 2f, transform.position.z), 0.25f).OnComplete(() => 
+        transform.DORotate(Vector3.zero, 0.5f);
+        transform.DOMoveY(transform.position.y + 0.5f, 0.5f).OnComplete(() =>
+        {
+            transform.DOMove(tank.position + Vector3.up * 3.5f, 0.5f).OnComplete(() =>
+            {
+                StartCoroutine(Movement(tank, main));
+            });
+        });
+        /*transform.DOMove(new Vector3(0, transform.position.y + 2f, transform.position.z), 0.25f).OnComplete(() => 
         {
             transform.DOMove(new Vector3(transform.position.x, transform.position.y, transform.position.z), 0.25f).OnComplete(() =>
             {
@@ -39,8 +51,27 @@ public class Mutagen : MonoBehaviour
                 });
 
             });
+        });*/
+    }
 
+    private IEnumerator Movement(Transform _tank, MainLaboratory _main)
+    {
+        yield return new WaitForSecondsRealtime(0.25f);
+        transform.DOMoveY(_tank.position.y + 1, 0.75f).OnComplete(() =>
+        {
+            AddMutagen(_main);
         });
+    }
 
+    private void AddMutagen (MainLaboratory _main)
+    {
+        if (FluidParticle != null)
+            Instantiate(FluidParticle, FluidSpawnPoint.position, FluidSpawnPoint.rotation);
+        transform.DOScale(new Vector3(0, 0, 0), 0.25f).OnComplete(() =>
+        {
+            _main.AddMutagen(mutagenColor, part, Image);
+            setParent.NextSet();
+            OnUse.Invoke();
+        });
     }
 }

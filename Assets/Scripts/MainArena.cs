@@ -39,7 +39,7 @@ public class MainArena : MonoBehaviour
         playerMutantPartActivator = playerModel.GetComponent<ModelManager>();
         foreach (var item in gameData.PlayerPartsSet)
         {
-            playerMutantPartActivator.SetSwichPart(item, true);
+            playerMutantPartActivator.SetSwitchPart(item, true);
         }
 
         blackoutCanvas.alpha = 1;

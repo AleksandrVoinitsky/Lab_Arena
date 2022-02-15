@@ -11,7 +11,8 @@ public class ModelManager : MonoBehaviour
     [SerializeField] string BaseAnimationAttack;
     [SerializeField] string BaseAnimationDeath;
     [SerializeField] string BaseAnimationHit;
-    [SerializeField] string BaseAnimationStan;
+    [SerializeField] string BaseAnimationStun;
+    [SerializeField] string BaseAnimatuonMutation;
     [SerializeField] bool StartRandomMutation;
     [Space(10)]
     [SerializeField] GameObject BaseBody;
@@ -33,24 +34,23 @@ public class ModelManager : MonoBehaviour
         animDictionary.Add(State.Attack, BaseAnimationAttack);
         animDictionary.Add(State.Death, BaseAnimationDeath);
         animDictionary.Add(State.Hit, BaseAnimationHit);
-        animDictionary.Add(State.Stan, BaseAnimationStan);
+        animDictionary.Add(State.Stun, BaseAnimationStun);
+        animDictionary.Add(State.Mutate, BaseAnimatuonMutation);
         foreach (var item in parts)
         {
-            SetSwichPart(item.partType, item.StartActive);
+            SetSwitchPart(item.partType, item.StartActive);
         }
     }
 
     private void Start()
     {
-       
         if(entity != null)
         {
             StartCoroutine(AnimationPlayer());
         }
-
         if (StartRandomMutation)
         {
-            SetSwichPart(parts[Random.Range(0, parts.Length - 1)].partType, true);
+            SetSwitchPart(parts[Random.Range(0, parts.Length - 1)].partType, true);
         }
     }
 
@@ -59,7 +59,7 @@ public class ModelManager : MonoBehaviour
         animator.Play(animDictionary[state]);
     }
 
-    public void SetSwichPart(MutantParts partType,bool active)
+    public void SetSwitchPart(MutantParts partType,bool active)
     {
         //State temp;
         //string animTemp;
@@ -111,10 +111,11 @@ public class ModelManager : MonoBehaviour
 
     IEnumerator ActivatePart(SkinnedMeshRenderer skin)
     {
+        Play(State.Mutate);
         while (skin.GetBlendShapeWeight(0) < 100)
         {
             skin.SetBlendShapeWeight(0, skin.GetBlendShapeWeight(0) + 1) ;
-            yield return new WaitForSeconds(0.02f);
+            yield return new WaitForSecondsRealtime(0.005f);
         }
     }
 
