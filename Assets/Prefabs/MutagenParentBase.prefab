@@ -106,13 +106,25 @@ PrefabInstance:
       value: FlaskSet2
       objectReference: {fileID: 0}
     - target: {fileID: 3304817465519503370, guid: 9f5878a97d492814db4fc2a50aa8c828, type: 3}
+      propertyPath: Image
+      value: 
+      objectReference: {fileID: 5404692722123608420, guid: d3e0032e3ff7b9546bf3c67887970371, type: 3}
+    - target: {fileID: 3304817465519503370, guid: 9f5878a97d492814db4fc2a50aa8c828, type: 3}
       propertyPath: setParent
       value: 
       objectReference: {fileID: 8016310964693302512}
     - target: {fileID: 5176648475715858600, guid: 9f5878a97d492814db4fc2a50aa8c828, type: 3}
+      propertyPath: Image
+      value: 
+      objectReference: {fileID: 5404692722123608420, guid: d3e0032e3ff7b9546bf3c67887970371, type: 3}
+    - target: {fileID: 5176648475715858600, guid: 9f5878a97d492814db4fc2a50aa8c828, type: 3}
       propertyPath: setParent
       value: 
       objectReference: {fileID: 8016310964693302512}
+    - target: {fileID: 6308392764094038168, guid: 9f5878a97d492814db4fc2a50aa8c828, type: 3}
+      propertyPath: Image
+      value: 
+      objectReference: {fileID: 5404692722123608420, guid: d3e0032e3ff7b9546bf3c67887970371, type: 3}
     - target: {fileID: 6308392764094038168, guid: 9f5878a97d492814db4fc2a50aa8c828, type: 3}
       propertyPath: setParent
       value: 

@@ -118,7 +118,7 @@ public class Player : Entity
             {
                 rigidbody.velocity = Vector3.Lerp(rigidbody.velocity, new Vector3(0, 0, 0), Time.fixedDeltaTime * Speed);
             }
-            Sphere.transform.position = MoveTarget;
+           // Sphere.transform.position = MoveTarget;
             state = State.Move;
         }
         else
@@ -127,17 +127,12 @@ public class Player : Entity
             if (EnemyDetected)
             {
                 direction = RotationTarget - transform.position;
-                Sphere.transform.position = RotationTarget;
-                if(state != State.Attack)
-                {
-                    rigidbody.velocity = transform.forward * Speed;
-                }
-               
+               // Sphere.transform.position = RotationTarget;
             }
             else
             {
                 direction = MoveTarget - transform.position;
-                Sphere.transform.position = MoveTarget;
+                //Sphere.transform.position = MoveTarget;
                 rigidbody.velocity = Vector3.Lerp(rigidbody.velocity, new Vector3(0, 0, 0), Time.fixedDeltaTime * Speed);
                 state = State.Idle;
             }
