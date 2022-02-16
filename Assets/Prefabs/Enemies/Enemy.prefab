@@ -254,6 +254,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyModel
       objectReference: {fileID: 0}
+    - target: {fileID: 5436910804565718366, guid: fb8c9b932d84ada4a919186482df0724, type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[0]
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6696736826842523410, guid: fb8c9b932d84ada4a919186482df0724, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -262,6 +266,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[2]
       value: 
       objectReference: {fileID: 2100000, guid: 0b5f3a77dd77f514ea96571a4832dcac, type: 2}
+    - target: {fileID: 6921481830165439988, guid: fb8c9b932d84ada4a919186482df0724, type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[0]
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb8c9b932d84ada4a919186482df0724, type: 3}
 --- !u!4 &717476622589478283 stripped
