@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca4f15c6d23f57f43ade09a2b60116a3, type: 3}
   m_Name: GAME_DATA
   m_EditorClassIdentifier: 
-  LevelNumber: 0
+  LevelNumber: 4
   PlayerModel: {fileID: 3656185600078060075, guid: 7507e71d81a35db45a75d15a3be4eaf0, type: 3}
-  PlayerPartsSet: 00000000
+  PlayerPartsSet: 020000000400000006000000
   Mutagens:
   - {fileID: 1270546670507101961, guid: d8e2140577f299d45bf650d704c335b3, type: 3}
+  - {fileID: 5248155943892806725, guid: 4d372e18d3f0fa141b45046918ce2429, type: 3}
+  - {fileID: 1215729674533361484, guid: 28116a17ea4d52b47a1e9c39bde67d2d, type: 3}
+  - {fileID: 947144380093602109, guid: 960c79bcc6488804c808791d7cb92d77, type: 3}
   - {fileID: 4066403237620414072, guid: fd8d8768c76718343aa034fd60489c63, type: 3}
   Enemies: []

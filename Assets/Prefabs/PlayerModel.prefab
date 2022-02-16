@@ -2643,7 +2643,8 @@ MonoBehaviour:
   BaseAnimationAttack: Melee1
   BaseAnimationDeath: Death1
   BaseAnimationHit: Hit1
-  BaseAnimationStan: Death2
+  BaseAnimationStun: 
+  BaseAnimatuonMutation: 
   StartRandomMutation: 0
   BaseBody: {fileID: 7846937653627107453}
   BaseLags: {fileID: 3587352801412217826}
@@ -2651,17 +2652,17 @@ MonoBehaviour:
   - partType: 0
     PartReferense: {fileID: 501986199828214617}
     StateAnimation: 2
-    AnimationName: 
+    AnimationName: Melee2
     StartActive: 0
   - partType: 1
     PartReferense: {fileID: 4132483125247802204}
     StateAnimation: 2
-    AnimationName: 
+    AnimationName: Ranged1
     StartActive: 0
   - partType: 2
     PartReferense: {fileID: 82319991025328568}
     StateAnimation: 2
-    AnimationName: 
+    AnimationName: Melee3
     StartActive: 0
   - partType: 3
     PartReferense: {fileID: 1014192479438604919}
@@ -2671,12 +2672,12 @@ MonoBehaviour:
   - partType: 4
     PartReferense: {fileID: 8603700441757521916}
     StateAnimation: 1
-    AnimationName: Run2
+    AnimationName: spider_walk
     StartActive: 0
   - partType: 5
     PartReferense: {fileID: 814257242035292929}
-    StateAnimation: 0
-    AnimationName: Fly
+    StateAnimation: 1
+    AnimationName: ghost_fly
     StartActive: 0
   - partType: 6
     PartReferense: {fileID: 243939139646196920}

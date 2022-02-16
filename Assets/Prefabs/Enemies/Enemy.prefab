@@ -44,7 +44,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7685353767425397937}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 10
   m_Drag: 10
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -82,6 +82,7 @@ MonoBehaviour:
   Health: 100
   AttackPower: 20
   MoveSpeed: 10
+  level: 1
   targetTransform: {fileID: 0}
   target: {x: 0, y: 0, z: 0}
   rigidbody: {fileID: 7685353767425397951}
@@ -98,6 +99,7 @@ MonoBehaviour:
   ParticleRange: {fileID: 1294065999996510881, guid: 3068368b416720649b4c8029d25f349f, type: 3}
   ParticleHit: {fileID: 1294065999996510881, guid: 3068368b416720649b4c8029d25f349f, type: 3}
   ParticleDamage: {fileID: 1294065999996510881, guid: 3068368b416720649b4c8029d25f349f, type: 3}
+  hpBar: {fileID: 304839308744371262}
 --- !u!1 &7685353767640389944
 GameObject:
   m_ObjectHideFlags: 0
@@ -393,3 +395,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1479103757705125922, guid: 285b49e37a7fb9f4c9f1cbe75c65051a, type: 3}
   m_PrefabInstance: {fileID: 7685353767610714546}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &304839308744371262 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7970488656432276876, guid: 285b49e37a7fb9f4c9f1cbe75c65051a, type: 3}
+  m_PrefabInstance: {fileID: 7685353767610714546}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c765857f68e129648b2fb6a594968803, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
