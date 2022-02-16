@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
-using MoreMountains.NiceVibrations;
 using TMPro;
 
 public class MainLaboratory : MonoBehaviour
@@ -34,15 +34,17 @@ public class MainLaboratory : MonoBehaviour
     [SerializeField] TextMeshProUGUI tmpTextInfo;
     [SerializeField] CanvasGroup tmpTextInfoCanvasGroup;
     [Header("VFX")]
-    [SerializeField] List<GameObject> teslaVFX;
-    [SerializeField] GameObject diffusion;
+    [SerializeField] List<Animator> teslaVFX;
+    [SerializeField] GameObject diffusion, electricity;
+
+    public bool isMoving;
 
 
 
     int mutagenCount = 0;
     Queue<string> TextInfoQueue = new Queue<string>();
     bool tmpTextInfoFlag;
-    // Start is called before the first frame update
+
     void Start()
     {
         InitScene();
@@ -82,34 +84,53 @@ public class MainLaboratory : MonoBehaviour
         blackoutCanvas.DOFade(1, 2f).OnComplete(() => { LoadNextScene(); });
     }
 
-    public void AddMutagen(Color color, MutantParts part, GameObject Image, string mutagenName = "")
+    public void ShootTeslaGuns()
     {
         foreach (var t in teslaVFX)
-            t.SetActive(true);
-        MMVibrationManager.Haptic(HapticTypes.LightImpact);
+        {
+            t.Play("CoilShoot", -1, 0f);
+            var e = Instantiate(electricity, t.transform.position, electricity.transform.rotation);
+            e.transform.DOMove(LboratoryTank.transform.position + Vector3.up, 0.2f);
+        }
+    }
+
+    public void ShakePlayer()
+    {
+        playerModel.GetComponent<ModelManager>().Play(State.Mutate);
+    }
+
+    public void AddMutagen(Color color, MutantParts part, GameObject mutationImage, string mutagenName = "")
+    {
+        isMoving = false;
         var tmp = Instantiate(diffusion, LboratoryTank.transform.position + Vector3.up, diffusion.transform.rotation);
         ParticleSystem.MainModule main = tmp.GetComponent<ParticleSystem>().main;
         main.startColor = color;
-        LboratoryTank.transform.DOShakePosition(0.3f, 0.3f);
+        //LboratoryTank.transform.DOShakePosition(0.3f, 0.3f);
         LboratoryTankGlassMaterial.DOColor(color, 3);
         playerModel.GetComponent<ModelManager>().SetSwitchPart(part, true);
         mutagenCount++;
         gameData.PlayerPartsSet.Add(part);
+        GameObject uiMutation;
         switch (mutagenCount)
         {
-            case 1:
+            default:
                 ObjectArrayActivator(FlaskUiGroup1, true);
-                Instantiate(Image, FlaskUiGroup1[0].transform.position, FlaskUiGroup1[0].transform.rotation, FlaskUiGroup1[0].transform);
+                uiMutation = FlaskUiGroup1[0];
+                Instantiate(mutationImage, FlaskUiGroup1[0].transform.position, FlaskUiGroup1[0].transform.rotation, FlaskUiGroup1[0].transform);
                 break;
             case 2:
                 ObjectArrayActivator(FlaskUiGroup2, true);
-                Instantiate(Image, FlaskUiGroup2[0].transform.position, FlaskUiGroup2[0].transform.rotation, FlaskUiGroup2[0].transform);
+                uiMutation = FlaskUiGroup2[0];
+                Instantiate(mutationImage, FlaskUiGroup2[0].transform.position, FlaskUiGroup2[0].transform.rotation, FlaskUiGroup2[0].transform);
                 break;
             case 3:
                 ObjectArrayActivator(FlaskUiGroup3, true);
-                Instantiate(Image, FlaskUiGroup3[0].transform.position, FlaskUiGroup3[0].transform.rotation, FlaskUiGroup3[0].transform);
+                uiMutation = FlaskUiGroup3[0];
+                Instantiate(mutationImage, FlaskUiGroup3[0].transform.position, FlaskUiGroup3[0].transform.rotation, FlaskUiGroup3[0].transform);
                 break;
         }
+
+        uiMutation.GetComponent<Image>().color = new Color (color.r, color.g, color.b, 0.7f);
 
         if (mutagenName == string.Empty)
         {
