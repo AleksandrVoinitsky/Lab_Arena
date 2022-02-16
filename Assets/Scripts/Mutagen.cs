@@ -70,7 +70,7 @@ public class Mutagen : MonoBehaviour
         main.startColor = mutagenColor;
         p.GetComponent<ParticleSystemRenderer>().material.color = mutagenColor;
         p.GetComponent<ParticleSystemRenderer>().trailMaterial.color = mutagenColor;
-        transform.DORotate(new Vector3 (0, 0, -75), 0.5f).OnComplete(() =>
+        transform.DORotate(new Vector3 (0, 0, -75), 0.25f).OnComplete(() =>
         {
             StartCoroutine(AddMutagen(_main));
         });
@@ -78,7 +78,9 @@ public class Mutagen : MonoBehaviour
 
     private IEnumerator AddMutagen (MainLaboratory _main)
     {
-        yield return new WaitForSecondsRealtime(0.4f);
+        yield return new WaitForSecondsRealtime(0.2f);
+        _main.SpawnDiffusion(mutagenColor);
+        yield return new WaitForSecondsRealtime(0.75f);
         _main.ShootTeslaGuns();
         if (FluidParticle != null)
             Instantiate(FluidParticle, FluidSpawnPoint.position, FluidSpawnPoint.rotation);

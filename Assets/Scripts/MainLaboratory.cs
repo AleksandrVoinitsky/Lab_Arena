@@ -99,12 +99,16 @@ public class MainLaboratory : MonoBehaviour
         playerModel.GetComponent<ModelManager>().Play(State.Mutate);
     }
 
-    public void AddMutagen(Color color, MutantParts part, GameObject mutationImage, string mutagenName = "")
+    public void SpawnDiffusion (Color color)
     {
-        isMoving = false;
         var tmp = Instantiate(diffusion, LboratoryTank.transform.position + Vector3.up, diffusion.transform.rotation);
         ParticleSystem.MainModule main = tmp.GetComponent<ParticleSystem>().main;
         main.startColor = color;
+    }
+
+    public void AddMutagen(Color color, MutantParts part, GameObject mutationImage, string mutagenName = "")
+    {
+        isMoving = false;
         //LboratoryTank.transform.DOShakePosition(0.3f, 0.3f);
         LboratoryTankGlassMaterial.DOColor(color, 3);
         playerModel.GetComponent<ModelManager>().SetSwitchPart(part, true);
