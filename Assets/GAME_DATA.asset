@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelNumber: 0
   PlayerModel: {fileID: 3656185600078060075, guid: 7507e71d81a35db45a75d15a3be4eaf0, type: 3}
-  PlayerPartsSet: 020000000300000007000000
+  PlayerPartsSet: 00000000
   Mutagens:
+  - {fileID: 1270546670507101961, guid: d8e2140577f299d45bf650d704c335b3, type: 3}
   - {fileID: 4066403237620414072, guid: fd8d8768c76718343aa034fd60489c63, type: 3}
   Enemies: []

@@ -71,6 +71,7 @@ public class MainArena : MonoBehaviour
 
     public void Win()
     {
+        gameData.AddLevel();
         WinCanvasGroup.DOFade(1, 1f);
         WinPanel.SetActive(true);
     }
