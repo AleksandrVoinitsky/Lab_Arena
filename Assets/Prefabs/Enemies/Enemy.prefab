@@ -79,9 +79,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  Health: 0
-  AttackPower: 0
-  MoveSpeed: 0
+  Health: 100
+  AttackPower: 20
+  MoveSpeed: 10
   targetTransform: {fileID: 0}
   target: {x: 0, y: 0, z: 0}
   rigidbody: {fileID: 7685353767425397951}
