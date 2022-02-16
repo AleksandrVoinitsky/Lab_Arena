@@ -111,7 +111,6 @@ public class ModelManager : MonoBehaviour
 
     IEnumerator ActivatePart(SkinnedMeshRenderer skin)
     {
-        Play(State.Mutate);
         while (skin.GetBlendShapeWeight(0) < 100)
         {
             skin.SetBlendShapeWeight(0, skin.GetBlendShapeWeight(0) + 1) ;

@@ -16,6 +16,7 @@ public class Mutagen : MonoBehaviour
     [SerializeField] Transform FluidSpawnPoint;
     [SerializeField] GameObject shatteredFlask;
     [SerializeField] string MutagenName;
+    [SerializeField] GameObject pour;
 
     void Awake()
     {
@@ -27,16 +28,21 @@ public class Mutagen : MonoBehaviour
     private void OnMouseDown()
     {
         MainLaboratory main = FindObjectOfType<MainLaboratory>();
-        Transform tank = main.GetTankObjectTransform();
-        transform.parent = null;
-        transform.DORotate(new Vector3 (0, transform.rotation.y, transform.rotation.z), 0.5f);
-        transform.DOMoveY(transform.position.y + 0.5f, 0.5f).OnComplete(() =>
+        if (!main.isMoving)
         {
-            transform.DOMove(tank.position + Vector3.left * 0.5f + Vector3.up * 3f, 0.5f).OnComplete(() =>
+            main.isMoving = true;
+            Transform tank = main.GetTankObjectTransform();
+            Destroy(transform.Find("cap").gameObject);
+            transform.parent = null;
+            transform.DORotate(new Vector3(0, transform.rotation.y, transform.rotation.z), 0.4f);
+            transform.DOMoveY(transform.position.y + 0.5f, 0.4f).OnComplete(() =>
             {
-                StartCoroutine(Movement(tank, main));
+                transform.DOMove(tank.position + Vector3.left * 0.5f + Vector3.up * 3f, 0.4f).OnComplete(() =>
+                {
+                    StartCoroutine(Movement(tank, main));
+                });
             });
-        });
+        }
         /*transform.DOMove(new Vector3(0, transform.position.y + 2f, transform.position.z), 0.25f).OnComplete(() => 
         {
             transform.DOMove(new Vector3(transform.position.x, transform.position.y, transform.position.z), 0.25f).OnComplete(() =>
@@ -58,24 +64,31 @@ public class Mutagen : MonoBehaviour
 
     private IEnumerator Movement(Transform _tank, MainLaboratory _main)
     {
-        yield return new WaitForSecondsRealtime(0.25f);
-        transform.DORotate(new Vector3 (0, 0, -75), 0.75f).OnComplete(() =>
+        yield return new WaitForSecondsRealtime(0.2f);
+        var p = Instantiate(pour, transform.position + Vector3.right * 0.25f, pour.transform.rotation);
+        ParticleSystem.MainModule main = p.GetComponent<ParticleSystem>().main;
+        main.startColor = mutagenColor;
+        p.GetComponent<ParticleSystemRenderer>().material.color = mutagenColor;
+        p.GetComponent<ParticleSystemRenderer>().trailMaterial.color = mutagenColor;
+        transform.DORotate(new Vector3 (0, 0, -75), 0.25f).OnComplete(() =>
         {
-            AddMutagen(_main);
+            StartCoroutine(AddMutagen(_main));
         });
     }
 
-    private void AddMutagen (MainLaboratory _main)
+    private IEnumerator AddMutagen (MainLaboratory _main)
     {
+        yield return new WaitForSecondsRealtime(0.2f);
+        _main.SpawnDiffusion(mutagenColor);
+        yield return new WaitForSecondsRealtime(0.75f);
+        _main.ShootTeslaGuns();
         if (FluidParticle != null)
             Instantiate(FluidParticle, FluidSpawnPoint.position, FluidSpawnPoint.rotation);
-        transform.DOScale(new Vector3(0, 0, 0), 0.25f).OnComplete(() =>
-        {
-            Instantiate(shatteredFlask, transform.position, Quaternion.identity);
-            _main.AddMutagen(mutagenColor, part, Image, MutagenName);
-            setParent.NextSet();
-            OnUse.Invoke();
-            Destroy(gameObject);
-        });
+        transform.DOScale(new Vector3(0, 0, 0), 0.25f).OnComplete(() => Instantiate(shatteredFlask, transform.position, Quaternion.identity));
+        yield return new WaitForSecondsRealtime(0.5f);
+        _main.AddMutagen(mutagenColor, part, Image, MutagenName);
+        setParent.NextSet();
+        OnUse.Invoke();
+        Destroy(gameObject);
     }
 }
