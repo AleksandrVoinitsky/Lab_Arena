@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class MainLaboratory : MonoBehaviour
 {
@@ -29,9 +30,14 @@ public class MainLaboratory : MonoBehaviour
     [SerializeField] GameObject[] FlaskUiGroup1;
     [SerializeField] GameObject[] FlaskUiGroup2;
     [SerializeField] GameObject[] FlaskUiGroup3;
+    [SerializeField] TextMeshProUGUI tmpTextInfo;
+    [SerializeField] CanvasGroup tmpTextInfoCanvasGroup;
 
-    
+
+
     int mutagenCount = 0;
+    Queue<string> TextInfoQueue = new Queue<string>();
+    bool tmpTextInfoFlag;
     // Start is called before the first frame update
     void Start()
     {
@@ -50,6 +56,8 @@ public class MainLaboratory : MonoBehaviour
         LboratoryTankGlassMaterial.color = LboratoryTankGlassMaterialColor;
         CreatePlayerCharacter();
         CreateFlaskSet();
+        tmpTextInfoCanvasGroup.alpha = 0;
+        tmpTextInfoFlag = true;
     }
 
     public void ShowStartButton()
@@ -70,7 +78,7 @@ public class MainLaboratory : MonoBehaviour
         blackoutCanvas.DOFade(1, 2f).OnComplete(() => { LoadNextScene(); });
     }
 
-    public void AddMutagen(Color color, MutantParts part, GameObject Image)
+    public void AddMutagen(Color color, MutantParts part, GameObject Image, string mutagenName = "")
     {
         LboratoryTank.transform.DOShakePosition(0.3f, 0.3f);
         LboratoryTankGlassMaterial.DOColor(color, 1);
@@ -92,7 +100,38 @@ public class MainLaboratory : MonoBehaviour
                 Instantiate(Image, FlaskUiGroup3[0].transform.position, FlaskUiGroup3[0].transform.rotation, FlaskUiGroup3[0].transform);
                 break;
         }
+
+            StartCoroutine(CheckTextInfo(part.ToString()));      
     }
+
+    IEnumerator CheckTextInfo(string text)
+    {
+        TextInfoQueue.Enqueue(text);
+
+        while (TextInfoQueue.Count > 0)
+        {
+            if (tmpTextInfoFlag)
+            {
+                ShowTextInfo(TextInfoQueue.Dequeue());
+            }
+            yield return null;
+        }
+    }
+
+    void ShowTextInfo(string text)
+    {
+
+        tmpTextInfoFlag = false;
+        tmpTextInfo.text = text;
+        tmpTextInfoCanvasGroup.DOFade(1, 1f).OnComplete(() => 
+        {
+            tmpTextInfoCanvasGroup.DOFade(0, 0.5f).OnComplete(() =>
+            {
+                tmpTextInfoFlag = true;
+            });
+        });
+    }
+
 
     void ObjectArrayActivator(GameObject[] arr, bool active)
     {
