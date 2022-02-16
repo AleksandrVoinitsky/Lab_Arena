@@ -196,7 +196,7 @@ public class MainLaboratory : MonoBehaviour
 
     public void CreateFlaskSet()
     {
-        Instantiate(gameData.Mutagens[0], FlaskSetSpawnPoint.position, FlaskSetSpawnPoint.rotation);
+        Instantiate(gameData.Mutagens[gameData.LevelNumber], FlaskSetSpawnPoint.position, FlaskSetSpawnPoint.rotation);
     }
 
     public Transform GetTankObjectTransform()

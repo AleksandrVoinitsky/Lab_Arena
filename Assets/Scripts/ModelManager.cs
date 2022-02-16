@@ -22,6 +22,8 @@ public class ModelManager : MonoBehaviour
     Dictionary<State, string> animDictionary = new Dictionary<State, string>();
     Animator animator;
     Entity entity;
+    
+
 
 
 
@@ -29,6 +31,7 @@ public class ModelManager : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         entity = transform.parent.GetComponent<Entity>();
+        
         animDictionary.Add(State.Idle, BaseAnimationIdle);
         animDictionary.Add(State.Move, BaseAnimationRun);
         animDictionary.Add(State.Attack, BaseAnimationAttack);
@@ -61,9 +64,6 @@ public class ModelManager : MonoBehaviour
 
     public void SetSwitchPart(MutantParts partType,bool active)
     {
-        //State temp;
-        //string animTemp;
-
 
         foreach (var item in parts)
         {
@@ -83,24 +83,29 @@ public class ModelManager : MonoBehaviour
 
                     item.PartReferense.SetActive(active);
                     SkinnedMeshRenderer skin = item.PartReferense.GetComponent<SkinnedMeshRenderer>();
-
+                    Mesh skinnedMesh = skin.sharedMesh;
                     if (active)
                     {
-                        skin.SetBlendShapeWeight(0, 0);
-                        StartCoroutine(ActivatePart(skin));
+                        if(skinnedMesh.blendShapeCount > 0)
+                        {
+                            float Shape = skin.GetBlendShapeWeight(0);
+                            skin.SetBlendShapeWeight(0, 0);
+                            StartCoroutine(ActivatePart(skin));
+                        }
+                        else
+                        {
+                            Debug.LogWarning("В меше " + item.partType.ToString() + " Отсутствует бленд шейп");
+                        }
+
                         ActiveParts.Add(item);
                         if(item.AnimationName != "")
                         {
-
-                            //animDictionary.Remove(item.StateAnimation);
-                            //animDictionary.Add(item.StateAnimation, item.AnimationName);
                             animDictionary[item.StateAnimation] = item.AnimationName;
                             return;
                         }
                     }
                     else
                     {
-                        skin.SetBlendShapeWeight(0, 0);
                         ActiveParts.Remove(item);
                     }
                 }
@@ -111,6 +116,7 @@ public class ModelManager : MonoBehaviour
 
     IEnumerator ActivatePart(SkinnedMeshRenderer skin)
     {
+
         while (skin.GetBlendShapeWeight(0) < 100)
         {
             skin.SetBlendShapeWeight(0, skin.GetBlendShapeWeight(0) + 1) ;

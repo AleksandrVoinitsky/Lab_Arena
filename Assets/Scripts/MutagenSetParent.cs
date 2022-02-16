@@ -7,7 +7,7 @@ using DG.Tweening;
 
 public class MutagenSetParent : MonoBehaviour
 {
-    [SerializeField] GameObject[] mutagenSet;
+    [SerializeField] FluskSet[] mutagenSet;
 
     private int counter;
     
@@ -16,21 +16,21 @@ public class MutagenSetParent : MonoBehaviour
     {
         foreach (var item in mutagenSet)
         {
-            item.transform.localScale = new Vector3(0, 0, 0);
-            item.SetActive(false);
+            item.SomeObject.transform.localScale = new Vector3(0, 0, 0);
+            item.SomeObject.SetActive(false);
         }
         ShowSet(0);
     }
 
     void ShowSet(int index)
     {
-        mutagenSet[index].SetActive(true);
-        mutagenSet[index].transform.DOScale(new Vector3(1, 1, 1), 0.25f);
+        mutagenSet[index].SomeObject.SetActive(true);
+        mutagenSet[index].SomeObject.transform.DOScale(new Vector3(1, 1, 1), 0.25f);
     }
 
     void HideSet(int index)
     {
-        mutagenSet[index].transform.DOScale(new Vector3(0, 0, 0), 0.25f).OnComplete(() => { mutagenSet[index].SetActive(false); });
+        mutagenSet[index].SomeObject.transform.DOScale(new Vector3(0, 0, 0), 0.25f).OnComplete(() => { mutagenSet[index].SomeObject.SetActive(false); });
     }
 
     public void NextSet()
@@ -52,5 +52,20 @@ public class MutagenSetParent : MonoBehaviour
         FindObjectOfType<MainLaboratory>().ShowStartButton();
     }
 
+    public void HideHand()
+    {
+        if(mutagenSet[counter].hand != null)
+        {
+            mutagenSet[counter].hand.transform.DOScale(0, 0.25f);
+        }
+    }
 
+
+}
+
+[System.Serializable]
+public struct FluskSet
+{
+    public GameObject SomeObject;
+    public GameObject hand;
 }

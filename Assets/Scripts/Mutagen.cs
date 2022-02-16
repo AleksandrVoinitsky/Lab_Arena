@@ -27,6 +27,7 @@ public class Mutagen : MonoBehaviour
 
     private void OnMouseDown()
     {
+        setParent.HideHand();
         MainLaboratory main = FindObjectOfType<MainLaboratory>();
         if (!main.isMoving)
         {

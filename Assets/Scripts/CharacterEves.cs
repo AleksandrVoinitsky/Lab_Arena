@@ -9,7 +9,7 @@ public class CharacterEves : MonoBehaviour
     void Start()
     {
         skinned = GetComponent<SkinnedMeshRenderer>();
-        StartCoroutine(EveClosed());
+        //StartCoroutine(EveClosed()); Актуально только с бленд шейпом
     }
 
     IEnumerator EveClosed()

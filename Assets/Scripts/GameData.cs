@@ -8,7 +8,6 @@ public class GameData : ScriptableObject
     [Header("GENERAL")]
     public int LevelNumber;
 
-
     [Header("PLAYER")]
     public GameObject PlayerModel;
     public List<MutantParts> PlayerPartsSet = new List<MutantParts>();
@@ -16,10 +15,16 @@ public class GameData : ScriptableObject
     [Header("MUTAGENS")]
     public GameObject[] Mutagens;
 
-
-
     [Header("ENEMIES")]
     public GameObject[] Enemies;
+
+    public void AddLevel()
+    {
+        if(LevelNumber < Mutagens.Length - 1)
+        {
+            LevelNumber += 1;
+        }
+    }
 }
 
 public enum MutantParts
