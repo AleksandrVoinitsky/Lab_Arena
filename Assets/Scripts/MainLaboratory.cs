@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
+using MoreMountains.NiceVibrations;
 using TMPro;
 
 public class MainLaboratory : MonoBehaviour
@@ -15,7 +16,7 @@ public class MainLaboratory : MonoBehaviour
     [SerializeField] string NextSceneName;
     [Header("data")]
     [SerializeField] GameData gameData;
-    [Header("level referenses")]
+    [Header("level referenсes")]
     [SerializeField] GameObject LboratoryTank;
     [SerializeField] Material LboratoryTankGlassMaterial;
     [SerializeField] Color LboratoryTankGlassMaterialColor;
@@ -32,6 +33,9 @@ public class MainLaboratory : MonoBehaviour
     [SerializeField] GameObject[] FlaskUiGroup3;
     [SerializeField] TextMeshProUGUI tmpTextInfo;
     [SerializeField] CanvasGroup tmpTextInfoCanvasGroup;
+    [Header("VFX")]
+    [SerializeField] List<GameObject> teslaVFX;
+    [SerializeField] GameObject diffusion;
 
 
 
@@ -80,8 +84,14 @@ public class MainLaboratory : MonoBehaviour
 
     public void AddMutagen(Color color, MutantParts part, GameObject Image, string mutagenName = "")
     {
+        foreach (var t in teslaVFX)
+            t.SetActive(true);
+        MMVibrationManager.Haptic(HapticTypes.LightImpact);
+        var tmp = Instantiate(diffusion, LboratoryTank.transform.position + Vector3.up, diffusion.transform.rotation);
+        ParticleSystem.MainModule main = tmp.GetComponent<ParticleSystem>().main;
+        main.startColor = color;
         LboratoryTank.transform.DOShakePosition(0.3f, 0.3f);
-        LboratoryTankGlassMaterial.DOColor(color, 1);
+        LboratoryTankGlassMaterial.DOColor(color, 3);
         playerModel.GetComponent<ModelManager>().SetSwitchPart(part, true);
         mutagenCount++;
         gameData.PlayerPartsSet.Add(part);
@@ -101,7 +111,7 @@ public class MainLaboratory : MonoBehaviour
                 break;
         }
 
-        if(mutagenName == "")
+        if (mutagenName == string.Empty)
         {
             StartCoroutine(CheckTextInfo(part.ToString()));
         }

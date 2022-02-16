@@ -241,8 +241,12 @@ PrefabInstance:
       objectReference: {fileID: 8016310964693302512}
     - target: {fileID: 3304817465519503370, guid: 9f5878a97d492814db4fc2a50aa8c828, type: 3}
       propertyPath: MutagenName
-      value: Wings
+      value: Angel wings
       objectReference: {fileID: 0}
+    - target: {fileID: 3304817465519503370, guid: 9f5878a97d492814db4fc2a50aa8c828, type: 3}
+      propertyPath: shatteredFlask
+      value: 
+      objectReference: {fileID: 2105667860521386070, guid: 41ee3599f8e56fe43bd58631eace6e0b, type: 3}
     - target: {fileID: 4201915659298959657, guid: 9f5878a97d492814db4fc2a50aa8c828, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -265,8 +269,12 @@ PrefabInstance:
       objectReference: {fileID: 8016310964693302512}
     - target: {fileID: 5176648475715858600, guid: 9f5878a97d492814db4fc2a50aa8c828, type: 3}
       propertyPath: MutagenName
-      value: Spider Legs
+      value: Spider legs
       objectReference: {fileID: 0}
+    - target: {fileID: 5176648475715858600, guid: 9f5878a97d492814db4fc2a50aa8c828, type: 3}
+      propertyPath: shatteredFlask
+      value: 
+      objectReference: {fileID: 2105667860521386070, guid: 41ee3599f8e56fe43bd58631eace6e0b, type: 3}
     - target: {fileID: 6308392764094038168, guid: 9f5878a97d492814db4fc2a50aa8c828, type: 3}
       propertyPath: Image
       value: 
@@ -277,8 +285,12 @@ PrefabInstance:
       objectReference: {fileID: 8016310964693302512}
     - target: {fileID: 6308392764094038168, guid: 9f5878a97d492814db4fc2a50aa8c828, type: 3}
       propertyPath: MutagenName
-      value: Ghost Tail
+      value: Ghost body
       objectReference: {fileID: 0}
+    - target: {fileID: 6308392764094038168, guid: 9f5878a97d492814db4fc2a50aa8c828, type: 3}
+      propertyPath: shatteredFlask
+      value: 
+      objectReference: {fileID: 2105667860521386070, guid: 41ee3599f8e56fe43bd58631eace6e0b, type: 3}
     - target: {fileID: 8412467421953872695, guid: 9f5878a97d492814db4fc2a50aa8c828, type: 3}
       propertyPath: m_Name
       value: WingsMutagen
@@ -328,8 +340,12 @@ PrefabInstance:
       objectReference: {fileID: 8016310964693302512}
     - target: {fileID: 3735700515459866166, guid: 8a2ca76e24a52aa4b83afb84755be324, type: 3}
       propertyPath: MutagenName
-      value: Blades
+      value: Wolverine claws
       objectReference: {fileID: 0}
+    - target: {fileID: 3735700515459866166, guid: 8a2ca76e24a52aa4b83afb84755be324, type: 3}
+      propertyPath: shatteredFlask
+      value: 
+      objectReference: {fileID: 2105667860521386070, guid: 41ee3599f8e56fe43bd58631eace6e0b, type: 3}
     - target: {fileID: 4311771564346716617, guid: 8a2ca76e24a52aa4b83afb84755be324, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -400,15 +416,19 @@ PrefabInstance:
       objectReference: {fileID: 8016310964693302512}
     - target: {fileID: 6715592588464987740, guid: 8a2ca76e24a52aa4b83afb84755be324, type: 3}
       propertyPath: MutagenName
-      value: Eves
+      value: Laser eyes
       objectReference: {fileID: 0}
+    - target: {fileID: 6715592588464987740, guid: 8a2ca76e24a52aa4b83afb84755be324, type: 3}
+      propertyPath: shatteredFlask
+      value: 
+      objectReference: {fileID: 2105667860521386070, guid: 41ee3599f8e56fe43bd58631eace6e0b, type: 3}
     - target: {fileID: 7438241242405629538, guid: 8a2ca76e24a52aa4b83afb84755be324, type: 3}
       propertyPath: m_Name
       value: BladesMutagen
       objectReference: {fileID: 0}
     - target: {fileID: 7440801382715802169, guid: 8a2ca76e24a52aa4b83afb84755be324, type: 3}
       propertyPath: m_Name
-      value: TentakleMutagen
+      value: TentacleMutagen
       objectReference: {fileID: 0}
     - target: {fileID: 7440801382715802169, guid: 8a2ca76e24a52aa4b83afb84755be324, type: 3}
       propertyPath: m_IsActive
@@ -424,12 +444,16 @@ PrefabInstance:
       objectReference: {fileID: 8016310964693302512}
     - target: {fileID: 7933069570389771364, guid: 8a2ca76e24a52aa4b83afb84755be324, type: 3}
       propertyPath: MutagenName
-      value: Tentakle
+      value: Octopus tentacles
       objectReference: {fileID: 0}
     - target: {fileID: 7933069570389771364, guid: 8a2ca76e24a52aa4b83afb84755be324, type: 3}
       propertyPath: FluidParticle
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7933069570389771364, guid: 8a2ca76e24a52aa4b83afb84755be324, type: 3}
+      propertyPath: shatteredFlask
+      value: 
+      objectReference: {fileID: 2105667860521386070, guid: 41ee3599f8e56fe43bd58631eace6e0b, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a2ca76e24a52aa4b83afb84755be324, type: 3}
 --- !u!1 &8900608097821297219 stripped
@@ -478,8 +502,12 @@ PrefabInstance:
       objectReference: {fileID: 8016310964693302512}
     - target: {fileID: 495045420296221268, guid: 80f98961a20dd5b4da719a70580ee2d1, type: 3}
       propertyPath: MutagenName
-      value: Armor
+      value: Mega armor
       objectReference: {fileID: 0}
+    - target: {fileID: 495045420296221268, guid: 80f98961a20dd5b4da719a70580ee2d1, type: 3}
+      propertyPath: shatteredFlask
+      value: 
+      objectReference: {fileID: 2105667860521386070, guid: 41ee3599f8e56fe43bd58631eace6e0b, type: 3}
     - target: {fileID: 814421917251582275, guid: 80f98961a20dd5b4da719a70580ee2d1, type: 3}
       propertyPath: m_Name
       value: ArmorMutagen
@@ -562,8 +590,12 @@ PrefabInstance:
       objectReference: {fileID: 8016310964693302512}
     - target: {fileID: 5137123711017555830, guid: 80f98961a20dd5b4da719a70580ee2d1, type: 3}
       propertyPath: MutagenName
-      value: Spike
+      value: Sharp spikes
       objectReference: {fileID: 0}
+    - target: {fileID: 5137123711017555830, guid: 80f98961a20dd5b4da719a70580ee2d1, type: 3}
+      propertyPath: shatteredFlask
+      value: 
+      objectReference: {fileID: 2105667860521386070, guid: 41ee3599f8e56fe43bd58631eace6e0b, type: 3}
     - target: {fileID: 6545837670296750002, guid: 80f98961a20dd5b4da719a70580ee2d1, type: 3}
       propertyPath: setParent
       value: 

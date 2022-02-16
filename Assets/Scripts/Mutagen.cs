@@ -14,6 +14,7 @@ public class Mutagen : MonoBehaviour
     [SerializeField] GameObject Image;
     [SerializeField] GameData FluidParticle;
     [SerializeField] Transform FluidSpawnPoint;
+    [SerializeField] GameObject shatteredFlask;
     [SerializeField] string MutagenName;
 
     void Awake()
@@ -28,10 +29,10 @@ public class Mutagen : MonoBehaviour
         MainLaboratory main = FindObjectOfType<MainLaboratory>();
         Transform tank = main.GetTankObjectTransform();
         transform.parent = null;
-        transform.DORotate(Vector3.zero, 0.5f);
+        transform.DORotate(new Vector3 (0, transform.rotation.y, transform.rotation.z), 0.5f);
         transform.DOMoveY(transform.position.y + 0.5f, 0.5f).OnComplete(() =>
         {
-            transform.DOMove(tank.position + Vector3.up * 3.5f, 0.5f).OnComplete(() =>
+            transform.DOMove(tank.position + Vector3.left * 0.5f + Vector3.up * 3f, 0.5f).OnComplete(() =>
             {
                 StartCoroutine(Movement(tank, main));
             });
@@ -58,7 +59,7 @@ public class Mutagen : MonoBehaviour
     private IEnumerator Movement(Transform _tank, MainLaboratory _main)
     {
         yield return new WaitForSecondsRealtime(0.25f);
-        transform.DOMoveY(_tank.position.y + 1, 0.75f).OnComplete(() =>
+        transform.DORotate(new Vector3 (0, 0, -75), 0.75f).OnComplete(() =>
         {
             AddMutagen(_main);
         });
@@ -70,9 +71,11 @@ public class Mutagen : MonoBehaviour
             Instantiate(FluidParticle, FluidSpawnPoint.position, FluidSpawnPoint.rotation);
         transform.DOScale(new Vector3(0, 0, 0), 0.25f).OnComplete(() =>
         {
+            Instantiate(shatteredFlask, transform.position, Quaternion.identity);
             _main.AddMutagen(mutagenColor, part, Image, MutagenName);
             setParent.NextSet();
             OnUse.Invoke();
+            Destroy(gameObject);
         });
     }
 }
