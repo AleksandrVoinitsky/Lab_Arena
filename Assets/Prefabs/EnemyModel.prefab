@@ -2371,32 +2371,32 @@ MonoBehaviour:
   - partType: 0
     PartReferense: {fileID: 2069679997323016708}
     StateAnimation: 2
-    AnimationName: 
+    AnimationName: Melee2
     StartActive: 0
   - partType: 1
     PartReferense: {fileID: 2528231013225804289}
     StateAnimation: 2
-    AnimationName: 
+    AnimationName: Ranged1
     StartActive: 0
   - partType: 2
     PartReferense: {fileID: 1975926503295789285}
     StateAnimation: 2
-    AnimationName: 
+    AnimationName: Melee3
     StartActive: 0
   - partType: 3
     PartReferense: {fileID: 1467242845731308330}
     StateAnimation: 1
     AnimationName: Fly
-    StartActive: 1
+    StartActive: 0
   - partType: 4
     PartReferense: {fileID: 7866074136669839009}
     StateAnimation: 1
-    AnimationName: 
+    AnimationName: spider_walk
     StartActive: 0
   - partType: 5
     PartReferense: {fileID: 1225895619677012572}
-    StateAnimation: 0
-    AnimationName: 
+    StateAnimation: 1
+    AnimationName: ghost_fly
     StartActive: 0
   - partType: 6
     PartReferense: {fileID: 1814166066825184741}

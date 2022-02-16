@@ -167,9 +167,10 @@ public class Player : Entity
         
     }
 
-    public override void Damage(int damage)
+    public override bool Damage(int damage)
     {
-        base.Damage(damage);
+        
         Instantiate(ParticleDamage, FirePoint.position, FirePoint.rotation);
+        return base.Damage(damage);
     }
 }

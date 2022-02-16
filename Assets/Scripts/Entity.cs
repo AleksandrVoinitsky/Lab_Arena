@@ -10,15 +10,18 @@ public class Entity : MonoBehaviour
     public int Health;
     public int AttackPower;
     public float MoveSpeed;
+    public int level;
 
-    public virtual void Damage(int damage)
+    public virtual bool Damage(int damage)
     {
         Health -= damage;
         if(Health<= 0)
         {
             Health = 0;
             state = State.Death;
+            return false;
         }
+        return true;
     }
 
     public virtual void Hit()

@@ -47,9 +47,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mutagenSet:
-  - {fileID: 8900608097821297219}
-  - {fileID: 4061024258785247687}
-  - {fileID: 8493621648075954525}
+  - SomeObject: {fileID: 8900608097821297219}
+    hand: {fileID: 0}
+  - SomeObject: {fileID: 4061024258785247687}
+    hand: {fileID: 0}
+  - SomeObject: {fileID: 8493621648075954525}
+    hand: {fileID: 0}
 --- !u!1001 &1541593348113672350
 PrefabInstance:
   m_ObjectHideFlags: 0
