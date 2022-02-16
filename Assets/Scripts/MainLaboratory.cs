@@ -101,7 +101,14 @@ public class MainLaboratory : MonoBehaviour
                 break;
         }
 
-            StartCoroutine(CheckTextInfo(part.ToString()));      
+        if(mutagenName == "")
+        {
+            StartCoroutine(CheckTextInfo(part.ToString()));
+        }
+        else
+        {
+            StartCoroutine(CheckTextInfo(mutagenName));
+        }
     }
 
     IEnumerator CheckTextInfo(string text)

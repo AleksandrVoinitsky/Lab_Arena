@@ -14,6 +14,7 @@ public class Mutagen : MonoBehaviour
     [SerializeField] GameObject Image;
     [SerializeField] GameData FluidParticle;
     [SerializeField] Transform FluidSpawnPoint;
+    [SerializeField] string MutagenName;
 
     void Awake()
     {
@@ -69,7 +70,7 @@ public class Mutagen : MonoBehaviour
             Instantiate(FluidParticle, FluidSpawnPoint.position, FluidSpawnPoint.rotation);
         transform.DOScale(new Vector3(0, 0, 0), 0.25f).OnComplete(() =>
         {
-            _main.AddMutagen(mutagenColor, part, Image);
+            _main.AddMutagen(mutagenColor, part, Image, MutagenName);
             setParent.NextSet();
             OnUse.Invoke();
         });
