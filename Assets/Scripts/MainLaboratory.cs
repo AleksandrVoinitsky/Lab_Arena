@@ -162,7 +162,6 @@ public class MainLaboratory : MonoBehaviour
 
     void ShowTextInfo(string text)
     {
-
         tmpTextInfoFlag = false;
         tmpTextInfo.text = text;
         tmpTextInfoCanvasGroup.DOFade(1, 1f).OnComplete(() => 

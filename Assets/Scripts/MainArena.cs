@@ -19,7 +19,7 @@ public class MainArena : MonoBehaviour
     [SerializeField] float RoundTime = 60;
     [SerializeField] ProgressBar progressBar;
     [Space(10)]
-    [SerializeField] CanvasGroup WinCanvasGroup;
+    [SerializeField] CanvasGroup mainCanvas, WinCanvasGroup;
     [SerializeField] GameObject WinPanel;
     [SerializeField] GameObject DefeatPanel;
 
@@ -39,16 +39,19 @@ public class MainArena : MonoBehaviour
         {
             playerMutantPartActivator.SetSwitchPart(item, true);
         }
-
         blackoutCanvas.alpha = 1;
         blackoutCanvas.DOFade(0, 1f).OnComplete(() => 
         {
             ArenaTank.transform.DOMove(new Vector3(ArenaTank.transform.position.x, ArenaTank.transform.position.y + 5, ArenaTank.transform.position.z), 1).OnComplete(() =>
             {
                 PlayerRoot.transform.parent = null;
-                PlayerRoot.GetComponent<Player>().ActiveCharaterMovement(true);
+                PlayerRoot.GetComponent<Player>().SetModel(playerMutantPartActivator);
+                PlayerRoot.GetComponent<Player>().ActiveCharacterMovement(true);
                 ArenaTank.transform.DOScale(new Vector3(0, 0, 0), 0.25f);
                 StartCoroutine(ArenaTimer());
+                CameraController.Instance.FocusOnPlayer();
+                mainCanvas.gameObject.SetActive(true);
+                mainCanvas.DOFade(1, 1f);
             });
         });
     }

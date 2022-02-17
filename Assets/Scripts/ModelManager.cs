@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using DG.Tweening;
+
+public enum ModelType { PLAYER, ENEMY }
 
 public class ModelManager : MonoBehaviour
 {
+    [SerializeField] private ModelType type;
     [SerializeField] string EntityStateMonitor;
     [SerializeField] string BaseAnimationIdle;
     [SerializeField] string BaseAnimationRun;
@@ -13,25 +17,24 @@ public class ModelManager : MonoBehaviour
     [SerializeField] string BaseAnimationHit;
     [SerializeField] string BaseAnimationStun;
     [SerializeField] string BaseAnimatuonMutation;
+    public bool isActive;
     [SerializeField] bool StartRandomMutation;
     [Space(10)]
-    [SerializeField] GameObject BaseBody;
-    [SerializeField] GameObject BaseLags;
+    [SerializeField] SkinnedMeshRenderer BaseBody, BaseCostume;
+    [SerializeField] SkinnedMeshRenderer BaseLegs, SpiderLegs, EyeMask;
+    [SerializeField] private List<Material> costumeMaterials, extraMaterials;
     public Parts[] parts;
     public List<Parts> ActiveParts = new List<Parts>();
     Dictionary<State, string> animDictionary = new Dictionary<State, string>();
     Animator animator;
     Entity entity;
     
-
-
-
-
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        if (SceneManager.GetActiveScene().name == "Laboratory")
+            animator.Play("Swim");
         entity = transform.parent.GetComponent<Entity>();
-        
         animDictionary.Add(State.Idle, BaseAnimationIdle);
         animDictionary.Add(State.Move, BaseAnimationRun);
         animDictionary.Add(State.Attack, BaseAnimationAttack);
@@ -43,11 +46,73 @@ public class ModelManager : MonoBehaviour
         {
             SetSwitchPart(item.partType, item.StartActive);
         }
+        if (type == ModelType.ENEMY)
+        {
+            transform.DOMoveY(transform.position.y + 3, 0.75f);
+            int costumeMats = Random.Range(0, costumeMaterials.Count);
+            List<Material> bodyMaterials = new List<Material>();
+            List<Material> legsMaterials = new List<Material>();
+            bodyMaterials.Add(BaseBody.materials[0]);
+            bodyMaterials.Add(costumeMaterials[costumeMats]);
+            bodyMaterials.Add(extraMaterials[costumeMats]);
+            legsMaterials.Add(costumeMaterials[costumeMats]);
+            legsMaterials.Add(extraMaterials[costumeMats]);
+            legsMaterials.Add(costumeMaterials[costumeMats]);
+            BaseBody.materials = bodyMaterials.ToArray();
+            BaseCostume.materials = bodyMaterials.ToArray();
+            BaseLegs.materials = legsMaterials.ToArray();
+            var tmp = SpiderLegs.materials;
+            tmp[1] = costumeMaterials[costumeMats];
+            SpiderLegs.materials = tmp;
+            EyeMask.material = costumeMaterials[costumeMats];
+        }
+    }
+
+    public bool IsSpiked()
+    {
+        return ActiveParts.Exists(x => x.partType == MutantParts.Spike);
+    }
+
+    public bool IsRanged()
+    {
+        return ActiveParts.Exists(x => x.partType == MutantParts.Range);
+    }
+
+    public int GetHealth()
+    {
+        int health = 100;
+        if (ActiveParts.Exists(x => x.partType == MutantParts.Armor))
+            health = 200;
+        return health;
+    }
+
+    public float GetSpeed()
+    {
+        float speed = 5;
+        if (ActiveParts.Exists(x => x.partType == MutantParts.Wings))
+            speed = 8;
+        if (ActiveParts.Exists(x => x.partType == MutantParts.Ghost))
+            speed = 8;
+        if (ActiveParts.Exists(x => x.partType == MutantParts.SpiderFoots))
+            speed = 8;
+        if (type == ModelType.ENEMY)
+            speed = Mathf.FloorToInt(speed * 0.85f);
+        return speed;
+    }
+
+    public float GetDistance()
+    {
+        float distance = 2;
+        if (ActiveParts.Exists(x => x.partType == MutantParts.Tentacle))
+            distance = 4;
+        if (ActiveParts.Exists(x => x.partType == MutantParts.Range))
+            distance = 6;
+        return distance;
     }
 
     private void Start()
     {
-        if(entity != null)
+        if (entity != null)
         {
             StartCoroutine(AnimationPlayer());
         }
@@ -62,23 +127,21 @@ public class ModelManager : MonoBehaviour
         animator.Play(animDictionary[state]);
     }
 
-    public void SetSwitchPart(MutantParts partType,bool active)
+    public void SetSwitchPart(MutantParts partType, bool active)
     {
-
         foreach (var item in parts)
         {
             if(item.partType == partType)
             {
                 if(item.PartReferense.active != active)
                 {
-
                     if (partType == MutantParts.Ghost || partType == MutantParts.SpiderFoots)
                     {
-                        BaseLags.SetActive(!active);
+                        BaseLegs.gameObject.SetActive(!active);
                     }
                     if (partType == MutantParts.Armor)
                     {
-                        BaseBody.SetActive(!active);
+                        BaseBody.gameObject.SetActive(!active);
                     }
 
                     item.PartReferense.SetActive(active);
@@ -86,15 +149,11 @@ public class ModelManager : MonoBehaviour
                     Mesh skinnedMesh = skin.sharedMesh;
                     if (active)
                     {
-                        if(skinnedMesh.blendShapeCount > 0)
+                        if (skinnedMesh.blendShapeCount > 0)
                         {
                             float Shape = skin.GetBlendShapeWeight(0);
                             skin.SetBlendShapeWeight(0, 0);
                             StartCoroutine(ActivatePart(skin));
-                        }
-                        else
-                        {
-                            Debug.LogWarning("В меше " + item.partType.ToString() + " Отсутствует бленд шейп");
                         }
 
                         ActiveParts.Add(item);
@@ -116,7 +175,6 @@ public class ModelManager : MonoBehaviour
 
     IEnumerator ActivatePart(SkinnedMeshRenderer skin)
     {
-
         while (skin.GetBlendShapeWeight(0) < 100)
         {
             skin.SetBlendShapeWeight(0, skin.GetBlendShapeWeight(0) + 1) ;
@@ -126,10 +184,13 @@ public class ModelManager : MonoBehaviour
 
     IEnumerator AnimationPlayer()
     {
-        while(true)
+        while (true)
         {
             EntityStateMonitor = entity.state.ToString();
-            Play(entity.state);
+            if (entity.state != State.Mutate || SceneManager.GetActiveScene().name == "Laboratory")
+            {
+                Play(entity.state);
+            }
             yield return new WaitForSeconds(0.1f);
         }
     }

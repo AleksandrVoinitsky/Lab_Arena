@@ -2,26 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(CapsuleCollider))]
-[RequireComponent(typeof(Rigidbody))]
 public class Entity : MonoBehaviour
 {
     public State state;
-    public int Health;
+    public bool isSpiked;
+    public int health;
     public int AttackPower;
-    public float MoveSpeed;
-    public int level;
+    public float moveSpeed;
+    public int level = 1;
 
-    public virtual bool Damage(int damage)
+    public virtual bool Damage(int damage, Entity attacker = null)
     {
-        Health -= damage;
-        if(Health<= 0)
+        health -= damage;
+        if (attacker != null)
         {
-            Health = 0;
-            state = State.Death;
-            return false;
+            if (isSpiked)
+                attacker.Damage(damage / 2);
         }
-        return true;
+        if (health <= 0)
+        {
+            health = 0;
+            state = State.Death;
+        }
+        return health <= 0;
     }
 
     public virtual void Hit()

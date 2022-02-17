@@ -615,7 +615,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 10
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 84
@@ -633,9 +633,7 @@ Transform:
   m_Children:
   - {fileID: 1883865819}
   - {fileID: 137799066}
-  - {fileID: 1116954669}
   - {fileID: 2118107878}
-  - {fileID: 1417585799}
   m_Father: {fileID: 1963899649}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -652,28 +650,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  Health: 0
+  isSpiked: 0
+  health: 0
   AttackPower: 0
-  MoveSpeed: 0
-  level: 0
-  Sphere: {fileID: 1413341049}
+  moveSpeed: 0
+  level: 1
+  model: {fileID: 0}
   Target: {fileID: 0}
-  rigidbody: {fileID: 276247202}
-  capsuleCollider: {fileID: 276247205}
   joystick: {fileID: 1143575819}
   animator: {fileID: 0}
   MoveTarget: {x: 0, y: 0, z: 0}
   RotationTarget: {x: 0, y: 0, z: 0}
   ViewDistance: 3
   AttackDistance: 1.2
-  Speed: 10
-  AngularSpeed: 10
   FirePoint: {fileID: 2118107878}
-  DamagePoint: {fileID: 1417585799}
-  ParticleMelee: {fileID: 1294065999996510881, guid: 3068368b416720649b4c8029d25f349f, type: 3}
-  ParticleRange: {fileID: 1294065999996510881, guid: 3068368b416720649b4c8029d25f349f, type: 3}
-  ParticleHit: {fileID: 1294065999996510881, guid: 3068368b416720649b4c8029d25f349f, type: 3}
-  ParticleDamage: {fileID: 1294065999996510881, guid: 3068368b416720649b4c8029d25f349f, type: 3}
+  ParticleDamage: {fileID: 3773802796254940066, guid: 568bf26e9a9ed4541b7e6dbaaf7e5598, type: 3}
+  hpBar: {fileID: 465816330}
 --- !u!136 &276247205
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -682,7 +674,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 276247201}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
@@ -724,6 +716,7 @@ MonoBehaviour:
   ArenaTank: {fileID: 1963899646}
   RoundTime: 60
   progressBar: {fileID: 1935010738}
+  mainCanvas: {fileID: 333942486}
   WinCanvasGroup: {fileID: 2029201604}
   WinPanel: {fileID: 1902375802}
   DefeatPanel: {fileID: 1158511299}
@@ -753,13 +746,26 @@ GameObject:
   - component: {fileID: 333942489}
   - component: {fileID: 333942488}
   - component: {fileID: 333942487}
+  - component: {fileID: 333942486}
   m_Layer: 5
   m_Name: CanvasArenaUi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
+--- !u!225 &333942486
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333942485}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!114 &333942487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -885,9 +891,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94ee5646ad9adb94d83295bb97c5c093, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enemies:
-  - {fileID: 7685353767425397937, guid: 30a05aa1a6fdeb844bfd423b2996e871, type: 3}
-  WaitTime: 15
+  enemy: {fileID: 7685353767425397949, guid: 30a05aa1a6fdeb844bfd423b2996e871, type: 3}
+  waitTimer: 5
+--- !u!114 &465816330 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7970488656432276876, guid: 285b49e37a7fb9f4c9f1cbe75c65051a, type: 3}
+  m_PrefabInstance: {fileID: 176636292}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c765857f68e129648b2fb6a594968803, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &539555000
 GameObject:
   m_ObjectHideFlags: 0
@@ -931,9 +947,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94ee5646ad9adb94d83295bb97c5c093, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enemies:
-  - {fileID: 7685353767425397937, guid: 30a05aa1a6fdeb844bfd423b2996e871, type: 3}
-  WaitTime: 8
+  enemy: {fileID: 7685353767425397949, guid: 30a05aa1a6fdeb844bfd423b2996e871, type: 3}
+  waitTimer: 5
 --- !u!1 &601622788
 GameObject:
   m_ObjectHideFlags: 0
@@ -1013,7 +1028,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 601622788}
   m_LocalRotation: {x: 0.46174863, y: 0, z: 0, w: 0.8870109}
-  m_LocalPosition: {x: -1.7182505, y: 16.342947, z: -18.26748}
+  m_LocalPosition: {x: 0, y: 11.5, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1048,7 +1063,7 @@ MonoBehaviour:
   settings: []
   won: 0
   player: {fileID: 276247203}
-  cameraOffset: {x: 0, y: 16, z: -8}
+  cameraOffset: {x: 0, y: 11, z: -7}
   cameraCatchUpDistance: 0
   cameraSpeed: 5
 --- !u!1 &668274466
@@ -1198,36 +1213,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &1116954668
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1116954669}
-  m_Layer: 0
-  m_Name: CameraTarget
-  m_TagString: CameraTarget
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1116954669
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1116954668}
-  m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 276247203}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1143575819 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8170153791668043265, guid: 0d230cc8be529a542a08cb878ab14b18, type: 3}
@@ -1443,36 +1428,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1417585798
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1417585799}
-  m_Layer: 0
-  m_Name: DamagePoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1417585799
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1417585798}
-  m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 276247203}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1661785891 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8080662714411782471, guid: f187f8269ad236746ac4e5b135eedbe0, type: 3}
@@ -1527,9 +1482,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94ee5646ad9adb94d83295bb97c5c093, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enemies:
-  - {fileID: 7685353767425397937, guid: 30a05aa1a6fdeb844bfd423b2996e871, type: 3}
-  WaitTime: 5
+  enemy: {fileID: 7685353767425397949, guid: 30a05aa1a6fdeb844bfd423b2996e871, type: 3}
+  waitTimer: 5
 --- !u!1001 &1811032146
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1551,7 +1505,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170153791668043268, guid: 0d230cc8be529a542a08cb878ab14b18, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8170153791668043268, guid: 0d230cc8be529a542a08cb878ab14b18, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1891,9 +1845,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94ee5646ad9adb94d83295bb97c5c093, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enemies:
-  - {fileID: 7685353767425397937, guid: 30a05aa1a6fdeb844bfd423b2996e871, type: 3}
-  WaitTime: 12
+  enemy: {fileID: 7685353767425397949, guid: 30a05aa1a6fdeb844bfd423b2996e871, type: 3}
+  waitTimer: 5
 --- !u!1 &1935010736 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8080662713648015042, guid: f187f8269ad236746ac4e5b135eedbe0, type: 3}
@@ -2070,7 +2023,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 276247203}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &543450653598356075
 Transform:
@@ -2441,7 +2394,7 @@ GameObject:
   - component: {fileID: 4298876740766531047}
   - component: {fileID: 2542070058530721632}
   - component: {fileID: 7569879394741711731}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: arena_floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}

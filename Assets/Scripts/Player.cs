@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class Player : Entity
 {
-    public GameObject Sphere;
+    [SerializeField] ModelManager model;
     [SerializeField] GameObject Target;
-    [SerializeField] Rigidbody rigidbody;
-    [SerializeField] CapsuleCollider capsuleCollider;
     [SerializeField] FloatingJoystick joystick;
     [SerializeField] Animator animator;
     [SerializeField] Vector3 MoveTarget;
@@ -15,36 +13,36 @@ public class Player : Entity
     [Space(10)]
     [SerializeField] float ViewDistance = 5;
     [SerializeField] float AttackDistance = 2;
-    [SerializeField] float Speed;
-    [SerializeField] float AngularSpeed;
     [Space(10)]
     [SerializeField] Transform FirePoint;
-    [SerializeField] Transform DamagePoint;
-    [SerializeField] GameObject ParticleMelee;
-    [SerializeField] GameObject ParticleRange;
-    [SerializeField] GameObject ParticleHit;
     [SerializeField] GameObject ParticleDamage;
+    [SerializeField] HpBar hpBar;
 
     private bool ActivePlayer = false;
     private bool EnemyDetected = false;
     private bool jump = false;
 
-    private void Start()
-    {
-
-    }
-
-    public void ActiveCharaterMovement(bool var)
+    public void ActiveCharacterMovement(bool var)
     {
         ActivePlayer = var;
-        if (var)
+        /*if (var)
         {
             StartCoroutine(FindEnemy());
         }
         else
         {
             StopCoroutine(FindEnemy());
-        }
+        }*/
+    }
+
+    public void SetModel (ModelManager _model)
+    {
+        model = _model;
+        moveSpeed = model.GetSpeed();
+        health = model.GetHealth();
+        isSpiked = model.IsSpiked();
+        AttackDistance = model.GetDistance();
+        hpBar.Init(health);
     }
 
     IEnumerator FindEnemy()
@@ -54,7 +52,7 @@ public class Player : Entity
             Collider[] Enemies = Physics.OverlapSphere(transform.position, ViewDistance);
             foreach (var item in Enemies)
             {
-                if (item != capsuleCollider && Enemies.Length > 0)
+                if (Enemies.Length > 0)
                 {
                     if (item.tag == "Enemy")
                     {
@@ -109,7 +107,6 @@ public class Player : Entity
         //JoystickMagnitude = joystick.Direction.magnitude;
         if (joystick.Direction != Vector2.zero)
         {
-            Debug.Log("1");
             float inputZ = joystick.Direction.y;
             float inputX = joystick.Direction.x;
 
@@ -120,7 +117,7 @@ public class Player : Entity
 
             transform.rotation = Quaternion.RotateTowards(lookRotation, transform.rotation, step);
             if (CanMove((transform.forward * 2.5f + Vector3.down * 2 - Vector3.up).normalized))
-                transform.Translate(Vector3.forward * Time.deltaTime * Speed);
+                transform.Translate(Vector3.forward * Time.deltaTime * moveSpeed);
             state = State.Move;
         }
         else
@@ -188,31 +185,31 @@ public class Player : Entity
     public override void MeleeAttack()
     {
         base.MeleeAttack();
-        Instantiate(ParticleMelee, FirePoint.position, FirePoint.rotation);
+        //Instantiate(ParticleMelee, FirePoint.position, FirePoint.rotation);
     }
 
     public override void RangeAttack()
     {
         base.RangeAttack();
-        Instantiate(ParticleRange, FirePoint.position, FirePoint.rotation);
+        //Instantiate(ParticleRange, FirePoint.position, FirePoint.rotation);
     }
 
     public override void Hit()
     {
         base.Hit();
-        Instantiate(ParticleHit, FirePoint.position, FirePoint.rotation);
+        //Instantiate(ParticleHit, FirePoint.position, FirePoint.rotation);
     }
 
     public override void EndAttack()
     {
         base.EndAttack();
-        
     }
 
-    public override bool Damage(int damage)
+    public override bool Damage(int damage, Entity attacker)
     {
-        
-        Instantiate(ParticleDamage, FirePoint.position, FirePoint.rotation);
-        return base.Damage(damage);
+        health -= damage;
+        hpBar.SetValue(health, level);
+        Instantiate(ParticleDamage, transform.position, ParticleDamage.transform.rotation);
+        return base.Damage(damage, attacker);
     }
 }

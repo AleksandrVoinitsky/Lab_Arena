@@ -4,22 +4,13 @@ using UnityEngine;
 
 public class Enemy : Entity
 {
-    [SerializeField] Transform targetTransform;
-    [SerializeField] Vector3 target;
-    [SerializeField] Rigidbody rigidbody;
-    [SerializeField] CapsuleCollider collider;
-    [SerializeField] float Speed = 2;
-    [SerializeField] float AngularSpeed = 20;
-    [SerializeField] float WaitTime = 2;
-    [SerializeField] float StopDistance = 2;
+    [SerializeField] ModelManager model;
+    [SerializeField] Transform target;
+    [SerializeField] private float waitTimer, maxWaitTimer = 2;
     [SerializeField] float ViewDistance = 5;
     [SerializeField] float AttackDistance = 2;
     [Space(10)]
     [SerializeField] Transform FirePoint;
-    [SerializeField] Transform DamagePoint;
-    [SerializeField] GameObject ParticleMelee;
-    [SerializeField] GameObject ParticleRange;
-    [SerializeField] GameObject ParticleHit;
     [SerializeField] GameObject ParticleDamage;
     [SerializeField] HpBar hpBar;
 
@@ -27,29 +18,24 @@ public class Enemy : Entity
     //private GameObject[] enemies;
     //private GameObject player;
 
-    List<GameObject> enemies = new List<GameObject>();
-    GameObject enemy;
-    Entity ent;
+    List<Entity> enemies = new List<Entity>();
+    Entity enemyEntity;
 
-    private float waitTimer;
-    private bool stop;
-    private float stanTimer;
+    Vector3 direction;
     private bool selectedTarget = false;
-
-    void OnDrawGizmos()
-    {
-         Gizmos.color = Color.yellow;
-         Gizmos.DrawWireSphere(transform.position, ViewDistance);
-         Gizmos.color = Color.red;
-         Gizmos.DrawWireSphere(transform.position, AttackDistance);
-    }
 
     void Start()
     {
         state = State.Idle;
-        waitTimer = WaitTime;
-        stanTimer = waitTimer * 5;
-        StartCoroutine( UpdateBehaviour());
+        waitTimer = maxWaitTimer;
+        Invoke("Init", 1f);
+        targets = GameObject.FindGameObjectsWithTag("Target");
+        StartCoroutine(UpdateBehaviour());
+    }
+
+    void Init()
+    {
+        SetModel(transform.GetComponentInChildren<ModelManager>());
     }
 
     public IEnumerator UpdateBehaviour()
@@ -61,26 +47,40 @@ public class Enemy : Entity
         }
     }
 
+    public void SetModel(ModelManager _model)
+    {
+        model = _model;
+        moveSpeed = model.GetSpeed();
+        health = model.GetHealth();
+        isSpiked = model.IsSpiked();
+        AttackDistance = model.GetDistance();
+        hpBar.Init(health);
+    }
+
+    private bool IsRanged()
+    {
+        if (model != null)
+            return model.IsRanged();
+        return false;
+    }
+
     public void UpdateState()
     {
-        if (DeadState()) { state = State.Death; }
-        else if (HitState()) { state = State.Hit; }
-        else if (AttackState()) { state = State.Attack; }
-        else if (MovelState()) { state = State.Move; }
-        else if (IdleState()) { state = State.Idle; }
-        else { IdleState(); }
+        if (DeadState())
+            state = State.Death;
+        else if (HitState())
+            state = State.Hit;
+        else if (AttackState())
+            state = State.Attack;
+        else if (MovingState())
+            state = State.Move;
+        else
+            state = State.Idle;
     }
 
     private bool DeadState()
     {
-        if(Health <= 0)
-        {
-            collider.enabled = false;
-            rigidbody.velocity = new Vector3(0, 0, 0);
-            rigidbody.angularVelocity = new Vector3(0, 0, 0);
-            return true;
-        }
-        return false;
+        return health <= 0;
     }
 
     private bool HitState()
@@ -90,19 +90,19 @@ public class Enemy : Entity
 
     private bool AttackState()
     {
-        
         FindEnemy();
-        GameObject tmp = FindClosestEnemy();
-        if(Vector3.Distance(tmp.transform.position,transform.position) <= AttackDistance)
+        var tmp = FindClosestEnemy();
+        if (Vector3.Distance(tmp.transform.position,transform.position) <= AttackDistance)
         {
             if (tmp.GetComponent<Entity>().state != State.Death)
             {
-                if (selectedTarget && (targetTransform.tag == "Player" || targetTransform.tag == "Enemy")) return true;
-                if (selectedTarget == false)
+                if (selectedTarget && target.GetComponent<Entity>() != null)
+                    return true;
+                if (!selectedTarget)
                 {
                     selectedTarget = true;
-                    targetTransform = tmp.transform;
-                    ent = tmp.GetComponent<Entity>();
+                    target = tmp.transform;
+                    enemyEntity = tmp.GetComponent<Entity>();
                     return true;
                 }
             }
@@ -110,101 +110,77 @@ public class Enemy : Entity
         return false;
     }
 
-    private bool MovelState()
+    private bool MovingState()
     {
         if (state != State.Move)
         {
-            if (Chance(80))
+            if (Random.Range (1, 101) <= 80)
             {
                 FindEnemy();
-                GameObject tmp = FindClosestEnemy();
+                var tmp = FindClosestEnemy();
                 if (Vector3.Distance(tmp.transform.position, transform.position) <= ViewDistance)
                 {
-                    targetTransform = tmp.transform;
-                    stop = false;
+                    target = tmp.transform;
                     return true;
                 }
             }
             else
             {
-                targetTransform = RandomizeTarget();
-                stop = false;
+                target = RandomizeTarget();
                 return true;
             }
         }
         else
         {
-            if(Vector3.Distance(target, transform.position) >= AttackDistance)
+            if (Vector3.Distance(target.position, transform.position) >= AttackDistance)
             {
                 return true;
             }
-            
         }
         return false;
     }
 
-    private bool IdleState()
-    {
-        
-        return true;
-    }
-
-    GameObject FindClosestEnemy()
+    Entity FindClosestEnemy()
     {
         float distance = Mathf.Infinity;
         Vector3 position = transform.position;
-        foreach (GameObject go in enemies)
+        foreach (var go in enemies)
         {
             Vector3 diff = go.transform.position - position;
             float curDistance = diff.sqrMagnitude;
             if (curDistance < distance)
             {
-                enemy = go;
+                enemyEntity = go;
                 distance = curDistance;
             }
         }
-        return enemy;
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    { // на случай столкновений. Не активно
-        if(collision.relativeVelocity.magnitude > rigidbody.mass * 20)
-        {
-            stop = true;
-            state = State.Stun;
-            collider.enabled = false;
-            rigidbody.velocity = new Vector3(0, 0, 0);
-            rigidbody.angularVelocity = new Vector3(0, 0, 0);
-        }
+        return enemyEntity;
     }
 
     private void FixedUpdate()
     {
-        if(targetTransform != null)
-        {
-            target = targetTransform.position; 
-        }
-
-        Vector3 direction = target - transform.position;
+       /*if (target != null)
+            direction = target.position - transform.position;
         Quaternion rotation = Quaternion.LookRotation(direction);
-        Vector3 NewRotation = rotation.eulerAngles;
+        Vector3 NewRotation = rotation.eulerAngles;*/
 
         switch (state)
         {
             case State.Attack:
-                rigidbody.rotation = Quaternion.Euler(0, NewRotation.y, 0);
+                transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
                 break;
             case State.Death:
                 break;
             case State.Hit:
                 break;
             case State.Idle:
-                target = transform.forward * 2;
-                rigidbody.rotation = Quaternion.Euler(0, NewRotation.y, 0);
+                //target = transform.forward * 2;
+                //transform.rotation = Quaternion.Euler(0, NewRotation.y, 0);
                 break;
             case State.Move:
-                rigidbody.rotation = Quaternion.Euler(0, NewRotation.y, 0);
-                rigidbody.velocity = transform.forward * Speed;
+                transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
+                transform.position = Vector3.MoveTowards (transform.position,
+                    new Vector3 (target.transform.position.x, transform.position.y, target.transform.position.z), moveSpeed * Time.deltaTime);
                 break;
             case State.Stun:
                 break;
@@ -217,66 +193,49 @@ public class Enemy : Entity
     private void FindEnemy()
     {
         enemies.Clear();
-
         var en = FindObjectsOfType<Entity>();
-        if (en.Length == 1) return;
+        if (en.Length <= 1)
+            return;
         foreach (var e in en)
         {
-            if (e != this)
-                enemies.Add(e.gameObject);
+            if (e != this && e.health > 0)
+                enemies.Add(e);
         }
     }
 
     private Transform RandomizeTarget()
     {
-        targets = GameObject.FindGameObjectsWithTag("Target");
         return targets[Random.Range(0, targets.Length)].transform;
-    }
-
-    bool Chance(int percent)
-    {
-        if (percent >= 100) return true;
-        return Random.Range(1, 101) < percent ? true : false;
     }
 
     public override void MeleeAttack()
     {
+        if (enemyEntity.Damage(AttackPower, this))
+        {
+            level++;
+        }
         base.MeleeAttack();
-        Instantiate(ParticleMelee, FirePoint.position, FirePoint.rotation);
+        //Instantiate(ParticleMelee, FirePoint.position, FirePoint.rotation);
     }
 
     public override void RangeAttack()
     {
+        if (enemyEntity.Damage(AttackPower, this))
+        {
+            level++;
+        }
         base.RangeAttack();
-        Instantiate(ParticleRange, FirePoint.position, FirePoint.rotation);
+        //Instantiate(ParticleRange, FirePoint.position, FirePoint.rotation);
     }
 
     public override void Hit()
     {
-        /*
-        if (selectedTarget == true)
-        {
-            if(targetTransform == null)
-            {
-                return;
-            }
-            if(targetTransform.tag == "Enemy" && targetTransform.TryGetComponent<Entity>(out ent))
-            {
-               if (ent.Damage(AttackPower))
-               {
-                   level += 1;
-               }
-            }  
-        }
-        */
-        if (ent.Damage(AttackPower))
-        {
-            level += 1;
-        }
-
+        if (IsRanged())
+            RangeAttack();
+        else
+            MeleeAttack();
         base.Hit();
-        Instantiate(ParticleHit, FirePoint.position, FirePoint.rotation);
-        hpBar.SetValue(Health,level);
+        hpBar.SetValue(health, level);
     }
 
     public override void EndAttack()
@@ -285,12 +244,12 @@ public class Enemy : Entity
         base.EndAttack();
     }
 
-    public override bool Damage(int damage)
+    public override bool Damage (int damage, Entity attacker)
     {
-        Health -= damage;
-        hpBar.SetValue(Health, level);
-        Instantiate(ParticleDamage, FirePoint.position, FirePoint.rotation);
-        return base.Damage(damage);
+        health -= damage;
+        hpBar.SetValue(health, level);
+        Instantiate(ParticleDamage, transform.position, ParticleDamage.transform.rotation);
+        return base.Damage(damage, attacker);
     }
 }
 

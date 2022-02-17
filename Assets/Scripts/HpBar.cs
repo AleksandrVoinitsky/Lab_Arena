@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class HpBar : MonoBehaviour
 {
+    [SerializeField] CanvasGroup canvas;
     [SerializeField] Image hp;
     [SerializeField] Image Fill;
     [SerializeField] TextMeshProUGUI tmp;
@@ -14,27 +16,20 @@ public class HpBar : MonoBehaviour
     float hpBahValue;
     [Range(0, 1)] [SerializeField] float ImageColor;
 
-
-    void Start()
-    {
-        Init(100);
-    }
-
     private void Awake()
     {
-        //gameObject.SetActive(false);
+        canvas = GetComponent<CanvasGroup>();
     }
 
 
     void LateUpdate()
     {
         transform.LookAt(LookObject);
-
     }
 
     public void Init(int max)
     {
-        gameObject.SetActive(true);
+        canvas.DOFade(1, 1f);
         LookObject = Camera.main.transform;
         maxValue = max;
     }
@@ -66,7 +61,6 @@ public class HpBar : MonoBehaviour
         if (t > 0.6)
         {
             hp.color = Color32.Lerp(new Color32(123, 255, 0, 255), new Color32(0, 255, 33, 255), t);
-
         }
         else if (t > 0.3 && t < 0.6)
         {
@@ -76,7 +70,5 @@ public class HpBar : MonoBehaviour
         {
             hp.color = Color32.Lerp(new Color32(255, 0, 0, 255), new Color32(225, 97, 0, 255), t * 2);
         }
-
-
     }
 }

@@ -2,7 +2,7 @@
 using DG.Tweening;
 using System.Collections.Generic;
 
-public class CameraController : MonoBehaviour
+public class CameraController : Singleton<CameraController>
 {
     public int cameraSettings = -1;
     public List<CameraSettings> settings;
@@ -16,6 +16,8 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     float cameraSpeed = 1f;
 
+    bool isActive;
+
     Vector3? cameraDestination;
 
     private void Update()
@@ -25,7 +27,7 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (player != null)
+        if (player != null && isActive)
         {
             Vector3 destination = player.position + cameraOffset;
             if (Mathf.Abs(destination.z - transform.position.z) > cameraCatchUpDistance || Mathf.Abs(destination.x - transform.position.x) > cameraCatchUpDistance)
@@ -64,10 +66,12 @@ public class CameraController : MonoBehaviour
             {
                 cameraOffset = settings[cameraSettings].offset;
                 transform.DORotate(settings[cameraSettings].angle, 0.75f);
-                transform.DOMove(player.position + cameraOffset, 0.75f);
             }
+            transform.DOMove(player.position + cameraOffset, 0.75f);
             cameraDestination = null;
         }
+        if (!isActive)
+            isActive = true;
         //transform.position = player.position + cameraOffset;
     }
 }

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] GameObject[] Enemies;
-    [SerializeField] float WaitTime;
-    private int counter;
+    [SerializeField] Enemy enemy;
+    [SerializeField] float waitTimer;
+
     void Start()
     {
         StartCoroutine(SpawnEnemy());
@@ -16,16 +16,8 @@ public class EnemySpawner : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(WaitTime);
-            Instantiate(Enemies[counter], transform.position, transform.rotation);
-            if(counter == Enemies.Length - 1)
-            {
-                counter = 0;
-            }
-            else
-            {
-                counter++;
-            }
+            yield return new WaitForSeconds(waitTimer);
+            var e = Instantiate(enemy, transform.position - Vector3.up * 3, transform.rotation);
         }
     }
 }

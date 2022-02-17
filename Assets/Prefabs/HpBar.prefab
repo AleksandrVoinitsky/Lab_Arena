@@ -300,6 +300,7 @@ GameObject:
   - component: {fileID: 6190410165767689963}
   - component: {fileID: 8849213789581586159}
   - component: {fileID: 7970488656432276876}
+  - component: {fileID: 6956649387164103119}
   m_Layer: 0
   m_Name: HpBar
   m_TagString: Untagged
@@ -370,7 +371,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &8849213789581586159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -400,10 +401,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c765857f68e129648b2fb6a594968803, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
   hp: {fileID: 7496606787038931742}
   Fill: {fileID: 6202864001284982813}
   tmp: {fileID: 708054713695501771}
   ImageColor: 0
+--- !u!225 &6956649387164103119
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1720575193574237542}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &6016168369963936667
 GameObject:
   m_ObjectHideFlags: 0
