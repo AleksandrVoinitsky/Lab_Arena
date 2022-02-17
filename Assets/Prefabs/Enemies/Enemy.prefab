@@ -63,13 +63,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   isSpiked: 0
-  Health: 100
-  AttackPower: 20
-  MoveSpeed: 10
+  health: 15
+  AttackPower: 5
+  moveSpeed: 0
   level: 1
   model: {fileID: 0}
   target: {fileID: 0}
-  speed: 2
   waitTimer: 0
   maxWaitTimer: 2
   ViewDistance: 5
@@ -599,7 +598,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2608599620988070606, guid: fb8c9b932d84ada4a919186482df0724, type: 3}
       propertyPath: parts.Array.data[2].AnimationName
-      value: "Melee3\u0444\u0435"
+      value: Melee3
       objectReference: {fileID: 0}
     - target: {fileID: 2921713707943944348, guid: fb8c9b932d84ada4a919186482df0724, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
