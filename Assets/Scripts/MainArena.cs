@@ -9,8 +9,6 @@ public class MainArena : MonoBehaviour
     [Header("MainArena")]
     [Space(10)]
     [SerializeField] CanvasGroup blackoutCanvas;
-    [SerializeField] ArenaUI arenaUI;
-    [SerializeField] Camera mainCamera;
     [SerializeField] string NextSceneName;
     [Header("data")]
     [SerializeField] GameData gameData;

@@ -8,7 +8,7 @@ public class Player : Entity
     [SerializeField] GameObject Target;
     [SerializeField] Rigidbody rigidbody;
     [SerializeField] CapsuleCollider capsuleCollider;
-    [SerializeField] DynamicJoystick dynamicJoystick;
+    [SerializeField] FloatingJoystick joystick;
     [SerializeField] Animator animator;
     [SerializeField] Vector3 MoveTarget;
     [SerializeField] Vector3 RotationTarget;
@@ -28,7 +28,7 @@ public class Player : Entity
     private bool ActivePlayer = false;
     private bool EnemyDetected = false;
     private bool jump = false;
-    private float JoystickMagnitude;
+
     private void Start()
     {
 
@@ -93,17 +93,59 @@ public class Player : Entity
         }
     }
 
-
-    private void FixedUpdate()
+    private bool CanMove(Vector3 direction)
     {
-        if (!ActivePlayer) return;
-        float inputZ = dynamicJoystick.Direction.y;
-        float inputX = dynamicJoystick.Direction.x;
-        Vector3 lookDirection = new Vector3(rigidbody.position.x + inputX, 0.0f, rigidbody.position.z + inputZ);
-        JoystickMagnitude = dynamicJoystick.Direction.magnitude;
+        if (Physics.Raycast(transform.position + Vector3.up + transform.forward, direction, 5, LayerMask.GetMask("Location")))
+            return true;
+        return false;
+    }
 
-        
-        if (dynamicJoystick.OnDown)
+    private void Update()
+    {
+        //if (!ActivePlayer)
+        //  return;
+
+        //Vector3 lookDirection = new Vector3(rigidbody.position.x + inputX, 0.0f, rigidbody.position.z + inputZ);
+        //JoystickMagnitude = joystick.Direction.magnitude;
+        if (joystick.Direction != Vector2.zero)
+        {
+            Debug.Log("1");
+            float inputZ = joystick.Direction.y;
+            float inputX = joystick.Direction.x;
+
+            Vector3 lookDirection = new Vector3(inputX, 0, inputZ);
+            Quaternion lookRotation = Quaternion.LookRotation(lookDirection, Vector3.up);
+
+            float step = 10 * Time.deltaTime;
+
+            transform.rotation = Quaternion.RotateTowards(lookRotation, transform.rotation, step);
+            if (CanMove((transform.forward * 2.5f + Vector3.down * 2 - Vector3.up).normalized))
+                transform.Translate(Vector3.forward * Time.deltaTime * Speed);
+            state = State.Move;
+        }
+        else
+        {
+            state = State.Idle;
+            /*Vector3 direction;
+            if (EnemyDetected)
+            {
+                direction = RotationTarget - transform.position;
+                // Sphere.transform.position = RotationTarget;
+            }
+            else
+            {
+                //direction = MoveTarget - transform.position;
+                //Sphere.transform.position = MoveTarget;
+                //rigidbody.velocity = Vector3.Lerp(rigidbody.velocity, new Vector3(0, 0, 0), Time.fixedDeltaTime * Speed);
+              
+            }
+            Quaternion rotation = Quaternion.LookRotation(direction);
+            Vector3 NewRotation = rotation.eulerAngles;
+            transform.rotation = Quaternion.Slerp(rigidbody.rotation, Quaternion.Euler(new Vector3(0, NewRotation.y, 0)), AngularSpeed * Time.fixedDeltaTime);*/
+
+        }
+
+        /*if (joystick.OnDown)
         {
             MoveTarget = lookDirection;
             Vector3 direction = MoveTarget - transform.position;
@@ -139,7 +181,7 @@ public class Player : Entity
             Quaternion rotation = Quaternion.LookRotation(direction);
             Vector3 NewRotation = rotation.eulerAngles;
             rigidbody.rotation = Quaternion.Slerp(rigidbody.rotation, Quaternion.Euler(new Vector3(0, NewRotation.y, 0)), AngularSpeed * Time.fixedDeltaTime);
-        }
+        }*/
 
     }
 
