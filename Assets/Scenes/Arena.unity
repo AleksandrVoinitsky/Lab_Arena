@@ -655,6 +655,7 @@ MonoBehaviour:
   Health: 0
   AttackPower: 0
   MoveSpeed: 0
+  level: 0
   Sphere: {fileID: 1413341049}
   Target: {fileID: 0}
   rigidbody: {fileID: 276247202}
@@ -2303,7 +2304,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2086129465716448671, guid: bc5b61b996e76474d82e159ae23398a7, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: bc5b61b996e76474d82e159ae23398a7, type: 3}
 --- !u!225 &2086129465284274724 stripped
 CanvasGroup:
