@@ -13,7 +13,7 @@ public class Entity : MonoBehaviour
 
     public virtual bool Damage(int damage, Entity attacker = null)
     {
-        health -= damage;
+       // health -= damage;
         if (attacker != null)
         {
             if (isSpiked)
