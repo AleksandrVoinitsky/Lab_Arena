@@ -81,6 +81,7 @@ public class MainLaboratory : MonoBehaviour
         MainCamera.transform.DORotate(new Vector3(-30f, 0, 0), 2);
         MainCamera.transform.DOShakePosition(0.3f, 0.3f);
         LboratoryTank.transform.DOMoveY(LboratoryTank.transform.position.y + 6f, 1f);
+        blackoutCanvas.gameObject.SetActive(true);
         blackoutCanvas.DOFade(1, 2f).OnComplete(() => { LoadNextScene(); });
     }
 

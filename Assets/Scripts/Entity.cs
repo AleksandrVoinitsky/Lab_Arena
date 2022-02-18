@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
+    public bool isActive;
     public State state;
     public bool isSpiked;
     public int health;
@@ -25,6 +26,11 @@ public class Entity : MonoBehaviour
             state = State.Death;
         }
         return health <= 0;
+    }
+
+    public virtual void AddLevel()
+    {
+        level++;
     }
 
     public virtual void Hit()

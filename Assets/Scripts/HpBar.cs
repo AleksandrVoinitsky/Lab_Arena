@@ -29,10 +29,17 @@ public class HpBar : MonoBehaviour
 
     public void Init(int max)
     {
+        GetComponent<Canvas>().worldCamera = Camera.main;
         canvas.DOFade(1, 1f);
         LookObject = Camera.main.transform;
         maxValue = max;
     }
+
+    public void Deinit()
+    {
+        canvas.DOFade(0, 1f).OnComplete(() => canvas.gameObject.SetActive(false));
+    }
+
     public void SetValue(int value, int level)
     {
         float val = value;

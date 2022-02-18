@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
 
-public class MainArena : MonoBehaviour
+public class MainArena : Singleton<MainArena>
 {
     [Header("MainArena")]
     [Space(10)]
@@ -73,20 +73,23 @@ public class MainArena : MonoBehaviour
     public void Win()
     {
         gameData.AddLevel();
-        WinCanvasGroup.DOFade(1, 1f);
+        WinCanvasGroup.gameObject.SetActive(true);
+        WinCanvasGroup.DOFade(1, 1f).SetUpdate (true).OnComplete (() => Time.timeScale = 0);
         WinPanel.SetActive(true);
     }
 
     public void Defeat()
     {
-        WinCanvasGroup.DOFade(1, 1f);
+        WinCanvasGroup.gameObject.SetActive(true);
+        WinCanvasGroup.DOFade(1, 1f).SetUpdate (true).OnComplete (() => Time.timeScale = 0);
         DefeatPanel.SetActive(true);
     }
 
     public void LoadNextScene()
     {
-        blackoutCanvas.DOFade(1, 1f).OnComplete(() => 
+        blackoutCanvas.DOFade(1, 1f).OnComplete(() =>
         {
+            Time.timeScale = 1;
             SceneManager.LoadScene(NextSceneName);
         });
        

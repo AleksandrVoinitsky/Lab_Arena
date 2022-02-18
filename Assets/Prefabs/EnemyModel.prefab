@@ -2372,6 +2372,8 @@ MonoBehaviour:
   BaseLegs: {fileID: 6696736826842523410}
   SpiderLegs: {fileID: 3981240026555813398}
   EyeMask: {fileID: 1483683394286034468}
+  Wings: {fileID: 2357772148120621941}
+  Tentacles: {fileID: 2153704773107323939}
   costumeMaterials:
   - {fileID: 2100000, guid: 5d44b103b6ca2458193fc2a15f3407d0, type: 2}
   - {fileID: 2100000, guid: f68c7b808b9a6496f86c487db70403ee, type: 2}
@@ -2380,6 +2382,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: a91523da0f3a6489ab331ff6c2328a51, type: 2}
   - {fileID: 2100000, guid: cc86f89890f284262ae4ad1eb75a0f12, type: 2}
   - {fileID: 2100000, guid: f7f3502ff129a4f18a7c63f807992a48, type: 2}
+  deathMaterial: {fileID: 2100000, guid: 9a2879ec289374f398722e95098f3307, type: 2}
   parts:
   - partType: 0
     PartReferense: {fileID: 2069679997323016708}

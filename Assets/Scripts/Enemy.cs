@@ -1,17 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Enemy : Entity
 {
     [SerializeField] ModelManager model;
     [SerializeField] Transform target;
-    [SerializeField] private float waitTimer, maxWaitTimer = 2;
     [SerializeField] float ViewDistance = 5;
     [SerializeField] float AttackDistance = 2;
     [Space(10)]
     [SerializeField] Transform FirePoint;
-    [SerializeField] GameObject ParticleDamage;
+    [SerializeField] GameObject ParticleDamage, deathSplash;
+    [SerializeField] ProjectileScript laserProjectile;
     [SerializeField] HpBar hpBar;
 
     private GameObject[] targets;
@@ -21,13 +22,11 @@ public class Enemy : Entity
     List<Entity> enemies = new List<Entity>();
     Entity enemyEntity;
 
-    Vector3 direction;
     private bool selectedTarget = false;
 
     void Start()
     {
         state = State.Idle;
-        waitTimer = maxWaitTimer;
         Invoke("Init", 1f);
         targets = GameObject.FindGameObjectsWithTag("Target");
         StartCoroutine(UpdateBehaviour());
@@ -55,6 +54,7 @@ public class Enemy : Entity
         isSpiked = model.IsSpiked();
         AttackDistance = model.GetDistance();
         hpBar.Init(health);
+        isActive = true;
     }
 
     private bool IsRanged()
@@ -92,9 +92,11 @@ public class Enemy : Entity
     {
         FindEnemy();
         var tmp = FindClosestEnemy();
-        if (Vector3.Distance(tmp.transform.position,transform.position) <= AttackDistance)
+        if (tmp == null)
+            return false;
+        if (Vector3.Distance(new Vector3(tmp.transform.position.x, transform.position.y, tmp.transform.position.z), transform.position) <= AttackDistance)
         {
-            if (tmp.GetComponent<Entity>().state != State.Death)
+            if (tmp.GetComponent<Entity>().health > 0)
             {
                 if (selectedTarget && target.GetComponent<Entity>() != null)
                     return true;
@@ -118,6 +120,8 @@ public class Enemy : Entity
             {
                 FindEnemy();
                 var tmp = FindClosestEnemy();
+                if (tmp == null)
+                    return false;
                 if (Vector3.Distance(tmp.transform.position, transform.position) <= ViewDistance)
                 {
                     target = tmp.transform;
@@ -142,16 +146,24 @@ public class Enemy : Entity
 
     Entity FindClosestEnemy()
     {
-        float distance = Mathf.Infinity;
-        Vector3 position = transform.position;
-        foreach (var go in enemies)
+        if (enemyEntity != null)
         {
-            Vector3 diff = go.transform.position - position;
-            float curDistance = diff.sqrMagnitude;
-            if (curDistance < distance)
+            if (enemyEntity.health <= 0)
+                enemyEntity = null;
+        }
+        if (enemyEntity == null)
+        {
+            float distance = Mathf.Infinity;
+            Vector3 position = transform.position;
+            foreach (var go in enemies)
             {
-                enemyEntity = go;
-                distance = curDistance;
+                Vector3 diff = go.transform.position - position;
+                float curDistance = diff.sqrMagnitude;
+                if (curDistance < distance)
+                {
+                    enemyEntity = go;
+                    distance = curDistance;
+                }
             }
         }
         return enemyEntity;
@@ -189,6 +201,15 @@ public class Enemy : Entity
         }
     }
 
+    public void SetTarget (Entity _enemy)
+    {
+        if (state != State.Death)
+        {
+            enemyEntity = _enemy;
+            target = _enemy.transform;
+        }
+    }
+
 
     private void FindEnemy()
     {
@@ -198,7 +219,7 @@ public class Enemy : Entity
             return;
         foreach (var e in en)
         {
-            if (e != this && e.health > 0)
+            if (e != this && e.health > 0 && e.isActive)
                 enemies.Add(e);
         }
     }
@@ -220,12 +241,9 @@ public class Enemy : Entity
 
     public override void RangeAttack()
     {
-        if (enemyEntity.Damage(AttackPower, this))
-        {
-            level++;
-        }
-        base.RangeAttack();
-        //Instantiate(ParticleRange, FirePoint.position, FirePoint.rotation);
+        var l = Instantiate(laserProjectile, model.transform.position + Vector3.up, transform.rotation);
+        var targetVector = new Vector3(enemyEntity.transform.position.x, l.transform.position.y, enemyEntity.transform.position.z);
+        l.SetDirection(targetVector, AttackPower, this);
     }
 
     public override void Hit()
@@ -234,6 +252,11 @@ public class Enemy : Entity
             RangeAttack();
         else
             MeleeAttack();
+        if (enemyEntity != null)
+        {
+            if (enemyEntity.GetComponent<Enemy>() != null)
+                enemyEntity.GetComponent<Enemy>().SetTarget(this);
+        }
         base.Hit();
         hpBar.SetValue(health, level);
     }
@@ -248,8 +271,22 @@ public class Enemy : Entity
     {
         health -= damage;
         hpBar.SetValue(health, level);
-        Instantiate(ParticleDamage, transform.position, ParticleDamage.transform.rotation);
+        if (model != null)
+            Instantiate(ParticleDamage, model.transform.position, transform.rotation);
+        if (health <= 0)
+        {
+            if (model != null)
+                Instantiate(deathSplash, model.transform.position + Vector3.up * 0.1f, transform.rotation);
+            Invoke("Destruction", 10);
+            model.Death();
+            hpBar.Deinit();
+        }
         return base.Damage(damage, attacker);
+    }
+
+    void Destruction()
+    {
+        transform.DOScale(0, 1f).OnComplete(() => Destroy(gameObject));
     }
 }
 

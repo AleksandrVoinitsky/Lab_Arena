@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelNumber: 4
   PlayerModel: {fileID: 3656185600078060075, guid: 7507e71d81a35db45a75d15a3be4eaf0, type: 3}
-  PlayerPartsSet: 020000000400000006000000
+  PlayerPartsSet: 
   Mutagens:
   - {fileID: 1270546670507101961, guid: d8e2140577f299d45bf650d704c335b3, type: 3}
   - {fileID: 5248155943892806725, guid: 4d372e18d3f0fa141b45046918ce2429, type: 3}

@@ -22,7 +22,9 @@ public class ModelManager : MonoBehaviour
     [Space(10)]
     [SerializeField] SkinnedMeshRenderer BaseBody, BaseCostume;
     [SerializeField] SkinnedMeshRenderer BaseLegs, SpiderLegs, EyeMask;
+    [SerializeField] SkinnedMeshRenderer Wings, Tentacles;
     [SerializeField] private List<Material> costumeMaterials, extraMaterials;
+    [SerializeField] private Material deathMaterial;
     public Parts[] parts;
     public List<Parts> ActiveParts = new List<Parts>();
     Dictionary<State, string> animDictionary = new Dictionary<State, string>();
@@ -83,6 +85,8 @@ public class ModelManager : MonoBehaviour
         int health = 100;
         if (ActiveParts.Exists(x => x.partType == MutantParts.Armor))
             health = 200;
+        if (type == ModelType.ENEMY)
+            health = Mathf.FloorToInt(health * 0.2f);
         return health;
     }
 
@@ -96,15 +100,15 @@ public class ModelManager : MonoBehaviour
         if (ActiveParts.Exists(x => x.partType == MutantParts.SpiderFoots))
             speed = 8;
         if (type == ModelType.ENEMY)
-            speed = Mathf.FloorToInt(speed * 0.85f);
+            speed = Mathf.FloorToInt(speed * 0.8f);
         return speed;
     }
 
     public float GetDistance()
     {
-        float distance = 2;
+        float distance = 2.1f;
         if (ActiveParts.Exists(x => x.partType == MutantParts.Tentacle))
-            distance = 4;
+            distance = 3f;
         if (ActiveParts.Exists(x => x.partType == MutantParts.Range))
             distance = 6;
         return distance;
@@ -120,6 +124,25 @@ public class ModelManager : MonoBehaviour
         {
             SetSwitchPart(parts[Random.Range(0, parts.Length - 1)].partType, true);
         }
+    }
+
+    public void Death()
+    {
+        var tmp = BaseBody.materials;
+        tmp[0].DOColor(deathMaterial.color, 1f);
+        BaseCostume.materials = tmp;
+        BaseBody.materials = tmp;
+        var tmpSpider = SpiderLegs.materials;
+        tmpSpider[1].DOColor(deathMaterial.color, 1f);
+        SpiderLegs.materials = tmpSpider;
+        var tmpWings = Wings.materials;
+        foreach (var t in tmpWings)
+            t.DOColor(deathMaterial.color, 1f);
+        Wings.materials = tmpWings;
+        var tmpTentacles = Tentacles.materials;
+        foreach (var t in tmpTentacles)
+            t.DOColor(deathMaterial.color, 1f);
+        Tentacles.materials = tmpTentacles;
     }
 
     public void Play(State state)
