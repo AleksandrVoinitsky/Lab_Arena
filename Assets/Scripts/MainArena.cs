@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class MainArena : Singleton<MainArena>
 {
@@ -15,9 +16,11 @@ public class MainArena : Singleton<MainArena>
     [Header("level objects")]
     [SerializeField] GameObject PlayerRoot;
     [SerializeField] GameObject ArenaTank;
+    [SerializeField] private MeshRenderer arenaFloor, arenaWalls, water;
+    [SerializeField] private List<Material> arenaMain, arenaSecondary, waterMaterials;
     [Space(10)]
     [SerializeField] float RoundTime = 60;
-    [SerializeField] ProgressBar progressBar;
+    [SerializeField] TMP_Text timerText;
     [Space(10)]
     [SerializeField] CanvasGroup mainCanvas, WinCanvasGroup;
     [SerializeField] GameObject WinPanel;
@@ -33,6 +36,13 @@ public class MainArena : Singleton<MainArena>
 
     void InitScene()
     {
+        int randMat = Random.Range(0, arenaMain.Count);
+        var tmp = new List<Material>();
+        tmp.Add(arenaMain[randMat]);
+        tmp.Add(arenaSecondary[randMat]);
+        arenaFloor.materials = tmp.ToArray();
+        arenaWalls.material = arenaSecondary[randMat];
+        water.material = waterMaterials[Random.Range (0, waterMaterials.Count)];
         playerModel = Instantiate(gameData.PlayerModel, PlayerRoot.transform.position, PlayerRoot.transform.rotation, PlayerRoot.transform);
         playerMutantPartActivator = playerModel.GetComponent<ModelManager>();
         foreach (var item in gameData.PlayerPartsSet)
@@ -58,12 +68,14 @@ public class MainArena : Singleton<MainArena>
 
     IEnumerator ArenaTimer()
     {
-        while(RoundTime > 0)
+        while (RoundTime > 0)
         {
             RoundTime -= Time.deltaTime;
-            progressBar.UpdateProdressBar(((int)RoundTime));
-            if (RoundTime <= 0)
+            if (RoundTime > 0)
+                timerText.text = string.Format("{0}:{1:00}", Mathf.FloorToInt(RoundTime/60), Mathf.FloorToInt(RoundTime%60));
+            else
             {
+                timerText.text = "0:00";
                 Win();
             }
             yield return null;
@@ -87,7 +99,8 @@ public class MainArena : Singleton<MainArena>
 
     public void LoadNextScene()
     {
-        blackoutCanvas.DOFade(1, 1f).OnComplete(() =>
+        blackoutCanvas.gameObject.SetActive(true);
+        blackoutCanvas.DOFade(1, 1f).SetUpdate(true).OnComplete(() =>
         {
             Time.timeScale = 1;
             SceneManager.LoadScene(NextSceneName);

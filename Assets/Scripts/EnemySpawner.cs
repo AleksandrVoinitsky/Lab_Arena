@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] Enemy enemy;
+    [SerializeField] private GameObject spawnEffect;
     [SerializeField] float waitTimer;
 
     void Start()
@@ -18,6 +19,7 @@ public class EnemySpawner : MonoBehaviour
         {
             yield return new WaitForSeconds(waitTimer);
             var e = Instantiate(enemy, transform.position - Vector3.up * 3, transform.rotation);
+            Instantiate(spawnEffect, transform.position, transform.rotation);
         }
     }
 }

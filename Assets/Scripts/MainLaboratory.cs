@@ -31,8 +31,10 @@ public class MainLaboratory : MonoBehaviour
     [SerializeField] GameObject[] FlaskUiGroup1;
     [SerializeField] GameObject[] FlaskUiGroup2;
     [SerializeField] GameObject[] FlaskUiGroup3;
+    [SerializeField] TMP_Text mutantLabel;
+    [SerializeField] string mutantText;
     [SerializeField] TextMeshProUGUI tmpTextInfo;
-    [SerializeField] CanvasGroup tmpTextInfoCanvasGroup;
+    [SerializeField] CanvasGroup tmpTextInfoCanvasGroup, mutagenCanvas;
     [Header("VFX")]
     [SerializeField] List<Animator> teslaVFX;
     [SerializeField] GameObject diffusion, electricity;
@@ -68,12 +70,15 @@ public class MainLaboratory : MonoBehaviour
 
     public void ShowStartButton()
     {
-        StartButtonRootObject.transform.DOScale(new Vector3(1, 1, 1), 0.5f);
+        mutantLabel.text = mutantText;
+        mutagenCanvas.gameObject.SetActive(true);
+        mutagenCanvas.DOFade(1, 0.5f);
+        StartButtonRootObject.transform.DOScale(1, 0.5f);
     }
 
     public void HideStartButton()
     {
-        StartButtonRootObject.transform.DOScale(new Vector3(0, 0, 0), 0.5f);
+        StartButtonRootObject.transform.DOScale(0, 0.5f);
     }
 
     public void UpLboratoryTank()
@@ -125,13 +130,13 @@ public class MainLaboratory : MonoBehaviour
                 break;
             case 2:
                 ObjectArrayActivator(FlaskUiGroup2, true);
-                uiMutation = FlaskUiGroup2[0];
-                Instantiate(mutationImage, FlaskUiGroup2[0].transform.position, FlaskUiGroup2[0].transform.rotation, FlaskUiGroup2[0].transform);
+                uiMutation = FlaskUiGroup2[1];
+                Instantiate(mutationImage, FlaskUiGroup2[1].transform.position, FlaskUiGroup2[1].transform.rotation, FlaskUiGroup2[1].transform);
                 break;
             case 3:
                 ObjectArrayActivator(FlaskUiGroup3, true);
-                uiMutation = FlaskUiGroup3[0];
-                Instantiate(mutationImage, FlaskUiGroup3[0].transform.position, FlaskUiGroup3[0].transform.rotation, FlaskUiGroup3[0].transform);
+                uiMutation = FlaskUiGroup3[1];
+                Instantiate(mutationImage, FlaskUiGroup3[1].transform.position, FlaskUiGroup3[1].transform.rotation, FlaskUiGroup3[1].transform);
                 break;
         }
 
@@ -145,6 +150,11 @@ public class MainLaboratory : MonoBehaviour
         {
             StartCoroutine(CheckTextInfo(mutagenName));
         }
+    }
+
+    public void AddMutagenText(string _text)
+    {
+        mutantText += _text + " ";
     }
 
     IEnumerator CheckTextInfo(string text)
@@ -177,7 +187,6 @@ public class MainLaboratory : MonoBehaviour
 
     void ObjectArrayActivator(GameObject[] arr, bool active)
     {
-
         foreach (var item in arr)
         {
             item.SetActive(active);

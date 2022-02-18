@@ -2374,6 +2374,11 @@ MonoBehaviour:
   EyeMask: {fileID: 1483683394286034468}
   Wings: {fileID: 2357772148120621941}
   Tentacles: {fileID: 2153704773107323939}
+  enemyMaterials:
+  - {fileID: 2100000, guid: ce6db5b5741b6f343944665a14005159, type: 2}
+  - {fileID: 2100000, guid: c6f1e9ef575824f98a2dda77c39f58c4, type: 2}
+  - {fileID: 2100000, guid: 15931cb4009b0437bac0d870075b1a72, type: 2}
+  - {fileID: 2100000, guid: 37c100ca6a68c43bcb54df174ae108aa, type: 2}
   costumeMaterials:
   - {fileID: 2100000, guid: 5d44b103b6ca2458193fc2a15f3407d0, type: 2}
   - {fileID: 2100000, guid: f68c7b808b9a6496f86c487db70403ee, type: 2}

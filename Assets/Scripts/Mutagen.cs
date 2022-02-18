@@ -15,7 +15,7 @@ public class Mutagen : MonoBehaviour
     [SerializeField] GameData FluidParticle;
     [SerializeField] Transform FluidSpawnPoint;
     [SerializeField] GameObject shatteredFlask;
-    [SerializeField] string MutagenName;
+    [SerializeField] string MutagenName, MutantName;
     [SerializeField] GameObject pour;
 
     void Awake()
@@ -90,6 +90,7 @@ public class Mutagen : MonoBehaviour
         _main.AddMutagen(mutagenColor, part, Image, MutagenName);
         setParent.NextSet();
         OnUse.Invoke();
+        _main.AddMutagenText(MutantName);
         Destroy(gameObject);
     }
 }

@@ -353,6 +353,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2271043933839943373}
     - target: {fileID: 3735700515459866166, guid: 8a2ca76e24a52aa4b83afb84755be324, type: 3}
+      propertyPath: MutantName
+      value: Wolverine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3735700515459866166, guid: 8a2ca76e24a52aa4b83afb84755be324, type: 3}
       propertyPath: MutagenName
       value: Wolverine claws
       objectReference: {fileID: 0}
@@ -432,6 +436,10 @@ PrefabInstance:
       propertyPath: setParent
       value: 
       objectReference: {fileID: 2271043933839943373}
+    - target: {fileID: 6715592588464987740, guid: 8a2ca76e24a52aa4b83afb84755be324, type: 3}
+      propertyPath: MutantName
+      value: Cyclope
+      objectReference: {fileID: 0}
     - target: {fileID: 6715592588464987740, guid: 8a2ca76e24a52aa4b83afb84755be324, type: 3}
       propertyPath: MutagenName
       value: Laser eyes

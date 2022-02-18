@@ -245,7 +245,7 @@ PrefabInstance:
     - target: {fileID: 537947242633582876, guid: fb8c9b932d84ada4a919186482df0724, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 0b5f3a77dd77f514ea96571a4832dcac, type: 2}
+      objectReference: {fileID: 2100000, guid: e9e8342c481364f76b463477b827ed20, type: 2}
     - target: {fileID: 537947242633582876, guid: fb8c9b932d84ada4a919186482df0724, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
@@ -607,6 +607,14 @@ PrefabInstance:
       value: -108.70402
       objectReference: {fileID: 0}
     - target: {fileID: 2608599620988070606, guid: fb8c9b932d84ada4a919186482df0724, type: 3}
+      propertyPath: Ghost
+      value: 
+      objectReference: {fileID: 6611250699564926871}
+    - target: {fileID: 2608599620988070606, guid: fb8c9b932d84ada4a919186482df0724, type: 3}
+      propertyPath: Blades
+      value: 
+      objectReference: {fileID: 5351354805161666995}
+    - target: {fileID: 2608599620988070606, guid: fb8c9b932d84ada4a919186482df0724, type: 3}
       propertyPath: Tentacles
       value: 
       objectReference: {fileID: 4012321127522719844}
@@ -614,6 +622,26 @@ PrefabInstance:
       propertyPath: StartRandomMutation
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2608599620988070606, guid: fb8c9b932d84ada4a919186482df0724, type: 3}
+      propertyPath: enemyMaterials.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2608599620988070606, guid: fb8c9b932d84ada4a919186482df0724, type: 3}
+      propertyPath: enemyMaterials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ce6db5b5741b6f343944665a14005159, type: 2}
+    - target: {fileID: 2608599620988070606, guid: fb8c9b932d84ada4a919186482df0724, type: 3}
+      propertyPath: enemyMaterials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6f1e9ef575824f98a2dda77c39f58c4, type: 2}
+    - target: {fileID: 2608599620988070606, guid: fb8c9b932d84ada4a919186482df0724, type: 3}
+      propertyPath: enemyMaterials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 15931cb4009b0437bac0d870075b1a72, type: 2}
+    - target: {fileID: 2608599620988070606, guid: fb8c9b932d84ada4a919186482df0724, type: 3}
+      propertyPath: enemyMaterials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: 37c100ca6a68c43bcb54df174ae108aa, type: 2}
     - target: {fileID: 2608599620988070606, guid: fb8c9b932d84ada4a919186482df0724, type: 3}
       propertyPath: parts.Array.data[2].StartActive
       value: 0
@@ -1451,6 +1479,16 @@ PrefabInstance:
 --- !u!4 &717476622589478283 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2574127101489613260, guid: fb8c9b932d84ada4a919186482df0724, type: 3}
+  m_PrefabInstance: {fileID: 3048338651183926343}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &5351354805161666995 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6921481830165439988, guid: fb8c9b932d84ada4a919186482df0724, type: 3}
+  m_PrefabInstance: {fileID: 3048338651183926343}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &6611250699564926871 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8210693934116473808, guid: fb8c9b932d84ada4a919186482df0724, type: 3}
   m_PrefabInstance: {fileID: 3048338651183926343}
   m_PrefabAsset: {fileID: 0}
 --- !u!137 &4012321127522719844 stripped

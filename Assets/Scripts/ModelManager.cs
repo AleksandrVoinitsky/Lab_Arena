@@ -22,8 +22,8 @@ public class ModelManager : MonoBehaviour
     [Space(10)]
     [SerializeField] SkinnedMeshRenderer BaseBody, BaseCostume;
     [SerializeField] SkinnedMeshRenderer BaseLegs, SpiderLegs, EyeMask;
-    [SerializeField] SkinnedMeshRenderer Wings, Tentacles;
-    [SerializeField] private List<Material> costumeMaterials, extraMaterials;
+    [SerializeField] SkinnedMeshRenderer Wings, Tentacles, Blades, Ghost;
+    [SerializeField] private List<Material> enemyMaterials, costumeMaterials, extraMaterials;
     [SerializeField] private Material deathMaterial;
     public Parts[] parts;
     public List<Parts> ActiveParts = new List<Parts>();
@@ -54,7 +54,8 @@ public class ModelManager : MonoBehaviour
             int costumeMats = Random.Range(0, costumeMaterials.Count);
             List<Material> bodyMaterials = new List<Material>();
             List<Material> legsMaterials = new List<Material>();
-            bodyMaterials.Add(BaseBody.materials[0]);
+            int bodyMaterial = Random.Range(0, enemyMaterials.Count);
+            bodyMaterials.Add(enemyMaterials[bodyMaterial]);
             bodyMaterials.Add(costumeMaterials[costumeMats]);
             bodyMaterials.Add(extraMaterials[costumeMats]);
             legsMaterials.Add(costumeMaterials[costumeMats]);
@@ -64,9 +65,21 @@ public class ModelManager : MonoBehaviour
             BaseCostume.materials = bodyMaterials.ToArray();
             BaseLegs.materials = legsMaterials.ToArray();
             var tmp = SpiderLegs.materials;
+            tmp[0] = enemyMaterials[bodyMaterial];
             tmp[1] = costumeMaterials[costumeMats];
             SpiderLegs.materials = tmp;
             EyeMask.material = costumeMaterials[costumeMats];
+            var tmpWings = Wings.materials.Length;
+            List<Material> wingsMats = new List<Material>();
+            for (int i = 0; i < Wings.materials.Length; i++)
+                wingsMats.Add(enemyMaterials[bodyMaterial]);
+            List<Material> tentacleMats = new List<Material>();
+            for (int i = 0; i < Tentacles.materials.Length; i++)
+                tentacleMats.Add(enemyMaterials[bodyMaterial]);
+            Wings.materials = wingsMats.ToArray();
+            Tentacles.materials = tentacleMats.ToArray();
+            Blades.material = enemyMaterials[bodyMaterial];
+            Ghost.material = enemyMaterials[bodyMaterial];
         }
     }
 
@@ -100,7 +113,7 @@ public class ModelManager : MonoBehaviour
         if (ActiveParts.Exists(x => x.partType == MutantParts.SpiderFoots))
             speed = 8;
         if (type == ModelType.ENEMY)
-            speed = Mathf.FloorToInt(speed * 0.8f);
+            speed = Mathf.FloorToInt(speed * 0.75f);
         return speed;
     }
 
@@ -133,7 +146,7 @@ public class ModelManager : MonoBehaviour
         BaseCostume.materials = tmp;
         BaseBody.materials = tmp;
         var tmpSpider = SpiderLegs.materials;
-        tmpSpider[1].DOColor(deathMaterial.color, 1f);
+        tmpSpider[0].DOColor(deathMaterial.color, 1f);
         SpiderLegs.materials = tmpSpider;
         var tmpWings = Wings.materials;
         foreach (var t in tmpWings)
@@ -143,6 +156,7 @@ public class ModelManager : MonoBehaviour
         foreach (var t in tmpTentacles)
             t.DOColor(deathMaterial.color, 1f);
         Tentacles.materials = tmpTentacles;
+        Ghost.material.DOColor(deathMaterial.color, 1f);
     }
 
     public void Play(State state)

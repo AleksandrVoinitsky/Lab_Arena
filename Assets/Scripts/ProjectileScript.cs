@@ -36,7 +36,10 @@ public class ProjectileScript : MonoBehaviour
                     if (other.GetComponent<Enemy>().Damage(damage, owner))
                     {
                         if (owner.GetComponent<Player>() != null)
+                        {
                             owner.GetComponent<Player>().AddGems(5);
+                            owner.GetComponent<Player>().AddKills();
+                        }
                         owner.AddLevel();
                     }
                     other.GetComponent<Enemy>().SetTarget(owner);

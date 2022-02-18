@@ -116,7 +116,7 @@ public class Enemy : Entity
     {
         if (state != State.Move)
         {
-            if (Random.Range (1, 101) <= 80)
+            if (Random.Range (1, 101) <= 85)
             {
                 FindEnemy();
                 var tmp = FindClosestEnemy();

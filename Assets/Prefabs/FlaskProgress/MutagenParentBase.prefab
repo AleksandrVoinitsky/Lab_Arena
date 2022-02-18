@@ -259,6 +259,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8016310964693302512}
     - target: {fileID: 3304817465519503370, guid: 9f5878a97d492814db4fc2a50aa8c828, type: 3}
+      propertyPath: MutantName
+      value: angel
+      objectReference: {fileID: 0}
+    - target: {fileID: 3304817465519503370, guid: 9f5878a97d492814db4fc2a50aa8c828, type: 3}
       propertyPath: MutagenName
       value: Angel wings
       objectReference: {fileID: 0}
@@ -291,6 +295,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8016310964693302512}
     - target: {fileID: 5176648475715858600, guid: 9f5878a97d492814db4fc2a50aa8c828, type: 3}
+      propertyPath: MutantName
+      value: spider
+      objectReference: {fileID: 0}
+    - target: {fileID: 5176648475715858600, guid: 9f5878a97d492814db4fc2a50aa8c828, type: 3}
       propertyPath: MutagenName
       value: Spider legs
       objectReference: {fileID: 0}
@@ -310,6 +318,10 @@ PrefabInstance:
       propertyPath: setParent
       value: 
       objectReference: {fileID: 8016310964693302512}
+    - target: {fileID: 6308392764094038168, guid: 9f5878a97d492814db4fc2a50aa8c828, type: 3}
+      propertyPath: MutantName
+      value: ghost
+      objectReference: {fileID: 0}
     - target: {fileID: 6308392764094038168, guid: 9f5878a97d492814db4fc2a50aa8c828, type: 3}
       propertyPath: MutagenName
       value: Ghost body
@@ -369,6 +381,10 @@ PrefabInstance:
       propertyPath: setParent
       value: 
       objectReference: {fileID: 8016310964693302512}
+    - target: {fileID: 3735700515459866166, guid: 8a2ca76e24a52aa4b83afb84755be324, type: 3}
+      propertyPath: MutantName
+      value: Wolverine
+      objectReference: {fileID: 0}
     - target: {fileID: 3735700515459866166, guid: 8a2ca76e24a52aa4b83afb84755be324, type: 3}
       propertyPath: MutagenName
       value: Wolverine claws
@@ -450,6 +466,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8016310964693302512}
     - target: {fileID: 6715592588464987740, guid: 8a2ca76e24a52aa4b83afb84755be324, type: 3}
+      propertyPath: MutantName
+      value: Cyclope
+      objectReference: {fileID: 0}
+    - target: {fileID: 6715592588464987740, guid: 8a2ca76e24a52aa4b83afb84755be324, type: 3}
       propertyPath: MutagenName
       value: Laser eyes
       objectReference: {fileID: 0}
@@ -481,6 +501,10 @@ PrefabInstance:
       propertyPath: setParent
       value: 
       objectReference: {fileID: 8016310964693302512}
+    - target: {fileID: 7933069570389771364, guid: 8a2ca76e24a52aa4b83afb84755be324, type: 3}
+      propertyPath: MutantName
+      value: Octopus
+      objectReference: {fileID: 0}
     - target: {fileID: 7933069570389771364, guid: 8a2ca76e24a52aa4b83afb84755be324, type: 3}
       propertyPath: MutagenName
       value: Octopus tentacles
@@ -543,6 +567,10 @@ PrefabInstance:
       propertyPath: setParent
       value: 
       objectReference: {fileID: 8016310964693302512}
+    - target: {fileID: 495045420296221268, guid: 80f98961a20dd5b4da719a70580ee2d1, type: 3}
+      propertyPath: MutantName
+      value: grunt
+      objectReference: {fileID: 0}
     - target: {fileID: 495045420296221268, guid: 80f98961a20dd5b4da719a70580ee2d1, type: 3}
       propertyPath: MutagenName
       value: Mega armor
@@ -647,6 +675,10 @@ PrefabInstance:
       propertyPath: setParent
       value: 
       objectReference: {fileID: 8016310964693302512}
+    - target: {fileID: 5137123711017555830, guid: 80f98961a20dd5b4da719a70580ee2d1, type: 3}
+      propertyPath: MutantName
+      value: spiked
+      objectReference: {fileID: 0}
     - target: {fileID: 5137123711017555830, guid: 80f98961a20dd5b4da719a70580ee2d1, type: 3}
       propertyPath: MutagenName
       value: Sharp spikes

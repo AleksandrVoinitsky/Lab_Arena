@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Entity : MonoBehaviour
 {
@@ -31,6 +32,7 @@ public class Entity : MonoBehaviour
     public virtual void AddLevel()
     {
         level++;
+        transform.DOScale(transform.localScale.x + 0.1f, 0.25f).SetUpdate (true);
     }
 
     public virtual void Hit()

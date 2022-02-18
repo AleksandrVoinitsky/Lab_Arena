@@ -752,6 +752,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5111742934439527809}
     - target: {fileID: 3735700515459866166, guid: 8a2ca76e24a52aa4b83afb84755be324, type: 3}
+      propertyPath: MutantName
+      value: Wolverine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3735700515459866166, guid: 8a2ca76e24a52aa4b83afb84755be324, type: 3}
       propertyPath: MutagenName
       value: Wolverine claws
       objectReference: {fileID: 0}

@@ -20,8 +20,8 @@ public class Player : Entity
     [SerializeField] Transform FirePoint;
     [SerializeField] private ProjectileScript laserProjectile;
     [SerializeField] GameObject ParticleDamage, deathSplash;
-    [SerializeField] private int gems;
-    [SerializeField] private TMP_Text gemCounter;
+    [SerializeField] private int gems, kills;
+    [SerializeField] private TMP_Text gemCounter, killCounter;
     [SerializeField] private CanvasGroup damageCanvas;
     [SerializeField] HpBar hpBar;
 
@@ -210,6 +210,7 @@ public class Player : Entity
             if (enemy.Damage(AttackPower, this))
             {
                 level++;
+                AddKills();
                 AddGems(5);
             }
             else
@@ -219,6 +220,13 @@ public class Player : Entity
         }
         base.MeleeAttack();
         //Instantiate(ParticleMelee, FirePoint.position, FirePoint.rotation);
+    }
+
+    public void AddKills()
+    {
+        kills++;
+        killCounter.text = string.Format("Kills: {0}", kills);
+        killCounter.transform.DOScale(0.9f, 0.3f).OnComplete(() => killCounter.transform.DOScale(0.85f, 0.2f));
     }
 
     public void AddGems (int _amount)

@@ -9,6 +9,6 @@ public class UIRotator : MonoBehaviour
 
     void Update()
     {
-        transform.Rotate(direction * Time.deltaTime * speed);
+        transform.Rotate(direction * Time.unscaledDeltaTime * speed);
     }
 }
