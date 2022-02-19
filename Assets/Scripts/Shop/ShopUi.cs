@@ -16,7 +16,7 @@ public class ShopUi : MonoBehaviour
         ShopItemsType[] types = shop.GetRandomSellShopItemsTypes(ShopBlocks.Length);
         for (int i = 0; i < ShopBlocks.Length; i++)
         {
-            if(i < types.Length - 1)
+            if(i < types.Length)
             {
                 ShopItem tempItem = shop.GetShopItem(types[i]);
                 ShopBlocks[i].itemName.text = tempItem.name;

@@ -1653,7 +1653,7 @@ MonoBehaviour:
   WinCanvasGroup: {fileID: 2029201604}
   WinPanel: {fileID: 7407351650640870087}
   DefeatPanel: {fileID: 7407351650839737214}
-  shopUi: {fileID: 0}
+  shopUi: {fileID: 389526359}
 --- !u!4 &332985031
 Transform:
   m_ObjectHideFlags: 0
@@ -2202,24 +2202,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shop: {fileID: 389526360}
   ShopBlocks:
-  - itemName: {fileID: 0}
-    itemDescription: {fileID: 0}
-    priceText: {fileID: 0}
-    itemImage: {fileID: 0}
-    type: 0
+  - itemName: {fileID: 1918552281}
+    itemDescription: {fileID: 1681261919}
+    priceText: {fileID: 1405035657}
+    itemImage: {fileID: 359341652}
+    type: 8
     ItemBlock: {fileID: 1060439109}
-  - itemName: {fileID: 0}
-    itemDescription: {fileID: 0}
-    priceText: {fileID: 0}
-    itemImage: {fileID: 0}
-    type: 0
+  - itemName: {fileID: 434132551}
+    itemDescription: {fileID: 1776438085}
+    priceText: {fileID: 1798195738}
+    itemImage: {fileID: 874686613}
+    type: 8
     ItemBlock: {fileID: 1172239005}
-  - itemName: {fileID: 0}
-    itemDescription: {fileID: 0}
-    priceText: {fileID: 0}
-    itemImage: {fileID: 0}
-    type: 0
+  - itemName: {fileID: 1118282542}
+    itemDescription: {fileID: 1932765516}
+    priceText: {fileID: 207591067}
+    itemImage: {fileID: 1874606284}
+    type: 8
     ItemBlock: {fileID: 666318855}
+  - itemName: {fileID: 1615969770}
+    itemDescription: {fileID: 101324290}
+    priceText: {fileID: 1672549148}
+    itemImage: {fileID: 475309604}
+    type: 8
+    ItemBlock: {fileID: 1903705312}
+  - itemName: {fileID: 1522085808}
+    itemDescription: {fileID: 339626154}
+    priceText: {fileID: 1667168129}
+    itemImage: {fileID: 1098915923}
+    type: 8
+    ItemBlock: {fileID: 314083598}
+  - itemName: {fileID: 259785746}
+    itemDescription: {fileID: 1993280300}
+    priceText: {fileID: 1430607349}
+    itemImage: {fileID: 1502589960}
+    type: 8
+    ItemBlock: {fileID: 784941848}
 --- !u!114 &389526360
 MonoBehaviour:
   m_ObjectHideFlags: 0

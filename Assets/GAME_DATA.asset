@@ -12,58 +12,66 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca4f15c6d23f57f43ade09a2b60116a3, type: 3}
   m_Name: GAME_DATA
   m_EditorClassIdentifier: 
-  LevelNumber: 3
-  ShopCoins: 60
+  levelNumber: 1
+  gems: 9660
   PlayerModel: {fileID: 3656185600078060075, guid: 7507e71d81a35db45a75d15a3be4eaf0, type: 3}
   PlayerPartsSet: 
   ShopItems:
-  - Name: BLADES
-    ItemType: 0
-    Description: Enter Text
-    Price: 10
+  - name: Blades
+    picture: {fileID: 0}
+    itemType: 0
+    description: 
+    Price: 100
     itemState: 1
     Prefab: {fileID: 6564196220924974943, guid: baf49581d8355b24d841d1fa19b76b6c, type: 3}
-  - Name: RANGE
-    ItemType: 1
-    Description: Enter Text
-    Price: 10
-    itemState: 0
+  - name: Range
+    picture: {fileID: 0}
+    itemType: 1
+    description: 
+    Price: 100
+    itemState: 1
     Prefab: {fileID: 6248037282934339673, guid: d48a936e8d4d20b41bb008ceaa3f40f4, type: 3}
-  - Name: TENTAKLE
-    ItemType: 2
-    Description: Enter Text
-    Price: 10
-    itemState: 0
+  - name: Tentakle
+    picture: {fileID: 0}
+    itemType: 2
+    description: 
+    Price: 100
+    itemState: 1
     Prefab: {fileID: 5109382341230208234, guid: 0c8935e34ea2da64e8c40a4d44c73940, type: 3}
-  - Name: WINGS
-    ItemType: 3
-    Description: Enter Text
+  - name: Wings
+    picture: {fileID: 0}
+    itemType: 3
+    description: 
     Price: 10
-    itemState: 0
+    itemState: 1
     Prefab: {fileID: 8327051698918988980, guid: 2bdd11b3b38e00047aceb551a4b82232, type: 3}
-  - Name: SPIDER
-    ItemType: 4
-    Description: Enter Text
+  - name: Spider
+    picture: {fileID: 0}
+    itemType: 4
+    description: 
     Price: 10
-    itemState: 0
+    itemState: 1
     Prefab: {fileID: 1135196800998720772, guid: 2b6eafe274a15e94687206817021ee8e, type: 3}
-  - Name: GHOST
-    ItemType: 5
-    Description: Enter Text
+  - name: Ggost
+    picture: {fileID: 0}
+    itemType: 5
+    description: 
     Price: 10
-    itemState: 0
+    itemState: 1
     Prefab: {fileID: 5964660828798028740, guid: 57af4f3b68466c149aedd9d044d9102b, type: 3}
-  - Name: ARMOR
-    ItemType: 6
-    Description: Enter Text
+  - name: Armor
+    picture: {fileID: 0}
+    itemType: 6
+    description: 
     Price: 10
-    itemState: 0
+    itemState: 1
     Prefab: {fileID: 4475892112679084633, guid: ae776fcc52276a448abf946e767b1887, type: 3}
-  - Name: SPIKE
-    ItemType: 7
-    Description: Enter Text
+  - name: Spike
+    picture: {fileID: 0}
+    itemType: 7
+    description: 
     Price: 10
-    itemState: 0
+    itemState: 1
     Prefab: {fileID: 2775648252837779703, guid: d6513acdc39435d4c9d7444472d9f4bf, type: 3}
   MutagenGroups:
   - GroupName: Attack

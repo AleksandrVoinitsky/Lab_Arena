@@ -37,11 +37,6 @@ public class MainArena : Singleton<MainArena>
         
     }
 
-    private void Awake()
-    {
-        LoadShop();
-    }
-
     public void AddGems(int _amount)
     {
         gameData.AddGems(_amount);
