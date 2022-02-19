@@ -63,7 +63,7 @@ public class MainLaboratory : MonoBehaviour
         StartButtonRootObject.transform.localScale = new Vector3(0, 0, 0);
         LboratoryTankGlassMaterial.color = LboratoryTankGlassMaterialColor;
         CreatePlayerCharacter();
-        CreateFlaskSet();
+       // CreateFlaskSet();
         tmpTextInfoCanvasGroup.alpha = 0;
         tmpTextInfoFlag = true;
     }
@@ -205,7 +205,7 @@ public class MainLaboratory : MonoBehaviour
 
     public void CreateFlaskSet()
     {
-        Instantiate(gameData.Mutagens[gameData.LevelNumber], FlaskSetSpawnPoint.position, FlaskSetSpawnPoint.rotation);
+        //Instantiate(gameData.Mutagens[gameData.LevelNumber], FlaskSetSpawnPoint.position, FlaskSetSpawnPoint.rotation);
     }
 
     public Transform GetTankObjectTransform()

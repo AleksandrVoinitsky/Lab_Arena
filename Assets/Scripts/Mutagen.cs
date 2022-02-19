@@ -27,7 +27,7 @@ public class Mutagen : MonoBehaviour
 
     private void OnMouseDown()
     {
-        setParent.HideHand();
+        //setParent.HideHand();
         MainLaboratory main = FindObjectOfType<MainLaboratory>();
         if (!main.isMoving)
         {
@@ -88,7 +88,8 @@ public class Mutagen : MonoBehaviour
         transform.DOScale(new Vector3(0, 0, 0), 0.25f).OnComplete(() => Instantiate(shatteredFlask, transform.position, Quaternion.identity));
         yield return new WaitForSecondsRealtime(0.5f);
         _main.AddMutagen(mutagenColor, part, Image, MutagenName);
-        setParent.NextSet();
+        //setParent.NextSet();
+        GameObject.FindObjectOfType<FlaskCollections>().NextSet();
         OnUse.Invoke();
         _main.AddMutagenText(MutantName);
         Destroy(gameObject);

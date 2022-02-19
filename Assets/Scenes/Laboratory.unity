@@ -1588,6 +1588,9 @@ MonoBehaviour:
   EyeMask: {fileID: 3505068965425115089}
   Wings: {fileID: 0}
   Tentacles: {fileID: 0}
+  Blades: {fileID: 0}
+  Ghost: {fileID: 0}
+  enemyMaterials: []
   costumeMaterials: []
   extraMaterials: []
   deathMaterial: {fileID: 0}
@@ -2299,6 +2302,54 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 485ffcbdf7d315b44a6800f2e0c66640, type: 3}
+--- !u!1 &1346873373
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1346873375}
+  - component: {fileID: 1346873374}
+  m_Layer: 0
+  m_Name: FlaskCollections(NEW)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1346873374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1346873373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b66e9aa3da212a4a9c4e3a0031e3034, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameData: {fileID: 11400000, guid: 3270cfee90de4a346be6dfa7175414c9, type: 2}
+  Item_1Pos: {x: -0.4, y: 0, z: 0}
+  Item_2Pos: {x: 0, y: 0, z: 0}
+  Item_3Pos: {x: 0.4, y: 0, z: 0}
+  ItemSetParentPrefab: {fileID: 5108360274233429516, guid: 44d0f0d4af0e11c42a8f02fdf3018d08, type: 3}
+--- !u!4 &1346873375
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1346873373}
+  m_LocalRotation: {x: 0, y: 0.97629607, z: 0.21643952, w: 0}
+  m_LocalPosition: {x: 0, y: 1.25, z: -3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: -25, y: 180, z: 0}
 --- !u!1 &1387739022
 GameObject:
   m_ObjectHideFlags: 0
