@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 
 
-
+// ме юйрсюкем (хяонкэгсеряъ FlaskCollections)
 public class MutagenSetParent : MonoBehaviour
 {
     [SerializeField] FluskSet[] mutagenSet;

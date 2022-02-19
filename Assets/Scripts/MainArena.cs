@@ -25,6 +25,7 @@ public class MainArena : Singleton<MainArena>
     [SerializeField] CanvasGroup mainCanvas, WinCanvasGroup;
     [SerializeField] GameObject WinPanel;
     [SerializeField] GameObject DefeatPanel;
+    [SerializeField] ShopUi shopUi;
 
     GameObject playerModel;
     ModelManager playerMutantPartActivator;
@@ -88,6 +89,8 @@ public class MainArena : Singleton<MainArena>
         WinCanvasGroup.gameObject.SetActive(true);
         WinCanvasGroup.DOFade(1, 1f).SetUpdate (true).OnComplete (() => Time.timeScale = 0);
         WinPanel.SetActive(true);
+        shopUi.gameObject.SetActive(true);
+        shopUi.InitShopUi();
     }
 
     public void Defeat()
