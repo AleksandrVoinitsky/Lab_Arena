@@ -23,7 +23,7 @@ public class MainArena : Singleton<MainArena>
     [SerializeField] TMP_Text levelText;
     [SerializeField] TMP_Text timerText;
     [Space(10)]
-    [SerializeField] CanvasGroup mainCanvas, WinCanvasGroup;
+    [SerializeField] CanvasGroup mainCanvas, shopCanvas, WinCanvasGroup;
     [SerializeField] GameObject WinPanel;
     [SerializeField] GameObject DefeatPanel;
     [SerializeField] ShopUi shopUi;
@@ -36,6 +36,11 @@ public class MainArena : Singleton<MainArena>
         InitScene();
     }
 
+    public void AddGems(int _amount)
+    {
+        gameData.AddGems(_amount);
+    }
+
     void InitScene()
     {
         int randMat = Random.Range(0, arenaMain.Count);
@@ -45,7 +50,7 @@ public class MainArena : Singleton<MainArena>
         arenaFloor.materials = tmp.ToArray();
         arenaWalls.material = arenaSecondary[randMat];
         water.material = waterMaterials[Random.Range (0, waterMaterials.Count)];
-        levelText.text = string.Format("Level {0}", (gameData.LevelNumber+1));
+        levelText.text = string.Format("Level {0}", (gameData.levelNumber+1));
         playerModel = Instantiate(gameData.PlayerModel, PlayerRoot.transform.position, PlayerRoot.transform.rotation, PlayerRoot.transform);
         playerMutantPartActivator = playerModel.GetComponent<ModelManager>();
         foreach (var item in gameData.PlayerPartsSet)
@@ -91,8 +96,7 @@ public class MainArena : Singleton<MainArena>
         WinCanvasGroup.gameObject.SetActive(true);
         WinCanvasGroup.DOFade(1, 1f).SetUpdate (true).OnComplete (() => Time.timeScale = 0);
         WinPanel.SetActive(true);
-        shopUi.gameObject.SetActive(true);
-        shopUi.InitShopUi();
+        
     }
 
     public void Defeat()
@@ -100,6 +104,13 @@ public class MainArena : Singleton<MainArena>
         WinCanvasGroup.gameObject.SetActive(true);
         WinCanvasGroup.DOFade(1, 1f).SetUpdate (true).OnComplete (() => Time.timeScale = 0);
         DefeatPanel.SetActive(true);
+    }
+
+    public void LoadShop()
+    {
+        WinCanvasGroup.gameObject.SetActive(false);
+        shopUi.gameObject.SetActive(true);
+        shopUi.InitShopUi();
     }
 
     public void LoadNextScene()

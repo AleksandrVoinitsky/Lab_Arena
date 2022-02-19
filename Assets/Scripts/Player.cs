@@ -21,7 +21,7 @@ public class Player : Entity
     [SerializeField] private ProjectileScript laserProjectile;
     [SerializeField] GameObject ParticleDamage, deathSplash;
     [SerializeField] private int gems, kills;
-    [SerializeField] private TMP_Text gemCounter, killCounter;
+    [SerializeField] private TMP_Text gemCounter, gemShopCounter, killCounter;
     [SerializeField] private CanvasGroup damageCanvas;
     [SerializeField] HpBar hpBar;
 
@@ -232,6 +232,7 @@ public class Player : Entity
     public void AddGems (int _amount)
     {
         gemCounter.transform.DOScale (1.25f, _amount * 0.05f).OnComplete (() => gemCounter.transform.DOScale(1f, 0.1f));
+        MainArena.Instance.AddGems(_amount);
         StartCoroutine(AddingGems(_amount));
     }
 
@@ -240,6 +241,7 @@ public class Player : Entity
         _amount--;
         gems++;
         gemCounter.text = gems.ToString();
+        gemShopCounter.text = gems.ToString();
         yield return new WaitForSecondsRealtime(0.05f);
         if (_amount > 0)
             StartCoroutine(AddingGems(_amount));

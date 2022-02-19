@@ -111,12 +111,12 @@ public class FlaskCollections : MonoBehaviour
         foreach (var item in gameData.ShopItems)
         {
 
-            if(item.ItemType == ShopItemsType.None)
+            if(item.itemType == ShopItemsType.None)
             {
                 return null;
             }
 
-            if(item.ItemType == type)
+            if(item.itemType == type)
             {
                 if(item.itemState == ShopItemState.bought)
                 {

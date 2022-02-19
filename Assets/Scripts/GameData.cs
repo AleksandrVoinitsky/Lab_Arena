@@ -7,24 +7,29 @@ using UnityEngine.Events;
 public class GameData : ScriptableObject
 {
 
-    [Header("__GENERAL__")]
-    public int LevelNumber;
-    public int ShopCoins;
+    [Header("General")]
+    public int levelNumber;
+    public int gems;
 
-    [Header("__PLAYER__")]
+    [Header("Player")]
     public GameObject PlayerModel;
     public List<MutantParts> PlayerPartsSet = new List<MutantParts>();
 
-    [Header("__SHOP__")]
+    [Header("Shop")]
     public ShopItem[] ShopItems;
 
-    [Header("__MUTAGENS__")]
+    [Header("Mutagens")]
     //public GameObject[] Mutagens;
     public ItemsGroup[] MutagenGroups;
 
-    public void AddLevel()
+    public void AddLevel(int _amount = 1)
     {
-        LevelNumber += 1;
+        levelNumber += _amount;
+    }
+
+    public void AddGems (int _amount = 1)
+    {
+        gems += _amount;
     }
 }
 
@@ -63,10 +68,11 @@ public enum ShopItemState
 [System.Serializable]
 public struct ShopItem
 {
-    [Header("[ITEM]_______________________________________________________________________________________________________")]
-    public string Name;
-    public ShopItemsType ItemType;
-    [TextArea] public string Description;
+    [Header("[ITEM]")]
+    public string name;
+    public Sprite picture;
+    public ShopItemsType itemType;
+    [TextArea] public string description;
     [Space(10)]
     public int Price;
     public ShopItemState itemState;

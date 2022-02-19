@@ -13,22 +13,21 @@ public class ShopUi : MonoBehaviour
     {
         shop.InitShop();
         ShopItemsType[] types = shop.GetRandomSellShopItemsTypes(ShopBlocks.Length);
-
         for (int i = 0; i < types.Length; i++)
         {
             ShopItem tempItem = shop.GetShopItem(types[i]);
-
-            ShopBlocks[i].ItemName.text = tempItem.Name;
-            ShopBlocks[i].ItemDescript.text = tempItem.Description;
-            ShopBlocks[i].Price.text = tempItem.Price.ToString();
-            ShopBlocks[i].type = tempItem.ItemType;
+            ShopBlocks[i].itemName.text = tempItem.name;
+            ShopBlocks[i].itemImage.sprite = tempItem.picture;
+            ShopBlocks[i].itemDescription.text = tempItem.description;
+            ShopBlocks[i].priceText.text = tempItem.Price.ToString();
+            ShopBlocks[i].type = tempItem.itemType;
         }
     }
 
-    public void TryBue(int index)
+    public void TryToBuy(int index)
     {
-        shop.Buy(ShopBlocks[index].type);//на случай проверки покупки возвращает bool
-        ShopBlocks[index].Price.text = "Bought!";
+        if (shop.Buy(ShopBlocks[index].type))
+            ShopBlocks[index].priceText.text = "Bought!";
     }
 
 }
@@ -36,9 +35,10 @@ public class ShopUi : MonoBehaviour
 [System.Serializable]
 public struct ShopUiBlock
 {
-    public TMP_Text ItemName;
-    public TMP_Text ItemDescript;
-    public TMP_Text Price;
+    public TMP_Text itemName;
+    public TMP_Text itemDescription;
+    public TMP_Text priceText;
+    public Image itemImage;
     public ShopItemsType type;
     public GameObject ItemBlock;
 }
