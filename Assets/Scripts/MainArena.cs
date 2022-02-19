@@ -34,6 +34,7 @@ public class MainArena : Singleton<MainArena>
     void Start()
     {
         InitScene();
+        
     }
 
     public void AddGems(int _amount)
