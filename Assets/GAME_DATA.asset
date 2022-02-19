@@ -12,77 +12,71 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca4f15c6d23f57f43ade09a2b60116a3, type: 3}
   m_Name: GAME_DATA
   m_EditorClassIdentifier: 
-  levelNumber: 1
-  gems: 9660
+  levelNumber: 0
+  gems: 0
   PlayerModel: {fileID: 3656185600078060075, guid: 7507e71d81a35db45a75d15a3be4eaf0, type: 3}
   PlayerPartsSet: 
   ShopItems:
-  - name: Blades
-    picture: {fileID: 0}
+  - name: Claws
+    picture: {fileID: 21300000, guid: c0788049c5bec4f61aefc2fc7d70fcc1, type: 3}
     itemType: 0
     description: 
     Price: 100
     itemState: 1
     Prefab: {fileID: 6564196220924974943, guid: baf49581d8355b24d841d1fa19b76b6c, type: 3}
-  - name: Range
-    picture: {fileID: 0}
+  - name: Laser
+    picture: {fileID: 21300000, guid: 1fff54a0f3f3f4bd697c944c16ca31a4, type: 3}
     itemType: 1
     description: 
     Price: 100
-    itemState: 1
+    itemState: 0
     Prefab: {fileID: 6248037282934339673, guid: d48a936e8d4d20b41bb008ceaa3f40f4, type: 3}
-  - name: Tentakle
-    picture: {fileID: 0}
+  - name: Tentacles
+    picture: {fileID: 21300000, guid: 469e42268faba4d6a875788cb65164e6, type: 3}
     itemType: 2
     description: 
     Price: 100
-    itemState: 1
+    itemState: 0
     Prefab: {fileID: 5109382341230208234, guid: 0c8935e34ea2da64e8c40a4d44c73940, type: 3}
   - name: Wings
-    picture: {fileID: 0}
+    picture: {fileID: 21300000, guid: f7962f2e2ebcc497286b5468203681e1, type: 3}
     itemType: 3
     description: 
-    Price: 10
-    itemState: 1
+    Price: 100
+    itemState: 0
     Prefab: {fileID: 8327051698918988980, guid: 2bdd11b3b38e00047aceb551a4b82232, type: 3}
   - name: Spider
-    picture: {fileID: 0}
+    picture: {fileID: 21300000, guid: ba4813120148d4950ae44f9c882b270b, type: 3}
     itemType: 4
     description: 
-    Price: 10
-    itemState: 1
+    Price: 100
+    itemState: 0
     Prefab: {fileID: 1135196800998720772, guid: 2b6eafe274a15e94687206817021ee8e, type: 3}
-  - name: Ggost
-    picture: {fileID: 0}
+  - name: Ghost
+    picture: {fileID: 21300000, guid: bdf88f254a4ad43df856d7ab2210ff2a, type: 3}
     itemType: 5
     description: 
-    Price: 10
-    itemState: 1
+    Price: 100
+    itemState: 0
     Prefab: {fileID: 5964660828798028740, guid: 57af4f3b68466c149aedd9d044d9102b, type: 3}
-  - name: Armor
-    picture: {fileID: 0}
+  - name: Muscles
+    picture: {fileID: 21300000, guid: 843b1890626904f8d85f05b493b0aa5e, type: 3}
     itemType: 6
     description: 
-    Price: 10
-    itemState: 1
+    Price: 100
+    itemState: 0
     Prefab: {fileID: 4475892112679084633, guid: ae776fcc52276a448abf946e767b1887, type: 3}
-  - name: Spike
-    picture: {fileID: 0}
+  - name: Thorns
+    picture: {fileID: 21300000, guid: 2a5e6171e40634ec2b28bb27228933e3, type: 3}
     itemType: 7
     description: 
-    Price: 10
-    itemState: 1
+    Price: 100
+    itemState: 0
     Prefab: {fileID: 2775648252837779703, guid: d6513acdc39435d4c9d7444472d9f4bf, type: 3}
   MutagenGroups:
   - GroupName: Attack
-    Item_1: 0
-    Item_2: 1
-    Item_3: 2
+    items: 000000000200000001000000
   - GroupName: Move
-    Item_1: 3
-    Item_2: 4
-    Item_3: 5
+    items: 030000000400000005000000
   - GroupName: Armor
-    Item_1: 6
-    Item_2: 7
-    Item_3: 8
+    items: 0600000007000000

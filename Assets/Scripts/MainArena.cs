@@ -8,21 +8,20 @@ using TMPro;
 public class MainArena : Singleton<MainArena>
 {
     [Header("MainArena")]
+    public bool victory;
     [Space(10)]
     [SerializeField] CanvasGroup blackoutCanvas;
     [SerializeField] string NextSceneName;
     [Header("data")]
     [SerializeField] GameData gameData;
+    public int maxEnemiesCount;
     [Header("level objects")]
     [SerializeField] GameObject PlayerRoot;
     [SerializeField] GameObject ArenaTank;
     [SerializeField] private MeshRenderer arenaFloor, arenaWalls, water;
     [SerializeField] private List<Material> arenaMain, arenaSecondary, waterMaterials;
     [Space(10)]
-    [SerializeField] float RoundTime = 60;
-    [SerializeField] TMP_Text levelText;
-    [SerializeField] TMP_Text timerText;
-    [Space(10)]
+    [SerializeField] TMP_Text gemShopCounter, levelText;
     [SerializeField] CanvasGroup mainCanvas, shopCanvas, WinCanvasGroup;
     [SerializeField] GameObject WinPanel;
     [SerializeField] GameObject DefeatPanel;
@@ -34,12 +33,16 @@ public class MainArena : Singleton<MainArena>
     void Start()
     {
         InitScene();
-        
+    }
+
+    public int GetGems()
+    {
+        return gameData.gems;
     }
 
     public void AddGems(int _amount)
     {
-        gameData.AddGems(_amount);
+        gameData.AddGems(_amount, gemShopCounter);
     }
 
     void InitScene()
@@ -67,51 +70,56 @@ public class MainArena : Singleton<MainArena>
                 PlayerRoot.GetComponent<Player>().SetModel(playerMutantPartActivator);
                 PlayerRoot.GetComponent<Player>().ActiveCharacterMovement(true);
                 ArenaTank.transform.DOScale(new Vector3(0, 0, 0), 0.25f);
-                StartCoroutine(ArenaTimer());
+                maxEnemiesCount = gameData.levelNumber * 5 + 10;
                 CameraController.Instance.FocusOnPlayer();
+                PlayerRoot.GetComponent<Player>().InitKillCounter(maxEnemiesCount);
                 mainCanvas.gameObject.SetActive(true);
                 mainCanvas.DOFade(1, 1f);
             });
         });
     }
 
-    IEnumerator ArenaTimer()
+    public void Win()
     {
-        while (RoundTime > 0)
+        victory = true;
+        foreach (var e in FindObjectsOfType<Enemy>())
         {
-            RoundTime -= Time.deltaTime;
-            if (RoundTime > 0)
-                timerText.text = string.Format("{0}:{1:00}", Mathf.FloorToInt(RoundTime/60), Mathf.FloorToInt(RoundTime%60));
-            else
-            {
-                timerText.text = "0:00";
-                Win();
-            }
-            yield return null;
+            e.Damage(e.health, null);
         }
+        CameraController.Instance.Victory();
+        Invoke("WinUI", 2f);
     }
 
-    public void Win()
+    private void WinUI()
     {
         gameData.AddLevel();
         WinCanvasGroup.gameObject.SetActive(true);
-        WinCanvasGroup.DOFade(1, 1f).SetUpdate (true).OnComplete (() => Time.timeScale = 0);
+        WinCanvasGroup.DOFade(1, 1f).SetUpdate(true).OnComplete(() => Time.timeScale = 0);
         WinPanel.SetActive(true);
-        
     }
 
     public void Defeat()
     {
+        victory = true;
+        Time.timeScale = 0.25f;
+        Invoke("DefeatUI", 2f);
+    }
+
+    private void DefeatUI()
+    {
         WinCanvasGroup.gameObject.SetActive(true);
-        WinCanvasGroup.DOFade(1, 1f).SetUpdate (true).OnComplete (() => Time.timeScale = 0);
+        WinCanvasGroup.DOFade(1, 1f).SetUpdate(true).OnComplete(() => Time.timeScale = 0);
         DefeatPanel.SetActive(true);
     }
 
     public void LoadShop()
     {
-        WinCanvasGroup.gameObject.SetActive(false);
-        shopUi.gameObject.SetActive(true);
+        shopCanvas.gameObject.SetActive(true);
         shopUi.InitShopUi();
+        shopCanvas.DOFade(1, 0.5f).SetUpdate(true).OnComplete (() =>
+        {
+            WinCanvasGroup.gameObject.SetActive(false);
+        });
     }
 
     public void LoadNextScene()
@@ -122,6 +130,5 @@ public class MainArena : Singleton<MainArena>
             Time.timeScale = 1;
             SceneManager.LoadScene(NextSceneName);
         });
-       
     }
 }

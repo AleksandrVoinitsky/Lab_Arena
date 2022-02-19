@@ -6,9 +6,7 @@ using DG.Tweening;
 public class FlaskCollections : MonoBehaviour
 {
     [SerializeField] GameData gameData;
-    [SerializeField] Vector3 Item_1Pos;
-    [SerializeField] Vector3 Item_2Pos;
-    [SerializeField] Vector3 Item_3Pos;
+    [SerializeField] Vector3 step = new Vector3 (0.4f, 0, 0);
     [SerializeField] GameObject ItemSetParentPrefab;
     GameObject[] ItemSetParents;
 
@@ -22,45 +20,40 @@ public class FlaskCollections : MonoBehaviour
     public void InitFlaskCollections()
     {
         List<GameObject> tempList = new List<GameObject>();
+        List<GameObject> items = new List<GameObject>();
 
         for (int i = 0; i < gameData.MutagenGroups.Length; i++)
         {
-            bool active = false;
-            GameObject Parent = Instantiate(ItemSetParentPrefab, this.transform.position, this.transform.rotation, this.transform);
-            Parent.name = gameData.MutagenGroups[i].GroupName;
-            GameObject temp;
-            temp = GetFlask(gameData.MutagenGroups[i].Item_1);
-            if(temp != null)
+            items.Clear();
+            GameObject parent = Instantiate(ItemSetParentPrefab, transform.position, transform.rotation, transform);
+            parent.name = gameData.MutagenGroups[i].GroupName;
+            for (int j = 0; j < gameData.MutagenGroups[i].items.Count; j++)
             {
-                active = true;
-                GameObject item1 = Instantiate(temp, this.transform.localPosition + Item_1Pos, this.transform.rotation, Parent.transform);
+                GameObject temp = GetFlask(gameData.MutagenGroups[i].items[j]);
+                if (temp != null)
+                {
+                    items.Add(Instantiate(temp, transform.localPosition, transform.rotation, parent.transform));
+                }
             }
-            temp = GetFlask(gameData.MutagenGroups[i].Item_2);
-            if (temp != null)
+            for (int j = 0; j < items.Count; j++)
             {
-                active = true;
-                GameObject item2 = Instantiate(temp, this.transform.localPosition + Item_2Pos, this.transform.rotation, Parent.transform);
-            }
-            temp = GetFlask(gameData.MutagenGroups[i].Item_3);
-            if (temp != null)
-            {
-                active = true;
-                GameObject item3 = Instantiate(temp, this.transform.localPosition + Item_3Pos, this.transform.rotation, Parent.transform);
+                items[j].transform.localPosition = items[j].transform.localPosition +
+                                                    new Vector3(step.x * (-items.Count / 2) + j * step.x, step.y, step.z);
             }
 
-            if (active)
+            if (items.Count > 0)
             {
-                tempList.Add(Parent);
+                tempList.Add(parent);
             }
             else
             {
-                Destroy(Parent);
+                Destroy(parent);
             }
         }
 
         ItemSetParents = tempList.ToArray();
 
-        if (ItemSetParents.Length == 0)
+        if (ItemSetParents.Length < 1)
         {
             Invoke("Complete", 3);
         }

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
+using TMPro;
 
 [CreateAssetMenu(fileName ="GAME_DATA",menuName = "Data/ Game data object")]
 public class GameData : ScriptableObject
@@ -27,9 +27,16 @@ public class GameData : ScriptableObject
         levelNumber += _amount;
     }
 
-    public void AddGems (int _amount = 1)
+    public void AddGems (int _amount = 1, TMP_Text gemText = null)
     {
         gems += _amount;
+        gemText.text = gems.ToString();
+    }
+
+    public void RemoveGems (int _amount = 1, TMP_Text gemText = null)
+    {
+        gems -= _amount;
+        gemText.text = gems.ToString();
     }
 }
 
@@ -84,9 +91,7 @@ public struct ShopItem
 public struct ItemsGroup
 {
     public string GroupName;
-    public ShopItemsType Item_1;
-    public ShopItemsType Item_2;
-    public ShopItemsType Item_3;
+    public List<ShopItemsType> items;
 }
 
 

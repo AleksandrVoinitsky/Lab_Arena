@@ -60,7 +60,7 @@ public class HpBar : MonoBehaviour
         hp.fillAmount = hpBahValue / 100;
         Fill.fillAmount = hpBahValue / 100;
         SetImageColor(hpBahValue / 100);
-        tmp.text = "Lv." + level.ToString();
+        tmp.text = "Level " + level.ToString();
     }
 
     public void SetImageColor(float t)

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 using TMPro;
 
 public class ShopUi : MonoBehaviour
@@ -28,9 +29,10 @@ public class ShopUi : MonoBehaviour
             else
             {
                 ShopItem tempItem = new ShopItem();
-                ShopBlocks[i].itemName.text = "Bought";
-                ShopBlocks[i].itemDescription.text = "Bought";
-                ShopBlocks[i].priceText.text = "Bought";
+                ShopBlocks[i].itemName.text = "Bought!";
+                ShopBlocks[i].itemDescription.text = "Bought!";
+                ShopBlocks[i].priceText.text = "-";
+                ShopBlocks[i].tick.gameObject.SetActive(true);
                 ShopBlocks[i].type = ShopItemsType.None;
             }
             
@@ -43,22 +45,29 @@ public class ShopUi : MonoBehaviour
         {
             if (shop.Buy(ShopBlocks[index].type))
             {
-                ShopBlocks[index].priceText.text = "Bought!";
+                ShopBlocks[index].button.transform.DOScale(1.2f, 0.25f).SetUpdate(true);
+                ShopBlocks[index].button.transform.DORotate(new Vector3(0, 0, -20), 0.25f).SetUpdate(true).OnComplete(() =>
+                {
+                    ShopBlocks[index].button.transform.DOScale(1f, 0.15f).SetUpdate(true);
+                    ShopBlocks[index].button.transform.DORotate(Vector3.zero, 0.15f).SetUpdate(true);
+                    ShopBlocks[index].priceText.text = "Bought!";
+                    ShopBlocks[index].tick.gameObject.SetActive(true);
+                    ShopBlocks[index].tick.DOFade(1, 0.15f).SetUpdate(true);
+                });
             }
-                
         }
-       
     }
-
 }
 
 [System.Serializable]
 public struct ShopUiBlock
 {
+    public GameObject button;
     public TMP_Text itemName;
     public TMP_Text itemDescription;
     public TMP_Text priceText;
     public Image itemImage;
     public ShopItemsType type;
     public GameObject ItemBlock;
+    public CanvasGroup tick;
 }

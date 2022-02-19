@@ -6,7 +6,7 @@ public class CameraController : Singleton<CameraController>
 {
     public int cameraSettings = -1;
     public List<CameraSettings> settings;
-    public bool won;
+    public bool victory;
     [SerializeField]
     Transform player;
     [SerializeField]
@@ -54,6 +54,13 @@ public class CameraController : Singleton<CameraController>
     {
         cameraOffset.y += 0.1f;
         cameraOffset.z -= 0.1f;
+    }
+
+    public void Victory()
+    {
+        cameraOffset = new Vector3(0, 8, -5);
+        FocusOnPlayer();
+        victory = true;
     }
 
     public void FocusOnPlayer()

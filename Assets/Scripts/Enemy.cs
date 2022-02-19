@@ -191,8 +191,12 @@ public class Enemy : Entity
                 break;
             case State.Move:
                 transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
-                transform.position = Vector3.MoveTowards (transform.position,
-                    new Vector3 (target.transform.position.x, transform.position.y, target.transform.position.z), moveSpeed * Time.deltaTime);
+                if (enemyEntity == null || Vector3.Distance (transform.position,
+                    new Vector3 (target.transform.position.x, transform.position.y, target.transform.position.z)) > AttackDistance)
+                {
+                    transform.position = Vector3.MoveTowards(transform.position,
+                        new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z), moveSpeed * Time.deltaTime);
+                }
                 break;
             case State.Stun:
                 break;
@@ -208,6 +212,13 @@ public class Enemy : Entity
             enemyEntity = _enemy;
             target = _enemy.transform;
         }
+    }
+
+    public override void AddLevel()
+    {
+        level++;
+        hpBar.SetValue(health, level);
+        transform.DOScale(transform.localScale.x + 0.05f, 0.25f).SetUpdate(true);
     }
 
 
@@ -233,7 +244,7 @@ public class Enemy : Entity
     {
         if (enemyEntity.Damage(AttackPower, this))
         {
-            level++;
+            AddLevel();
         }
         base.MeleeAttack();
         //Instantiate(ParticleMelee, FirePoint.position, FirePoint.rotation);
@@ -278,7 +289,8 @@ public class Enemy : Entity
             if (model != null)
                 Instantiate(deathSplash, model.transform.position + Vector3.up * 0.1f, transform.rotation);
             Invoke("Destruction", 10);
-            model.Death();
+            if (model != null)
+                model.Death();
             hpBar.Deinit();
         }
         return base.Damage(damage, attacker);

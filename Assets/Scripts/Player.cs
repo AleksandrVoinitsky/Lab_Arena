@@ -21,7 +21,7 @@ public class Player : Entity
     [SerializeField] private ProjectileScript laserProjectile;
     [SerializeField] GameObject ParticleDamage, deathSplash;
     [SerializeField] private int gems, kills;
-    [SerializeField] private TMP_Text gemCounter, gemShopCounter, killCounter;
+    [SerializeField] private TMP_Text gemCounter, killCounter;
     [SerializeField] private CanvasGroup damageCanvas;
     [SerializeField] HpBar hpBar;
 
@@ -58,6 +58,13 @@ public class Player : Entity
         AttackDistance = model.GetDistance();
         hpBar.Init(health);
         StartCoroutine(FindEnemy());
+    }
+
+    public void InitKillCounter(int _amount)
+    {
+        killCounter.text = string.Format("{0}/{1}", kills, _amount);
+        //gems = MainArena.Instance.GetGems();
+        //gemCounter.text = gems.ToString();
     }
 
     private IEnumerator FindEnemy()
@@ -117,50 +124,60 @@ public class Player : Entity
 
         //Vector3 lookDirection = new Vector3(rigidbody.position.x + inputX, 0.0f, rigidbody.position.z + inputZ);
         //JoystickMagnitude = joystick.Direction.magnitude;
-        if (joystick.Direction != Vector2.zero)
+        if (!MainArena.Instance.victory)
         {
-            enemy = null;
-            float inputZ = joystick.Direction.y;
-            float inputX = joystick.Direction.x;
+            if (joystick.Direction != Vector2.zero)
+            {
+                enemy = null;
+                float inputZ = joystick.Direction.y;
+                float inputX = joystick.Direction.x;
 
-            Vector3 lookDirection = new Vector3(inputX, 0, inputZ);
-            Quaternion lookRotation = Quaternion.LookRotation(lookDirection, Vector3.up);
+                Vector3 lookDirection = new Vector3(inputX, 0, inputZ);
+                Quaternion lookRotation = Quaternion.LookRotation(lookDirection, Vector3.up);
 
-            float step = 10 * Time.deltaTime;
+                float step = 10 * Time.deltaTime;
 
-            transform.rotation = Quaternion.RotateTowards(lookRotation, transform.rotation, step);
-            if (CanMove((transform.forward * 2.5f + Vector3.down * 2 - Vector3.up).normalized))
-                transform.Translate(Vector3.forward * Time.deltaTime * moveSpeed);
-            state = State.Move;
+                transform.rotation = Quaternion.RotateTowards(lookRotation, transform.rotation, step);
+                if (CanMove((transform.forward * 2.5f + Vector3.down * 2 - Vector3.up).normalized))
+                    transform.Translate(Vector3.forward * Time.deltaTime * moveSpeed);
+                state = State.Move;
+            }
+            else
+            {
+                if (enemy == null)
+                    state = State.Idle;
+                else
+                {
+                    Quaternion lookRotation = Quaternion.LookRotation(enemy.transform.position - transform.position, Vector3.up);
+                    lookRotation.x = 0;
+                    lookRotation.z = 0;
+                    transform.rotation = Quaternion.RotateTowards(lookRotation, transform.rotation, 30 * Time.deltaTime);
+                }
+                /*Vector3 direction;
+                if (EnemyDetected)
+                {
+                    direction = RotationTarget - transform.position;
+                    // Sphere.transform.position = RotationTarget;
+                }
+                else
+                {
+                    //direction = MoveTarget - transform.position;
+                    //Sphere.transform.position = MoveTarget;
+                    //rigidbody.velocity = Vector3.Lerp(rigidbody.velocity, new Vector3(0, 0, 0), Time.fixedDeltaTime * Speed);
+
+                }
+                Quaternion rotation = Quaternion.LookRotation(direction);
+                Vector3 NewRotation = rotation.eulerAngles;
+                transform.rotation = Quaternion.Slerp(rigidbody.rotation, Quaternion.Euler(new Vector3(0, NewRotation.y, 0)), AngularSpeed * Time.fixedDeltaTime);*/
+
+            }
         }
         else
         {
-            if (enemy == null)
-                state = State.Idle;
-            else
+            if (state != State.Death)
             {
-                Quaternion lookRotation = Quaternion.LookRotation(enemy.transform.position - transform.position, Vector3.up);
-                lookRotation.x = 0;
-                lookRotation.z = 0;
-                transform.rotation = Quaternion.RotateTowards(lookRotation, transform.rotation, 30 * Time.deltaTime);
-            }
-            /*Vector3 direction;
-            if (EnemyDetected)
-            {
-                direction = RotationTarget - transform.position;
-                // Sphere.transform.position = RotationTarget;
-            }
-            else
-            {
-                //direction = MoveTarget - transform.position;
-                //Sphere.transform.position = MoveTarget;
-                //rigidbody.velocity = Vector3.Lerp(rigidbody.velocity, new Vector3(0, 0, 0), Time.fixedDeltaTime * Speed);
-              
-            }
-            Quaternion rotation = Quaternion.LookRotation(direction);
-            Vector3 NewRotation = rotation.eulerAngles;
-            transform.rotation = Quaternion.Slerp(rigidbody.rotation, Quaternion.Euler(new Vector3(0, NewRotation.y, 0)), AngularSpeed * Time.fixedDeltaTime);*/
 
+            }
         }
 
         /*if (joystick.OnDown)
@@ -209,7 +226,7 @@ public class Player : Entity
             MMVibrationManager.Haptic(HapticTypes.LightImpact);
             if (enemy.Damage(AttackPower, this))
             {
-                level++;
+                AddLevel();
                 AddKills();
                 AddGems(5);
             }
@@ -222,11 +239,31 @@ public class Player : Entity
         //Instantiate(ParticleMelee, FirePoint.position, FirePoint.rotation);
     }
 
+    public override void AddLevel()
+    {
+        level++;
+        transform.DOScale(transform.localScale.x + 0.05f, 0.25f).SetUpdate(true);
+        hpBar.SetValue(health, level);
+    }
+
     public void AddKills()
     {
         kills++;
-        killCounter.text = string.Format("Kills: {0}", kills);
-        killCounter.transform.DOScale(0.9f, 0.3f).OnComplete(() => killCounter.transform.DOScale(0.85f, 0.2f));
+        killCounter.text = string.Format("{0}/{1}", kills, MainArena.Instance.maxEnemiesCount);
+        killCounter.transform.DOScale(1.1f, 0.3f).OnComplete(() => killCounter.transform.DOScale(1f, 0.2f));
+        if (kills >= MainArena.Instance.maxEnemiesCount)
+        {
+            hpBar.Deinit();
+            MainArena.Instance.Win();
+        }
+        if (kills > MainArena.Instance.maxEnemiesCount)
+            kills = MainArena.Instance.maxEnemiesCount;
+    }
+
+    public void AddHealth()
+    {
+        health++;
+        hpBar.SetValue(health, level);
     }
 
     public void AddGems (int _amount)
@@ -241,7 +278,6 @@ public class Player : Entity
         _amount--;
         gems++;
         gemCounter.text = gems.ToString();
-        gemShopCounter.text = gems.ToString();
         yield return new WaitForSecondsRealtime(0.05f);
         if (_amount > 0)
             StartCoroutine(AddingGems(_amount));
@@ -293,6 +329,11 @@ public class Player : Entity
                 enemy = null;
                 state = State.Idle;
             }
+            if (enemy.health <= 0)
+            {
+                enemy = null;
+                state = State.Idle;
+            }
         }
         base.EndAttack();
     }
@@ -307,6 +348,7 @@ public class Player : Entity
             Time.timeScale = 0.25f;
             MainArena.Instance.Defeat();
             model.Death();
+            state = State.Death;
             Instantiate(deathSplash, model.transform.position + Vector3.up * 0.1f, transform.rotation);
         }
         else

@@ -18,8 +18,11 @@ public class EnemySpawner : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(waitTimer);
-            var e = Instantiate(enemy, transform.position - Vector3.up * 3, transform.rotation);
-            Instantiate(spawnEffect, transform.position, transform.rotation);
+            if (!MainArena.Instance.victory)
+            {
+                var e = Instantiate(enemy, transform.position - Vector3.up * 3, transform.rotation);
+                Instantiate(spawnEffect, transform.position, transform.rotation);
+            }
         }
     }
 }

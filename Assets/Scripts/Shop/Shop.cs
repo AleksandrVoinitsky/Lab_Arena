@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Shop : MonoBehaviour
 {
     [SerializeField] GameData gamedata;
+    [SerializeField] TMP_Text shopGemText;
     private Dictionary<ShopItemsType, int> ShopItemsDictionary; 
 
     private void Awake()
@@ -37,7 +39,7 @@ public class Shop : MonoBehaviour
         {
             if(item.itemState == ShopItemState.sell)
             {
-                gamedata.gems -= item.Price;
+                gamedata.RemoveGems(item.Price, shopGemText);
                 OpenItem(type);
                 return true;
             }

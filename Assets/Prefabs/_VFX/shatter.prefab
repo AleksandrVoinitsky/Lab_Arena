@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4669406076569166655}
   - component: {fileID: 1313345817235133486}
   - component: {fileID: 6876547384721005280}
+  - component: {fileID: 3309821750434116699}
   m_Layer: 0
   m_Name: shatter
   m_TagString: Untagged
@@ -4862,3 +4863,18 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &3309821750434116699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105667860521386070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0368c7d4d3fc84035b266465038ceb06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scale: 0
+  startScaleTimer: 0
+  destrTimer: 3
