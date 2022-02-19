@@ -34,6 +34,12 @@ public class MainArena : Singleton<MainArena>
     void Start()
     {
         InitScene();
+        
+    }
+
+    private void Awake()
+    {
+        LoadShop();
     }
 
     public void AddGems(int _amount)
