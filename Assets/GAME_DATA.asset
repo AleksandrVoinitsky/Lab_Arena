@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca4f15c6d23f57f43ade09a2b60116a3, type: 3}
   m_Name: GAME_DATA
   m_EditorClassIdentifier: 
-  LevelNumber: 1
-  ShopCoins: 80
+  LevelNumber: 3
+  ShopCoins: 60
   PlayerModel: {fileID: 3656185600078060075, guid: 7507e71d81a35db45a75d15a3be4eaf0, type: 3}
   PlayerPartsSet: 
   ShopItems:
