@@ -20,6 +20,7 @@ public class MainArena : Singleton<MainArena>
     [SerializeField] private List<Material> arenaMain, arenaSecondary, waterMaterials;
     [Space(10)]
     [SerializeField] float RoundTime = 60;
+    [SerializeField] TMP_Text levelText;
     [SerializeField] TMP_Text timerText;
     [Space(10)]
     [SerializeField] CanvasGroup mainCanvas, WinCanvasGroup;
@@ -44,6 +45,7 @@ public class MainArena : Singleton<MainArena>
         arenaFloor.materials = tmp.ToArray();
         arenaWalls.material = arenaSecondary[randMat];
         water.material = waterMaterials[Random.Range (0, waterMaterials.Count)];
+        levelText.text = string.Format("Level {0}", (gameData.LevelNumber+1));
         playerModel = Instantiate(gameData.PlayerModel, PlayerRoot.transform.position, PlayerRoot.transform.rotation, PlayerRoot.transform);
         playerMutantPartActivator = playerModel.GetComponent<ModelManager>();
         foreach (var item in gameData.PlayerPartsSet)
