@@ -49,7 +49,7 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 4, z: 0.1}
+  m_Center: {x: 0, y: 1, z: 0.1}
 --- !u!114 &7685353767425397949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,6 +79,7 @@ MonoBehaviour:
   deathSplash: {fileID: 8321236321537994716, guid: 2630cbb42537c4b3e9ddac5380e4d545, type: 3}
   laserProjectile: {fileID: -6582011004541579959, guid: ba942171d007e2241b0bb7d335d6be5c, type: 3}
   hpBar: {fileID: 304839308744371262}
+  enemies: []
 --- !u!54 &8190676777189381370
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1583,7 +1584,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1479103757705125922, guid: 285b49e37a7fb9f4c9f1cbe75c65051a, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 5
+      value: 2.416
       objectReference: {fileID: 0}
     - target: {fileID: 1479103757705125922, guid: 285b49e37a7fb9f4c9f1cbe75c65051a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

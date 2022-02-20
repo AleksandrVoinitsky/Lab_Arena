@@ -50,7 +50,7 @@ public class ModelManager : MonoBehaviour
         }
         if (type == ModelType.ENEMY)
         {
-            transform.DOMoveY(transform.position.y + 3, 0.75f);
+            transform.DOMoveY(transform.position.y, 0.75f);
             int costumeMats = Random.Range(0, costumeMaterials.Count);
             List<Material> bodyMaterials = new List<Material>();
             List<Material> legsMaterials = new List<Material>();
