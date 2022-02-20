@@ -53,7 +53,8 @@ public class Player : Entity
     {
         model = _model;
         moveSpeed = model.GetSpeed();
-        health = model.GetHealth();
+        maxHealth = model.GetHealth();
+        health = maxHealth;
         isSpiked = model.IsSpiked();
         AttackDistance = model.GetDistance();
         hpBar.Init(health);
@@ -224,7 +225,7 @@ public class Player : Entity
         if (enemy != null)
         {
             MMVibrationManager.Haptic(HapticTypes.LightImpact);
-            if (enemy.Damage(AttackPower, this))
+            if (enemy.Damage(damage, this))
             {
                 AddLevel();
                 AddKills();
@@ -242,7 +243,7 @@ public class Player : Entity
     public override void AddLevel()
     {
         level++;
-        transform.DOScale(transform.localScale.x + 0.05f, 0.25f).SetUpdate(true);
+        transform.DOScale(transform.localScale.x + 0.03f, 0.25f).SetUpdate(true);
         hpBar.SetValue(health, level);
     }
 
@@ -260,17 +261,23 @@ public class Player : Entity
             kills = MainArena.Instance.maxEnemiesCount;
     }
 
-    public void AddHealth()
-    {
-        health++;
-        hpBar.SetValue(health, level);
-    }
-
     public void AddGems (int _amount)
     {
         gemCounter.transform.DOScale (1.25f, _amount * 0.05f).OnComplete (() => gemCounter.transform.DOScale(1f, 0.1f));
         MainArena.Instance.AddGems(_amount);
         StartCoroutine(AddingGems(_amount));
+    }
+
+    public int GetGems ()
+    {
+        return gems;
+    }
+
+    public void SpendGems (int _amount)
+    {
+        gems -= _amount;
+        MainArena.Instance.SpendGems(_amount);
+        gemCounter.text = gems.ToString();
     }
 
     private IEnumerator AddingGems (int _amount)
@@ -281,6 +288,26 @@ public class Player : Entity
         yield return new WaitForSecondsRealtime(0.05f);
         if (_amount > 0)
             StartCoroutine(AddingGems(_amount));
+        else
+            UpgradeHandler.Instance.CheckUpgrades(gems);
+    }
+
+    public void Upgrade(UpgradeType _type)
+    {
+        switch (_type)
+        {
+            case UpgradeType.HEALTH:
+                maxHealth += 20;
+                health = maxHealth;
+                hpBar.SetValue(health, level);
+                break;
+            case UpgradeType.DAMAGE:
+                damage += 5;
+                break;
+            case UpgradeType.SPEED:
+                moveSpeed += 0.5f;
+                break;
+        }
     }
 
     public override void RangeAttack()
@@ -289,7 +316,7 @@ public class Player : Entity
         {
             var l = Instantiate(laserProjectile, model.transform.position + Vector3.up, transform.rotation);
             var targetVector = new Vector3(enemy.transform.position.x, l.transform.position.y, enemy.transform.position.z);
-            l.SetDirection(targetVector, AttackPower, this);
+            l.SetDirection(targetVector, damage, this);
             /*l.transform.DOMove(targetVector, 0.25f).OnComplete(() =>
             {
                 Debug.Log(Vector3.Distance(l.transform.position, targetVector));

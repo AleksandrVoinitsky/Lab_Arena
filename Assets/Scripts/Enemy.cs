@@ -50,7 +50,8 @@ public class Enemy : Entity
     {
         model = _model;
         moveSpeed = model.GetSpeed();
-        health = model.GetHealth();
+        maxHealth = model.GetHealth();
+        health = maxHealth;
         isSpiked = model.IsSpiked();
         AttackDistance = model.GetDistance();
         hpBar.Init(health);
@@ -242,7 +243,7 @@ public class Enemy : Entity
 
     public override void MeleeAttack()
     {
-        if (enemyEntity.Damage(AttackPower, this))
+        if (enemyEntity.Damage(damage, this))
         {
             AddLevel();
         }
@@ -254,7 +255,7 @@ public class Enemy : Entity
     {
         var l = Instantiate(laserProjectile, model.transform.position + Vector3.up, transform.rotation);
         var targetVector = new Vector3(enemyEntity.transform.position.x, l.transform.position.y, enemyEntity.transform.position.z);
-        l.SetDirection(targetVector, AttackPower, this);
+        l.SetDirection(targetVector, damage, this);
     }
 
     public override void Hit()

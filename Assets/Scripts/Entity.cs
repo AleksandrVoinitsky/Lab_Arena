@@ -8,8 +8,8 @@ public class Entity : MonoBehaviour
     public bool isActive;
     public State state;
     public bool isSpiked;
-    public int health;
-    public int AttackPower;
+    public int health, maxHealth;
+    public int damage;
     public float moveSpeed;
     public int level = 1;
 

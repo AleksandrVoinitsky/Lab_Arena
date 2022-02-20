@@ -29,7 +29,6 @@ public class GemScript : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, player.position, 10 * Time.deltaTime);
             if (Vector3.Distance (transform.position, player.position) <= 0)
             {
-                player.GetComponent<Player>().AddHealth();
                 player.GetComponent<Player>().AddGems(1);
                 Destroy(gameObject);
             }

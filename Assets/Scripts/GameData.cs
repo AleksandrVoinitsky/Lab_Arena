@@ -52,6 +52,13 @@ public enum MutantParts
     Spike
 }
 
+public enum MutantGroup
+{
+    Attack,
+    Speed,
+    Defence
+}
+
 public enum ShopItemsType
 {
     Blabes,

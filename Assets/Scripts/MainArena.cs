@@ -25,6 +25,7 @@ public class MainArena : Singleton<MainArena>
     [SerializeField] CanvasGroup mainCanvas, shopCanvas, WinCanvasGroup;
     [SerializeField] GameObject WinPanel;
     [SerializeField] GameObject DefeatPanel;
+    [SerializeField] private GameObject confetti;
     [SerializeField] ShopUi shopUi;
 
     GameObject playerModel;
@@ -35,6 +36,11 @@ public class MainArena : Singleton<MainArena>
         InitScene();
     }
 
+    public int GetLevel()
+    {
+        return gameData.levelNumber + 1;
+    }
+
     public int GetGems()
     {
         return gameData.gems;
@@ -43,6 +49,12 @@ public class MainArena : Singleton<MainArena>
     public void AddGems(int _amount)
     {
         gameData.AddGems(_amount, gemShopCounter);
+    }
+
+    public void SpendGems (int _amount)
+    {
+        gameData.gems -= _amount;
+        gemShopCounter.text = gameData.gems.ToString();
     }
 
     void InitScene()
@@ -73,6 +85,7 @@ public class MainArena : Singleton<MainArena>
                 maxEnemiesCount = gameData.levelNumber * 5 + 10;
                 CameraController.Instance.FocusOnPlayer();
                 PlayerRoot.GetComponent<Player>().InitKillCounter(maxEnemiesCount);
+                UpgradeHandler.Instance.CheckUpgrades(PlayerRoot.GetComponent<Player>().GetGems());
                 mainCanvas.gameObject.SetActive(true);
                 mainCanvas.DOFade(1, 1f);
             });
@@ -81,12 +94,14 @@ public class MainArena : Singleton<MainArena>
 
     public void Win()
     {
+        confetti.SetActive(true);
         victory = true;
         foreach (var e in FindObjectsOfType<Enemy>())
         {
             e.Damage(e.health, null);
         }
         CameraController.Instance.Victory();
+        mainCanvas.DOFade(0, 1f).OnComplete(() => mainCanvas.gameObject.SetActive(false));
         Invoke("WinUI", 2f);
     }
 

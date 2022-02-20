@@ -32,6 +32,16 @@ public class Shop : MonoBehaviour
         }
     }
 
+    public bool IsBought (ShopItemsType type)
+    {
+        return GetShopItem(type).itemState == ShopItemState.bought;
+    }
+
+    public bool EnoughGems(ShopItemsType type)
+    {
+        return gamedata.gems >= GetShopItem(type).Price;
+    }
+
     public bool Buy(ShopItemsType type)
     {
         ShopItem item = GetShopItem(type);

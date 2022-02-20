@@ -18,7 +18,7 @@ public class ModelManager : MonoBehaviour
     [SerializeField] string BaseAnimationStun;
     [SerializeField] string BaseAnimatuonMutation;
     public bool isActive;
-    [SerializeField] bool StartRandomMutation;
+    [SerializeField] int randomMutations;
     [Space(10)]
     [SerializeField] SkinnedMeshRenderer BaseBody, BaseCostume;
     [SerializeField] SkinnedMeshRenderer BaseLegs, SpiderLegs, EyeMask;
@@ -133,9 +133,31 @@ public class ModelManager : MonoBehaviour
         {
             StartCoroutine(AnimationPlayer());
         }
-        if (StartRandomMutation)
+        if (type == ModelType.ENEMY)
+            randomMutations = MainArena.Instance.GetLevel();
+        if (randomMutations > 0)
         {
-            SetSwitchPart(parts[Random.Range(0, parts.Length - 1)].partType, true);
+            if (randomMutations == 1)
+                MutateRandomly(1);
+            else
+                MutateRandomly(Random.Range (1, randomMutations));
+        }
+    }
+
+    private void MutateRandomly(int _amount)
+    {
+        List<Parts> randomParts = new List<Parts>();
+        for (int i = 0; i < parts.Length; i++)
+        {
+            if (!ActiveParts.Exists(x => x.partGroup == parts[i].partGroup))
+                randomParts.Add(parts[i]);
+        }
+        if (randomParts.Count > 0)
+        {
+            SetSwitchPart(randomParts[Random.Range(0, randomParts.Count)].partType, true);
+            _amount--;
+            if (_amount > 0)
+                MutateRandomly(_amount);
         }
     }
 
@@ -247,6 +269,7 @@ public class ModelManager : MonoBehaviour
 public struct Parts
 {
     public MutantParts partType;
+    public MutantGroup partGroup;
     public GameObject PartReferense;
     public State StateAnimation;
     public string AnimationName;

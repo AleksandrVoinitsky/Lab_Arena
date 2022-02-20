@@ -17,7 +17,7 @@ public class ShopUi : MonoBehaviour
         ShopItemsType[] types = shop.GetRandomSellShopItemsTypes(ShopBlocks.Length);
         for (int i = 0; i < ShopBlocks.Length; i++)
         {
-            if(i < types.Length)
+            if (i < types.Length)
             {
                 ShopItem tempItem = shop.GetShopItem(types[i]);
                 ShopBlocks[i].itemName.text = tempItem.name;
@@ -25,6 +25,7 @@ public class ShopUi : MonoBehaviour
                 ShopBlocks[i].itemDescription.text = tempItem.description;
                 ShopBlocks[i].priceText.text = tempItem.Price.ToString();
                 ShopBlocks[i].type = tempItem.itemType;
+                ShopBlocks[i].CheckAvailability(shop.EnoughGems(ShopBlocks[i].type));
             }
             else
             {
@@ -35,7 +36,6 @@ public class ShopUi : MonoBehaviour
                 ShopBlocks[i].tick.gameObject.SetActive(true);
                 ShopBlocks[i].type = ShopItemsType.None;
             }
-            
         }
     }
 
@@ -45,6 +45,13 @@ public class ShopUi : MonoBehaviour
         {
             if (shop.Buy(ShopBlocks[index].type))
             {
+                for (int i = 0; i < ShopBlocks.Length; i++)
+                {
+                    if (!shop.IsBought(ShopBlocks[i].type))
+                    {
+                        ShopBlocks[i].CheckAvailability(shop.EnoughGems(ShopBlocks[i].type));
+                    }
+                }
                 ShopBlocks[index].button.transform.DOScale(1.2f, 0.25f).SetUpdate(true);
                 ShopBlocks[index].button.transform.DORotate(new Vector3(0, 0, -20), 0.25f).SetUpdate(true).OnComplete(() =>
                 {
@@ -62,7 +69,8 @@ public class ShopUi : MonoBehaviour
 [System.Serializable]
 public struct ShopUiBlock
 {
-    public GameObject button;
+    public Image button;
+    public Sprite availableSprite, unavailableSprite;
     public TMP_Text itemName;
     public TMP_Text itemDescription;
     public TMP_Text priceText;
@@ -70,4 +78,9 @@ public struct ShopUiBlock
     public ShopItemsType type;
     public GameObject ItemBlock;
     public CanvasGroup tick;
+
+    public void CheckAvailability (bool _available)
+    {
+        button.sprite = _available ? availableSprite : unavailableSprite;
+    }
 }
