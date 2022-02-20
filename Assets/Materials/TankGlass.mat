@@ -34,5 +34,5 @@ Material:
     - _Refraction: 0.9
     - _Saturation: 2.2
     m_Colors:
-    - _Color: {r: 1, g: 0, b: 0.81639194, a: 0.25}
+    - _Color: {r: 1, g: 1, b: 1, a: 0.078431375}
   m_BuildTextureStacks: []
