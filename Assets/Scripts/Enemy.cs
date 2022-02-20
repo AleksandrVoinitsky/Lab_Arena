@@ -19,17 +19,18 @@ public class Enemy : Entity
     //private GameObject[] enemies;
     //private GameObject player;
 
-    List<Entity> enemies = new List<Entity>();
+    [SerializeField] List<Entity> enemies = new List<Entity>();
     Entity enemyEntity;
 
     private bool selectedTarget = false;
 
     void Start()
     {
-        state = State.Idle;
-        Invoke("Init", 1f);
+        //state = State.Idle;
+       // Invoke("Init", 1f);
         targets = GameObject.FindGameObjectsWithTag("Target");
         StartCoroutine(UpdateBehaviour());
+        Init();
     }
 
     void Init()
@@ -42,7 +43,7 @@ public class Enemy : Entity
         while (true)
         {
             UpdateState();
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
@@ -90,11 +91,10 @@ public class Enemy : Entity
 
     private bool AttackState()
     {
-        FindEnemy();
         var tmp = FindClosestEnemy();
         if (tmp == null)
             return false;
-        if (Vector3.Distance(new Vector3(tmp.transform.position.x, transform.position.y, tmp.transform.position.z), transform.position) <= AttackDistance)
+        if (Vector3.Distance(tmp.transform.position, transform.position) <= AttackDistance)
         {
             if (tmp.GetComponent<Entity>().health > 0)
             {
@@ -114,25 +114,19 @@ public class Enemy : Entity
 
     private bool MovingState()
     {
-        if (state != State.Move)
+        var tmp = FindClosestEnemy();
+        if (tmp == null)
+            return false;
+        if (Vector3.Distance(tmp.transform.position, transform.position) <= ViewDistance)
         {
-            if (Random.Range (1, 101) <= 85)
-            {
-                FindEnemy();
-                var tmp = FindClosestEnemy();
-                if (tmp == null)
-                    return false;
-                if (Vector3.Distance(tmp.transform.position, transform.position) <= ViewDistance)
-                {
-                    target = tmp.transform;
-                    return true;
-                }
-            }
-            else
-            {
-                target = RandomizeTarget();
-                return true;
-            }
+            target = tmp.transform;
+            return true;
+        }
+
+        if(target == null)
+        {
+            target = RandomizeTarget();
+            return true;
         }
         else
         {
@@ -141,11 +135,13 @@ public class Enemy : Entity
                 return true;
             }
         }
+
         return false;
     }
 
     Entity FindClosestEnemy()
     {
+
         if (enemyEntity != null)
         {
             if (enemyEntity.health <= 0)
@@ -153,6 +149,7 @@ public class Enemy : Entity
         }
         if (enemyEntity == null)
         {
+            FindEnemy();
             float distance = Mathf.Infinity;
             Vector3 position = transform.position;
             foreach (var go in enemies)
@@ -188,6 +185,7 @@ public class Enemy : Entity
             case State.Idle:
                 //target = transform.forward * 2;
                 //transform.rotation = Quaternion.Euler(0, NewRotation.y, 0);
+                
                 break;
             case State.Move:
                 transform.LookAt(new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z));
@@ -225,9 +223,10 @@ public class Enemy : Entity
     private void FindEnemy()
     {
         enemies.Clear();
-        var en = FindObjectsOfType<Entity>();
+        var en = FindObjectsOfType<Enemy>();
         if (en.Length <= 1)
             return;
+        enemies.Add(FindObjectOfType<Player>());
         foreach (var e in en)
         {
             if (e != this && e.health > 0 && e.isActive)
