@@ -92,12 +92,12 @@ Material:
     - _ZWrite: 1
     - __dummy__: 0
     m_Colors:
-    - _Color: {r: 0.27058825, g: 0.54509807, b: 0.6901961, a: 1}
+    - _Color: {r: 0.7264151, g: 0.4968405, b: 0.6828249, a: 1}
     - _DepthColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FoamColor: {r: 0.9, g: 0.9, b: 0.9, a: 1}
     - _FoamSpeed: {r: 2, g: 2, b: 2, a: 2}
-    - _HColor: {r: 0.5647059, g: 0.69411767, b: 0.7647059, a: 1}
+    - _HColor: {r: 0.7647059, g: 0.70850277, b: 0.5647059, a: 1}
     - _RimColor: {r: 0.8, g: 0.8, b: 0.8, a: 0.6}
-    - _SColor: {r: 0.34117648, g: 0.36862746, b: 0.6313726, a: 1}
+    - _SColor: {r: 0.735849, g: 0.48940903, b: 0.48940903, a: 1}
   m_BuildTextureStacks: []

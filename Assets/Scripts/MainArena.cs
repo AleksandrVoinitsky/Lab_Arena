@@ -19,7 +19,7 @@ public class MainArena : Singleton<MainArena>
     [SerializeField] GameObject PlayerRoot;
     [SerializeField] GameObject ArenaTank;
     [SerializeField] private MeshRenderer arenaFloor, arenaWalls, water;
-    [SerializeField] private List<Material> arenaMain, arenaSecondary, waterMaterials;
+    [SerializeField] private List<Material> arenaMain, arenaMainTwo, arenaSecondary, waterMaterials;
     [Space(10)]
     [SerializeField] TMP_Text gemShopCounter, levelText;
     [SerializeField] CanvasGroup mainCanvas, shopCanvas, WinCanvasGroup;
@@ -62,10 +62,10 @@ public class MainArena : Singleton<MainArena>
         int randMat = Random.Range(0, arenaMain.Count);
         var tmp = new List<Material>();
         tmp.Add(arenaMain[randMat]);
-        tmp.Add(arenaSecondary[randMat]);
+        tmp.Add(arenaMainTwo[randMat]);
         arenaFloor.materials = tmp.ToArray();
         arenaWalls.material = arenaSecondary[randMat];
-        water.material = waterMaterials[Random.Range (0, waterMaterials.Count)];
+        water.material = waterMaterials[randMat];
         levelText.text = string.Format("Level {0}", (gameData.levelNumber+1));
         playerModel = Instantiate(gameData.PlayerModel, PlayerRoot.transform.position, PlayerRoot.transform.rotation, PlayerRoot.transform);
         playerMutantPartActivator = playerModel.GetComponent<ModelManager>();

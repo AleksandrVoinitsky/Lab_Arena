@@ -168,15 +168,15 @@ Material:
     - _UseSpecular: 0
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.31011927, g: 0.6509434, b: 0.47871983, a: 1}
+    - _BaseColor: {r: 0.18640977, g: 0.5566038, b: 0.42364678, a: 1}
     - _Color: {r: 0.40672344, g: 0.30647027, b: 0.9150943, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _HColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HColor: {r: 0.43543077, g: 0.9716981, b: 0.7799601, a: 1}
     - _MatCapColor: {r: 1, g: 1, b: 1, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _ReflectionColor: {r: 1, g: 1, b: 1, a: 1}
     - _RimColor: {r: 0.8, g: 0.8, b: 0.8, a: 0.5}
-    - _SColor: {r: 0.09433961, g: 0.09433961, b: 0.09433961, a: 1}
+    - _SColor: {r: 0.041295845, g: 0.3018868, b: 0.20871463, a: 1}
     - _ShnColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecularColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
   m_BuildTextureStacks: []
