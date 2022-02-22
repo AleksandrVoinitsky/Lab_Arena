@@ -102,7 +102,7 @@ public class MainArena : Singleton<MainArena>
         }
         CameraController.Instance.Victory();
         mainCanvas.DOFade(0, 1f).OnComplete(() => mainCanvas.gameObject.SetActive(false));
-        Invoke("WinUI", 2f);
+        Invoke("WinUI", 2.5f);
     }
 
     private void WinUI()
@@ -116,7 +116,7 @@ public class MainArena : Singleton<MainArena>
     public void Defeat()
     {
         victory = true;
-        Time.timeScale = 0.25f;
+        Time.timeScale = 0.5f;
         Invoke("DefeatUI", 2f);
     }
 

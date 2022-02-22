@@ -10,7 +10,6 @@ public class Player : Entity
     [SerializeField] ModelManager model;
     [SerializeField] Enemy enemy;
     [SerializeField] FloatingJoystick joystick;
-    [SerializeField] Animator animator;
     [SerializeField] Vector3 MoveTarget;
     [SerializeField] Vector3 RotationTarget;
     [Space(10)]
@@ -177,7 +176,7 @@ public class Player : Entity
         {
             if (state != State.Death)
             {
-
+                state = State.Dance;
             }
         }
 

@@ -66,5 +66,6 @@ public enum State
     Death,
     Hit,
     Stun,
-    Mutate
+    Mutate,
+    Dance
 }

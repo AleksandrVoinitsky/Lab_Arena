@@ -2647,7 +2647,7 @@ MonoBehaviour:
   BaseAnimationStun: 
   BaseAnimatuonMutation: 
   isActive: 0
-  StartRandomMutation: 0
+  randomMutations: 0
   BaseBody: {fileID: 2105642957822529601}
   BaseCostume: {fileID: 5853653284423515139}
   BaseLegs: {fileID: 5089073755829464655}
@@ -2655,46 +2655,57 @@ MonoBehaviour:
   EyeMask: {fileID: 1069755648852580217}
   Wings: {fileID: 4249126943549151784}
   Tentacles: {fileID: 553076491439824254}
+  Blades: {fileID: 8809489722659777705}
+  Ghost: {fileID: 7763552194220278413}
+  enemyMaterials: []
   costumeMaterials: []
   extraMaterials: []
   deathMaterial: {fileID: 2100000, guid: 9a2879ec289374f398722e95098f3307, type: 2}
   parts:
   - partType: 0
+    partGroup: 0
     PartReferense: {fileID: 501986199828214617}
     StateAnimation: 2
     AnimationName: Melee2
     StartActive: 0
   - partType: 1
+    partGroup: 0
     PartReferense: {fileID: 4132483125247802204}
     StateAnimation: 2
     AnimationName: Ranged1
     StartActive: 0
   - partType: 2
+    partGroup: 0
     PartReferense: {fileID: 82319991025328568}
     StateAnimation: 2
     AnimationName: attack_tentacles
     StartActive: 0
   - partType: 3
+    partGroup: 0
     PartReferense: {fileID: 1014192479438604919}
     StateAnimation: 1
     AnimationName: Fly
     StartActive: 0
   - partType: 4
+    partGroup: 0
     PartReferense: {fileID: 8603700441757521916}
     StateAnimation: 1
     AnimationName: spider_walk
     StartActive: 0
   - partType: 5
+    partGroup: 0
     PartReferense: {fileID: 814257242035292929}
     StateAnimation: 1
     AnimationName: ghost_fly
     StartActive: 0
   - partType: 6
+    partGroup: 0
     PartReferense: {fileID: 243939139646196920}
     StateAnimation: 0
     AnimationName: 
     StartActive: 0
   - partType: 7
+    partGroup: 0
     PartReferense: {fileID: 2490551513133765572}
     StateAnimation: 0
     AnimationName: 

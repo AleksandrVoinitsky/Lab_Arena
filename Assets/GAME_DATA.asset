@@ -53,7 +53,7 @@ MonoBehaviour:
     itemState: 1
     Prefab: {fileID: 1135196800998720772, guid: 2b6eafe274a15e94687206817021ee8e, type: 3}
   - name: Ghost
-    picture: {fileID: 21300000, guid: bdf88f254a4ad43df856d7ab2210ff2a, type: 3}
+    picture: {fileID: 21300000, guid: 30c3530d4386a4659b9632413be7b2c8, type: 3}
     itemType: 5
     description: 
     Price: 50

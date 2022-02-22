@@ -95,7 +95,7 @@ public class Enemy : Entity
         var tmp = FindClosestEnemy();
         if (tmp == null)
             return false;
-        if (Vector3.Distance(tmp.transform.position, transform.position) <= AttackDistance)
+        if (Vector3.Distance(new Vector3(tmp.transform.position.x, transform.position.y, tmp.transform.position.z), transform.position) <= AttackDistance)
         {
             if (tmp.GetComponent<Entity>().health > 0)
             {
@@ -118,7 +118,7 @@ public class Enemy : Entity
         var tmp = FindClosestEnemy();
         if (tmp == null)
             return false;
-        if (Vector3.Distance(tmp.transform.position, transform.position) <= ViewDistance)
+        if (Vector3.Distance(new Vector3 (tmp.transform.position.x, transform.position.y, tmp.transform.position.z), transform.position) <= ViewDistance)
         {
             target = tmp.transform;
             return true;
@@ -131,7 +131,7 @@ public class Enemy : Entity
         }
         else
         {
-            if (Vector3.Distance(target.position, transform.position) >= AttackDistance)
+            if (Vector3.Distance(new Vector3(target.position.x, transform.position.y, target.position.z), transform.position) >= AttackDistance)
             {
                 return true;
             }
@@ -142,7 +142,6 @@ public class Enemy : Entity
 
     Entity FindClosestEnemy()
     {
-
         if (enemyEntity != null)
         {
             if (enemyEntity.health <= 0)
@@ -152,10 +151,9 @@ public class Enemy : Entity
         {
             FindEnemy();
             float distance = Mathf.Infinity;
-            Vector3 position = transform.position;
             foreach (var go in enemies)
             {
-                Vector3 diff = go.transform.position - position;
+                Vector3 diff = new Vector3 (go.transform.position.x, transform.position.y, go.transform.position.z) - transform.position;
                 float curDistance = diff.sqrMagnitude;
                 if (curDistance < distance)
                 {

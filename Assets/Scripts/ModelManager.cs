@@ -44,13 +44,14 @@ public class ModelManager : MonoBehaviour
         animDictionary.Add(State.Hit, BaseAnimationHit);
         animDictionary.Add(State.Stun, BaseAnimationStun);
         animDictionary.Add(State.Mutate, BaseAnimatuonMutation);
+        animDictionary.Add(State.Dance, "dance");
         foreach (var item in parts)
         {
             SetSwitchPart(item.partType, item.StartActive);
         }
         if (type == ModelType.ENEMY)
         {
-            transform.DOMoveY(transform.position.y, 0.75f);
+            transform.DOMoveY(transform.position.y + 3, 0.75f);
             int costumeMats = Random.Range(0, costumeMaterials.Count);
             List<Material> bodyMaterials = new List<Material>();
             List<Material> legsMaterials = new List<Material>();
