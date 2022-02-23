@@ -202,7 +202,7 @@ public class Enemy : Entity
         }
     }
 
-    public void SetTarget (Entity _enemy)
+    public override void SetTarget (Entity _enemy)
     {
         if (state != State.Death)
         {
@@ -290,6 +290,7 @@ public class Enemy : Entity
             if (model != null)
                 model.Death();
             hpBar.Deinit();
+            GetComponent<Collider>().isTrigger = true;
         }
         return base.Damage(damage, attacker);
     }

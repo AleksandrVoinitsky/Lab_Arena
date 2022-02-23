@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class PropScript : MonoBehaviour
+public class PropScript : Entity
 {
     [SerializeField] private GemScript gem;
     [SerializeField] private ParticleSystem particles;
@@ -18,22 +18,39 @@ public class PropScript : MonoBehaviour
             chosenMat = Random.Range(0, materials.Count);
             GetComponent<MeshRenderer>().material = materials[chosenMat];
         }
+        health = 1;
+        isActive = true;
+        state = State.Idle;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (!destroyed)
+        if (collision.collider.GetComponent<Enemy>() != null)
         {
-            if (other.GetComponent<Entity>() != null)
-            {
-                destroyed = true;
-                StartCoroutine(GemSpawner(Random.Range(3, 7)));
-            }
+            destroyed = true;
+            StartCoroutine(GemSpawner(Random.Range(3, 7)));
         }
     }
 
+
+    public override bool Damage(int damage, Entity attacker = null)
+    {
+        //return base.Damage(damage, attacker);
+        health = 0;
+        if (!destroyed)
+        {
+            destroyed = true;
+            StartCoroutine(GemSpawner(Random.Range(3, 7)));
+        }
+
+        return true;
+    }
+
+
     private IEnumerator GemSpawner(int _money)
     {
+        state = State.Death;
+        isActive = false ;
         while (_money > 0)
         {
             var m = Instantiate(gem, transform.position, gem.transform.rotation);
