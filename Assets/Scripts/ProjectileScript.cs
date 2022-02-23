@@ -26,14 +26,14 @@ public class ProjectileScript : MonoBehaviour
     {
         if (other.GetComponent<Entity>() != owner)
         {
-            if (other.GetComponent<Enemy>() != null && !stopped)
+            if (other.GetComponent<Entity>() != null && !stopped)
             {
-                if (other.GetComponent<Enemy>().health > 0)
+                if (other.GetComponent<Entity>().health > 0)
                 {
                     Stop();
                     if (owner.GetComponent<Player>() != null)
                         MMVibrationManager.Haptic(HapticTypes.LightImpact);
-                    if (other.GetComponent<Enemy>().Damage(damage, owner))
+                    if (other.GetComponent<Entity>().Damage(damage, owner))
                     {
                         if (owner.GetComponent<Player>() != null)
                         {
@@ -42,7 +42,7 @@ public class ProjectileScript : MonoBehaviour
                         }
                         owner.AddLevel();
                     }
-                    other.GetComponent<Enemy>().SetTarget(owner);
+                    other.GetComponent<Entity>().SetTarget(owner); 
                 }
             }
             if (other.GetComponent<Player>() != null && !stopped)

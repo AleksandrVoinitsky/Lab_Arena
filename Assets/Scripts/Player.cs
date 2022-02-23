@@ -8,7 +8,7 @@ using MoreMountains.NiceVibrations;
 public class Player : Entity
 {
     [SerializeField] ModelManager model;
-    [SerializeField] Enemy enemy;
+    [SerializeField] Entity enemy;
     [SerializeField] FloatingJoystick joystick;
     [SerializeField] Vector3 MoveTarget;
     [SerializeField] Vector3 RotationTarget;
@@ -75,7 +75,7 @@ public class Player : Entity
             {
                 if (enemy == null)
                 {
-                    var enemies = FindObjectsOfType<Enemy>();
+                    var enemies = FindObjectsOfType<Entity>();
                     foreach (var e in enemies)
                     {
                         if (enemies.Length > 0)
@@ -232,7 +232,7 @@ public class Player : Entity
             }
             else
             {
-                enemy.SetTarget(this);
+                enemy.SetTarget(this); 
             }
         }
         base.MeleeAttack();
@@ -350,18 +350,13 @@ public class Player : Entity
     {
         if (enemy != null)
         {
-            if (Vector3.Distance(transform.position, new Vector3(enemy.transform.position.x, transform.position.y, enemy.transform.position.z)) <= AttackDistance)
-            {
-                enemy = null;
-                state = State.Idle;
-            }
-            if (enemy.health <= 0)
+            if (Vector3.Distance(transform.position, new Vector3(enemy.transform.position.x, transform.position.y, enemy.transform.position.z)) <= AttackDistance || enemy.health <= 0)
             {
                 enemy = null;
                 state = State.Idle;
             }
         }
-        base.EndAttack();
+        //base.EndAttack();
     }
 
     public override bool Damage(int damage, Entity attacker)
@@ -389,5 +384,14 @@ public class Player : Entity
         }
         Instantiate(ParticleDamage, transform.position, Quaternion.Euler(0, 270, 0));
         return base.Damage(damage, attacker);
+    }
+
+    public override void SetTarget(Entity _enemy)
+    {
+        if (state != State.Death)
+        {
+            enemy = _enemy;
+            //target = _enemy.transform;
+        }
     }
 }

@@ -55,6 +55,10 @@ public class Entity : MonoBehaviour
 
     }
 
+    public virtual void SetTarget(Entity _enemy)
+    {
+
+    }
 }
 
 
